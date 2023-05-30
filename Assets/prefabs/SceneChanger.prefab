@@ -44,4 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49889c1f8d46640b3f5f299fbf6646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: 
+  _nameSelectScene: SelectScene
+  _nameClearScene: ClearScene
+  _nameStage_1: MainScene_1
+  _nameStage_2: 
+  _nameStage_3: 

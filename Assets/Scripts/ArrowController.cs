@@ -14,10 +14,7 @@ public class ArrowController : MonoBehaviour
 
     //[SerializeField, Tooltip("動かすUI")] GameObject _arrow;
     [SerializeField, Tooltip("シーン遷移のためのUI")] GameObject[] _images;
-    // テキストの番号が変わっても対応できるように---＞テキストの文字次第であって、「_images」の配列順は影響なし。
-    //[SerializeField, Header("入力不要"), Tooltip("TextコンポーネントがついているObjs")] GameObject[] _imageChilds;
-    //[SerializeField, Header("入力不要"), Tooltip("Texts")] string[] _imageChildTexts;
-    [SerializeField] SceneChanger _sceneChanger;
+    //[SerializeField, Tooltip("シーン遷移を行うスクリプト")] SceneChanger _sceneChanger;
     [SerializeField] bool _isStage_1;
     [SerializeField] bool _isStage_2;
     int _num;
@@ -26,41 +23,41 @@ public class ArrowController : MonoBehaviour
 
     void Start()
     {
-        _isStage_1 = false;
+        ResetbBools();
+        SceneChanger.ResetBools();
         _num = 0;
+        //Debug.Log(_num);
+        this.gameObject.transform.position = new Vector3(_images[0].transform.position.x, _images[0].transform.position.y - 110, gameObject.transform.position.z);
+        //GameObject _sceneChangerObject = GameObject.Find("SceneChanger");
+        //_sceneChanger = _sceneChangerObject.GetComponent<SceneChanger>();
     }
 
     void Update()
     {
-        //Debug.Log(_images.Length);
-
-        if (_num < _images.Length)
+        if (_num < _images.Length -1)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 _num = _num + 1;
-                Debug.Log(_num);
-
+                MoveArrow();
+                //Debug.Log(_num);
             }
+        }
+        if(_num >= 1)
+        {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 _num = _num - 1;
-                Debug.Log(_num);
+                MoveArrow();
+                //Debug.Log(_num);
             }
         }
-        /*
-        else
-        {
-            _num = 0;
-            Debug.Log(_num);
-        }
-        */
-
+        
         if (Input.GetKeyDown(KeyCode.Return))
         {
             if (_isStage_1)
             {
-                _sceneChanger.SceneChange("MainScene_1");
+                SceneChanger._isStage_1 = true;
             }
             else if(_isStage_2)
             {
@@ -68,16 +65,13 @@ public class ArrowController : MonoBehaviour
                 Debug.LogWarning("追々追加");
             }
         }
-        
     }
-
 
     void OnTriggerEnter2D(Collider2D col)
     {
         // 追々楽にしたい
         if(col.gameObject.name == "1")
         {
-            // _sceneChanger.SceneChange("MainScene_1");
             ResetbBools();
             _isStage_1 = true;
             Debug.Log(1);
@@ -97,8 +91,8 @@ public class ArrowController : MonoBehaviour
     void MoveArrow()
     {
         // objのXポジを取得してクリックのたびに、ずれるようにする
-        this.gameObject.transform.position = _images[_num].transform.position;
-
+        // objの位置が変わっても。objのｘポジのまま、ｙポジより110下に矢印が来る
+        this.gameObject.transform.position = new Vector3(_images[_num].transform.position.x, _images[_num].transform.position.y - 110, this.gameObject.transform.position.z);
     }
 
     void ResetbBools()
