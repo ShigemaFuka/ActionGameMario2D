@@ -7,30 +7,35 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyHp : MonoBehaviour
 {
-    /// <summary> 「Player」スクリプトの「_attackValue」 </summary>
-    [SerializeField] int _damageValue;
-    /// <summary> 「Player」スクリプト </summary>
-    [SerializeField] Player _scPlayer;
-    /// <summary> エネミーのHPの初期設定 </summary>
-    [SerializeField] int _enemyHpMax;
-    [SerializeField] int _enemyHp;
-    SpriteRenderer _spre;
+    // 参照
+    [SerializeField, Tooltip("「Player」スクリプトの「_attackValue」")] int _damageValue;
+    [SerializeField, Tooltip("プレイヤーNameを入れる")] string _playerName;
+    [SerializeField, Tooltip("「Player」スクリプト")] Player _scPlayer;
+    // HP
+    [SerializeField, Tooltip("エネミーのHPの初期設定")] int _enemyHpMax;
+    [SerializeField, Header("入力不要")] int _enemyHp;
+    // 攻撃値
+    [Header("5以上を推奨")][SerializeField, Tooltip("「_attackValue」を決めるための値")] int _atVa;
+    [Header("入力不要")][Tooltip("プレイヤー相手に使う攻撃値")] public int _attackValue;
+    // その他
+    SpriteRenderer _spriteRenderer;
     Animator _anim;
     Collider2D _col2d;
+    
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // 「MyRogue_01」を取得
-        GameObject _player = GameObject.Find("MyRogue_01");
-        // 「Player」スクリプトを取得
+        // 「Player」を取得
+        GameObject _player = GameObject.Find(_playerName);
+        // 「Player」スクリプトを取得 → 攻撃値が欲しい
         _scPlayer = _player.GetComponent<Player>();
         // エネミーのHPの初期化
         _enemyHp = _enemyHpMax;
-        _spre = GetComponent<SpriteRenderer>();
-        _spre.color = Color.white;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.color = Color.white;
         _anim = _player.GetComponent<Animator>();
         _col2d = GetComponent<Collider2D>();
 
@@ -39,28 +44,19 @@ public class EnemyHp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(_anim.GetBool("isAttack_3") == false)
-        {
-            _col2d.enabled = false;
-        }
-        else if(_anim.GetBool("isAttack_3") == true)
-        {
-            _col2d.enabled = true;
-        }
-        */
+       
     }
 
     void OnTriggerEnter2D(Collider2D coll)
     {
         // 「Input.GetKeyDown(KeyCode.N)」がないとキー入力なくてもダメージ負う,,,,,,,,
-        // けど入れると機能しない、、、、、
-        if (coll.gameObject.tag == "Weapon") //&& Input.GetKeyDown(KeyCode.N))
+        // けど入れると機能しない、、、、、ので、武器のコライダをかなり小さくした
+        if (coll.gameObject.tag == "Weapon")        //&& Input.GetKeyDown(KeyCode.N))
         {
             _damageValue = _scPlayer._attackValue;
             // HP減らしていく
             _enemyHp = _enemyHp - _damageValue;  
-            _spre.color = Color.red;
+            _spriteRenderer.color = Color.red;
 
             if (_enemyHp < _damageValue)
             {
@@ -74,7 +70,17 @@ public class EnemyHp : MonoBehaviour
     {
         if(coll.gameObject.tag == "Weapon")
         {
-            _spre.color = Color.white;
+            _spriteRenderer.color = Color.white;
         }
+    }
+
+    /// <summary>
+    /// 「BulletController」側で使う
+    /// </summary>
+    public void Attack()
+    {
+        // +-2で攻撃
+        _attackValue = Random.Range(_atVa - 2, _atVa + 3);
+        Debug.Log("攻撃値 :  " + _attackValue);
     }
 }
