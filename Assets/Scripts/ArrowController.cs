@@ -26,10 +26,7 @@ public class ArrowController : MonoBehaviour
         ResetbBools();
         SceneChanger.ResetBools();
         _num = 0;
-        //Debug.Log(_num);
         this.gameObject.transform.position = new Vector3(_images[0].transform.position.x, _images[0].transform.position.y - 110, gameObject.transform.position.z);
-        //GameObject _sceneChangerObject = GameObject.Find("SceneChanger");
-        //_sceneChanger = _sceneChangerObject.GetComponent<SceneChanger>();
     }
 
     void Update()
@@ -40,7 +37,6 @@ public class ArrowController : MonoBehaviour
             {
                 _num = _num + 1;
                 MoveArrow();
-                //Debug.Log(_num);
             }
         }
         if(_num >= 1)
@@ -49,7 +45,6 @@ public class ArrowController : MonoBehaviour
             {
                 _num = _num - 1;
                 MoveArrow();
-                //Debug.Log(_num);
             }
         }
         
@@ -74,17 +69,17 @@ public class ArrowController : MonoBehaviour
         {
             ResetbBools();
             _isStage_1 = true;
-            Debug.Log(1);
+            //Debug.Log(1);
         }
         else if(col.gameObject.name == "2")
         {
             ResetbBools();
             _isStage_2 = true;
-            Debug.Log(2);
+            //Debug.Log(2);
         }
         else if(col.gameObject.name == "3")
         {
-            Debug.Log(3);
+            //Debug.Log(3);
         }
     }
 
