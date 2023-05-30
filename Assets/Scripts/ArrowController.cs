@@ -32,6 +32,8 @@ public class ArrowController : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(_images.Length);
+
         if (_num < _images.Length)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -40,18 +42,19 @@ public class ArrowController : MonoBehaviour
                 Debug.Log(_num);
 
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 _num = _num - 1;
                 Debug.Log(_num);
             }
         }
+        /*
         else
         {
             _num = 0;
             Debug.Log(_num);
         }
-
+        */
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -75,11 +78,14 @@ public class ArrowController : MonoBehaviour
         if(col.gameObject.name == "1")
         {
             // _sceneChanger.SceneChange("MainScene_1");
+            ResetbBools();
             _isStage_1 = true;
             Debug.Log(1);
         }
         else if(col.gameObject.name == "2")
         {
+            ResetbBools();
+            _isStage_2 = true;
             Debug.Log(2);
         }
         else if(col.gameObject.name == "3")
@@ -93,6 +99,12 @@ public class ArrowController : MonoBehaviour
         // objのXポジを取得してクリックのたびに、ずれるようにする
         this.gameObject.transform.position = _images[_num].transform.position;
 
+    }
+
+    void ResetbBools()
+    {
+        _isStage_1 = false;
+        _isStage_2 = false;
     }
 
 }
