@@ -62,15 +62,21 @@ public class Player : MonoBehaviour
 
     void MoveControl()
     {
+        // çUåÇ        
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Attack();
+            _anim.SetTrigger("isAttack_3");
+        }
         // ï˚å¸éwé¶Ç™Ç†ÇÈÇ∆Ç´
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (Input.GetKey(KeyCode.B))
             {
                 // ëñÇÈ
                 _movePower = _movePowerUp;
                 _anim.SetBool("isRun", true);
-                _anim.SetBool("isWalk", false);
+                //_anim.SetBool("isWalk", false);
             }
             else
             {
@@ -87,12 +93,7 @@ public class Player : MonoBehaviour
             _anim.SetBool("isRun", false);
         }
 
-        // çUåÇ        
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            Attack();
-            _anim.SetTrigger("isAttack_3");
-        }
+        
     }
 
     void Attack()
