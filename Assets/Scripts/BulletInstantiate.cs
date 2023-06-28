@@ -12,7 +12,7 @@ public class BulletInstantiate : MonoBehaviour
     [SerializeField, Tooltip("発射をカウントする")] int _shotCount;
     [SerializeField, Tooltip("時間")] float _timer;
     [SerializeField, Tooltip("発射フラグ")] bool _isShot;
-
+    GameObject _muzzle;
 
     // Time.deltaTime で時間カウント、数秒毎に生成
     // そのために、エネミーにアタッチ
@@ -24,6 +24,10 @@ public class BulletInstantiate : MonoBehaviour
         _timer = 0;       
         _isShot = true;
         _shotCount = 0;
+
+        _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
+
+        
     }
 
     void Update()
@@ -68,7 +72,10 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= 2)
                 {
                     // ３回までは弾丸を生成
-                    Instantiate(_bulletPrefab);
+                    GameObject prefabObject = Instantiate(_bulletPrefab);
+                    // マズルの位置から弾丸発射
+                    prefabObject.transform.position = _muzzle.transform.position;
+
                     //Debug.Log("_timeCount:   " + _timeCount);
                     _shotCount++;
                 }

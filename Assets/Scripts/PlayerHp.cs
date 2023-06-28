@@ -30,14 +30,20 @@ public class PlayerHp : MonoBehaviour
         if (coll.gameObject.tag == "Bullet")        
         {
             // 参照したものを代入
-            _damageValue = _enemyHpScript._attackValue;
+            //_damageValue = _enemyHpScript._attackValue; 
+            AttackController scr = coll.gameObject.GetComponent<AttackController>(); 
+            scr.Attack(); 
+            _damageValue = scr._attackValue; 
+
             // HP減らしていく
             _playerHp = _playerHp - _damageValue;
             
 
             if (_playerHp < _damageValue)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+
+                Debug.LogWarning("プレイヤー死んだよ"); 
             }
             Debug.Log(_playerHp);
             //Debug.Log("弾丸に接触");

@@ -10,13 +10,13 @@ public class EnemyHp : MonoBehaviour
     // 参照
     [SerializeField, Tooltip("「Player」スクリプトの「_attackValue」")] int _damageValue;
     [SerializeField, Tooltip("プレイヤーNameを入れる")] string _playerName;
-    [SerializeField, Tooltip("「Player」スクリプト")] Player _scPlayer;
+    [SerializeField, Tooltip("「Player」スクリプト")] PlayerMove _scPlayer;
     // HP
     [SerializeField, Tooltip("エネミーのHPの初期設定")] int _enemyHpMax;
     [SerializeField, Header("入力不要")] int _enemyHp;
     // 攻撃値
     [Header("5以上を推奨")][SerializeField, Tooltip("「_attackValue」を決めるための値")] int _atVa;
-    [Header("入力不要")][Tooltip("プレイヤー相手に使う攻撃値")] public int _attackValue;
+    //[Header("入力不要")][Tooltip("プレイヤー相手に使う攻撃値")] public int _attackValue;
     // その他
     SpriteRenderer _spriteRenderer;
     Animator _anim;
@@ -31,7 +31,7 @@ public class EnemyHp : MonoBehaviour
         // 「Player」を取得
         GameObject _player = GameObject.Find(_playerName);
         // 「Player」スクリプトを取得 → 攻撃値が欲しい
-        _scPlayer = _player.GetComponent<Player>();
+        _scPlayer = _player.GetComponent<PlayerMove>();
         // エネミーのHPの初期化
         _enemyHp = _enemyHpMax;
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -49,8 +49,6 @@ public class EnemyHp : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        // 「Input.GetKeyDown(KeyCode.N)」がないとキー入力なくてもダメージ負う,,,,,,,,
-        // けど入れると機能しない、、、、、ので、武器のコライダをかなり小さくした
         if (coll.gameObject.tag == "Weapon")        //&& Input.GetKeyDown(KeyCode.N))
         {
             _damageValue = _scPlayer._attackValue;
@@ -72,15 +70,5 @@ public class EnemyHp : MonoBehaviour
         {
             _spriteRenderer.color = Color.white;
         }
-    }
-
-    /// <summary>
-    /// 「BulletController」側で使う
-    /// </summary>
-    public void Attack()
-    {
-        // +-2で攻撃
-        _attackValue = Random.Range(_atVa - 2, _atVa + 3);
-        Debug.Log("攻撃値 :  " + _attackValue);
     }
 }

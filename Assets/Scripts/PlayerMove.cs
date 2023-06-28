@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Player : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     Animator _anim;
     Rigidbody2D _rb;
@@ -21,7 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables;
     [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;
 
-
+    /// <summary>プレイヤーの状態を表す</summary>
+    [SerializeField] PlayerState _state = PlayerState.Normal;
 
     void Start()
     {
@@ -136,5 +137,17 @@ public class Player : MonoBehaviour
                 //Debug.Log("Jumpable");
             }
         }
+    }
+
+    enum PlayerState
+    {
+        /// <summary>通常</summary>
+        Normal,
+        /// <summary>毒 ライフが減る</summary>
+        Poisoned,
+        /// <summary>麻痺 移動が遅くなる</summary>
+        Paralyzed,
+        /// <summary>死</summary>
+        Dead,
     }
 }
