@@ -66,18 +66,16 @@ public class PlayerMove : MonoBehaviour
         // çUåÇ        
         if (Input.GetKeyDown(KeyCode.N))
         {
-            Attack();
             _anim.SetTrigger("isAttack_3");
         }
         // ï˚å¸éwé¶Ç™Ç†ÇÈÇ∆Ç´
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (Input.GetKey(KeyCode.B))
             {
                 // ëñÇÈ
                 _movePower = _movePowerUp;
                 _anim.SetBool("isRun", true);
-                //_anim.SetBool("isWalk", false);
             }
             else
             {
@@ -92,16 +90,7 @@ public class PlayerMove : MonoBehaviour
         {
             _anim.SetBool("isWalk", false);
             _anim.SetBool("isRun", false);
-        }
-
-        
-    }
-
-    void Attack()
-    {
-        // +-2Ç≈çUåÇ
-        _attackValue = Random.Range(_atVa - 2, _atVa + 3);
-        Debug.Log("çUåÇíl :  " + _attackValue);
+        }        
     }
 
     //ç∂âEîΩì]
@@ -134,9 +123,17 @@ public class PlayerMove : MonoBehaviour
             {
                 _jumpCount = 0;
                 _isJump = true;
-                //Debug.Log("Jumpable");
             }
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "Bullet")
+        {
+            _anim.SetBool("isHit", true); 
+        }
+
     }
 
     enum PlayerState

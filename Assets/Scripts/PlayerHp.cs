@@ -2,35 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーのHPを制御
+/// 「　Bullet　」に接触したときのみダメージを受ける 
+/// </summary>
 public class PlayerHp : MonoBehaviour
 {
     // HP
-    [SerializeField, Tooltip("プレイヤーのHPの初期設定")] int _playerHpMax;
-    [SerializeField, Header("入力不要")] int _playerHp;
-    // 参照
-    [SerializeField, Tooltip("「EnemyHp」スクリプト")] EnemyHp _enemyHpScript;
-    [SerializeField, Tooltip("「EnemyHp」スクリプトの「_attackValue」")] int _damageValue;
+    [SerializeField, Header("入力不要")] int _playerHp; 
+    [SerializeField, Tooltip("プレイヤーが受けるダメージ")] int _damageValue;
 
     // その他
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate characterDate;
+    [SerializeField, Tooltip("タイプを選択")] CharacterType characterType;
 
 
     void Start()
     {
-        // 「Enemy」を取得
-        GameObject _enemy = GameObject.Find("Enemy");
-        // 「EnemyHp」スクリプトを取得 → 攻撃値が欲しい
-        _enemyHpScript = _enemy.GetComponent<EnemyHp>();
-
         // プレイヤーのHPの初期化
-        _playerHp = _playerHpMax;
+        if (characterType == CharacterType.Player)
+            _playerHp = characterDate.achievementList[0].Maxhp;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Bullet")        
         {
-            // 参照したものを代入
-            //_damageValue = _enemyHpScript._attackValue; 
             AttackController scr = coll.gameObject.GetComponent<AttackController>(); 
             scr.Attack(); 
             _damageValue = scr._attackValue; 
@@ -38,7 +35,6 @@ public class PlayerHp : MonoBehaviour
             // HP減らしていく
             _playerHp = _playerHp - _damageValue;
             
-
             if (_playerHp < _damageValue)
             {
                 //Destroy(gameObject);
@@ -46,8 +42,6 @@ public class PlayerHp : MonoBehaviour
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
             Debug.Log(_playerHp);
-            //Debug.Log("弾丸に接触");
-
         }
     }
 }

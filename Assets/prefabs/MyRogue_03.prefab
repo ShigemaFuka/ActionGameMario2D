@@ -412,7 +412,6 @@ GameObject:
   - component: {fileID: 3110601120204472397}
   - component: {fileID: 3059251200303386933}
   - component: {fileID: 3059251200303386934}
-  - component: {fileID: 3059251200303386935}
   - component: {fileID: 684700844872563521}
   - component: {fileID: 3059251200303386928}
   - component: {fileID: 3059251200303386941}
@@ -498,30 +497,6 @@ MonoBehaviour:
     showGizmo: 1
   - color: {r: 0, g: 1, b: 0, a: 1}
     showGizmo: 1
---- !u!114 &3059251200303386935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3109360888901024041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04766029a6e7c2941bfe209ad6a55cc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _jumpPower: 6
-  _movePowerDef: 150
-  _movePowerUp: 0
-  _atVa: 5
-  _attackValue: 0
-  _isJump: 0
-  _jumpCount: 0
-  _jumpables:
-  - Enemy
-  - Ground
-  - Bullet
-  - Bullet(Clone)
 --- !u!114 &684700844872563521
 MonoBehaviour:
   m_ObjectHideFlags: 0

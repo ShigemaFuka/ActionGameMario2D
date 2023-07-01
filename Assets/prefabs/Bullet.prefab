@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _lifeTime: 5
+  _effectPrefab: {fileID: 8675353245122752699, guid: bb36ca2f129a0794dbd773294fd6ca36, type: 3}
 --- !u!70 &4082034440066781880
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

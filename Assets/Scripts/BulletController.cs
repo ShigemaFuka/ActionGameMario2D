@@ -9,7 +9,9 @@ public class BulletController : MonoBehaviour
     Rigidbody2D _rb;
     // [SerializeField, Tooltip("マズル")] GameObject _muzzle;
     GameObject _enemy;
-    EnemyHp _enemyHpScript;
+    EnemyController _enemyHpScript;
+    //[SerializeField] AudioClip _clip;
+    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab; 
 
 
     void Start()
@@ -29,6 +31,8 @@ public class BulletController : MonoBehaviour
 
         // 生存期間が経過したら自分自身を破棄する
         Destroy(this.gameObject, _lifeTime);
+
+        //_clip = GetComponent<AudioSource>().clip; 
     }
 
     // 踏める 
@@ -37,12 +41,30 @@ public class BulletController : MonoBehaviour
         // プレイヤーに攻撃されたら消える
         if (coll.gameObject.tag == "Weapon")        
         {
-            Destroy(gameObject);           
+            /*
+            // 爆発の音と画像を出す 
+            AudioSource.PlayClipAtPoint(_clip, transform.position);
+            */
+            // エフェクトとなるプレハブが設定されていたら、それを生成する
+            if (_effectPrefab)
+            {
+                Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
+            }
+            Destroy(gameObject);
         } 
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        // エフェクトとなるプレハブが設定されていたら、それを生成する
+        if (_effectPrefab)
+        {
+            Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
+        }
+        /*
+        // 爆発の音と画像を出す 
+        AudioSource.PlayClipAtPoint(_clip, transform.position);
+        */
         // 削除
         Destroy(gameObject);
     }
