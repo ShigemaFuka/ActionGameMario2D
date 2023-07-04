@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Animator _anim;
     Rigidbody2D _rb;
@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField, Tooltip("ジャンプできるかの接地判定")] bool _isJump;
     [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount;
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables;
-    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;
+    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;  
 
     /// <summary>プレイヤーの状態を表す</summary>
     [SerializeField] PlayerState _state = PlayerState.Normal;
@@ -66,10 +66,10 @@ public class PlayerMove : MonoBehaviour
         // 攻撃        
         if (Input.GetKeyDown(KeyCode.N))
         {
-            _anim.SetTrigger("isAttack_3");
+            _anim.SetTrigger("isAttack"); 
         }
-        // 方向指示があるとき
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        // 方向指示があるとき 
+        if(_h != 0)
         {
             if (Input.GetKey(KeyCode.B))
             {
@@ -129,11 +129,21 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Bullet")
+        // 読み取り 
+        PlayerHp playerHp = GetComponent<PlayerHp>(); 
+        if (coll.gameObject.tag == "Bullet" && playerHp.PlayerCurrentHp > 0)
         {
+            ResetAnim(); 
             _anim.SetBool("isHit", true); 
         }
 
+    }
+
+    void ResetAnim()
+    {
+        _anim.SetBool("isWalk", false);
+        _anim.SetBool("isRun", false);
+        _anim.SetBool("isHit", false);  
     }
 
     enum PlayerState

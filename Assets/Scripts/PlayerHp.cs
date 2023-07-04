@@ -8,40 +8,50 @@ using UnityEngine;
 /// </summary>
 public class PlayerHp : MonoBehaviour
 {
+
+    [SerializeField] GameManager _gm = default; 
+
     // HP
-    [SerializeField, Header("入力不要")] int _playerHp; 
+    [Tooltip("現在のプレイヤーのHP")] int _playerCurrentHp;
+    public int PlayerCurrentHp { get { return _playerCurrentHp; } }
+
     [SerializeField, Tooltip("プレイヤーが受けるダメージ")] int _damageValue;
 
     // その他
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate characterDate;
-    [SerializeField, Tooltip("タイプを選択")] CharacterType characterType;
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate characterDate; 
+    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
 
 
     void Start()
     {
         // プレイヤーのHPの初期化
-        if (characterType == CharacterType.Player)
-            _playerHp = characterDate.achievementList[0].Maxhp;
+        if (characterDate)
+            _playerCurrentHp = characterDate.Maxhp;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Bullet")        
         {
-            AttackController scr = coll.gameObject.GetComponent<AttackController>(); 
+            AttackValueController scr = coll.gameObject.GetComponent<AttackValueController>(); 
             scr.Attack(); 
             _damageValue = scr._attackValue; 
 
             // HP減らしていく
-            _playerHp = _playerHp - _damageValue;
+            _playerCurrentHp = _playerCurrentHp - _damageValue;
             
-            if (_playerHp < _damageValue)
+            if (_playerCurrentHp < _damageValue)
             {
-                //Destroy(gameObject);
-
+                // エフェクトとなるプレハブが設定されていたら、それを生成する
+                if (_effectPrefab)
+                {
+                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
+                } 
+                GetComponent<Animator>().Play("Death"); 
+                _gm.GameOver(); 
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
-            Debug.Log(_playerHp);
+            Debug.Log(_playerCurrentHp);
         }
     }
 }

@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 弾丸の生成だけ
+/// ３回生成したらインターバルが入る
+/// 一発生成するときもインターバルが少し入る 
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class BulletInstantiate : MonoBehaviour
 {
-    
     [SerializeField, Tooltip("弾丸のプレハブ")] GameObject _bulletPrefab;
     GameObject _bullet;
-    [SerializeField, Tooltip("時間をカウントする")] float _timeCount;
-    [SerializeField, Tooltip("発射をカウントする")] int _shotCount;
-    [SerializeField, Tooltip("時間")] float _timer;
-    [SerializeField, Tooltip("発射フラグ")] bool _isShot;
+    [Tooltip("時間をカウントする")] float _timeCount;
+    [Tooltip("発射をカウントする")] int _shotCount;
+    [Tooltip("時間")] float _timer;
+    [Tooltip("発射フラグ")] bool _isShot;
     GameObject _muzzle;
 
     // Time.deltaTime で時間カウント、数秒毎に生成
@@ -25,9 +29,7 @@ public class BulletInstantiate : MonoBehaviour
         _isShot = true;
         _shotCount = 0;
 
-        _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
-
-        
+        _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle"); 
     }
 
     void Update()
@@ -41,7 +43,6 @@ public class BulletInstantiate : MonoBehaviour
         // 3.5f秒を超えたらリセット
         if(_timer >= 3.5f)
         {
-            //Debug.Log(_timer);
             _isShot = true;
             _timer = 0;
         }
@@ -76,7 +77,6 @@ public class BulletInstantiate : MonoBehaviour
                     // マズルの位置から弾丸発射
                     prefabObject.transform.position = _muzzle.transform.position;
 
-                    //Debug.Log("_timeCount:   " + _timeCount);
                     _shotCount++;
                 }
                 _timeCount = 0;
@@ -86,7 +86,6 @@ public class BulletInstantiate : MonoBehaviour
                 _timeCount = _timeCount + Time.deltaTime;
             }
         }
-
     }
 }
 

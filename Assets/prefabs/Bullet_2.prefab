@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 1507012249380705136}
   - component: {fileID: 1507012249380705143}
   - component: {fileID: -4207060668980397793}
-  - component: {fileID: -298925518054574782}
   - component: {fileID: 4082034440066781880}
   - component: {fileID: 6179054162037149976}
+  - component: {fileID: 5327603027841068252}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Bullet_2
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,21 +136,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.31193376, y: 2}
   m_EdgeRadius: 0
---- !u!114 &-298925518054574782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507012249380705141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4774149d41ed56c43a4a32525595b5ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _crashEffectPrefab: {fileID: 8675353245122752699, guid: bb36ca2f129a0794dbd773294fd6ca36, type: 3}
-  _destroyTime: 5
-  _speed: 3
 --- !u!70 &4082034440066781880
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -182,3 +167,19 @@ MonoBehaviour:
   _characterDate: {fileID: 11400000, guid: 881838c599b90204bbfe8fbf39da007e, type: 2}
   _num: 0
   _attackValue: 0
+--- !u!114 &5327603027841068252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507012249380705141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa366fb7ef825341a4f6a7d452c2bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _crashEffectPrefab: {fileID: 8675353245122752699, guid: bb36ca2f129a0794dbd773294fd6ca36, type: 3}
+  _destroyTime: 3
+  _target: {fileID: 0}
+  _speed: 10

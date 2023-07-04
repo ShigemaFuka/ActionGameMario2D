@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 /// <summary>
 /// 敵キャラの行動制御 
@@ -12,9 +11,8 @@ public class EnemyController : MonoBehaviour
     // 参照
     [SerializeField, Tooltip("「Player」スクリプトの「_attackValue」")] int _damageValue;
     [SerializeField, Tooltip("プレイヤーNameを入れる")] string _playerName;
-    [SerializeField, Tooltip("「Player」スクリプト")] PlayerMove _scPlayer;
+    [SerializeField, Tooltip("「Player」スクリプト")] PlayerController _scPlayer;
     // HP
-    //[SerializeField, Tooltip("エネミーのHPの初期設定")] int _enemyHpMax;
     [SerializeField, Header("入力不要")] int _enemyHp;
     
     // その他
@@ -23,28 +21,17 @@ public class EnemyController : MonoBehaviour
     Collider2D _col2d;
 
 
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate characterDate;
-    [SerializeField, Tooltip("敵の強さを選択")]CharacterType characterType; 
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate _characterDate;
+    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
 
-    // Start is called before the first frame update
     void Start()
     {
-        // 「Player」を取得
-        GameObject _player = GameObject.Find(_playerName);
-        // 「Player」スクリプトを取得 → 攻撃値が欲しい
-        _scPlayer = _player.GetComponent<PlayerMove>();
-
         // エネミーのHPの初期化
-        if (characterType == CharacterType.Nomal)
-            _enemyHp = characterDate.achievementList[1].Maxhp;
-        else if(characterType == CharacterType.Midiam)
-            _enemyHp = characterDate.achievementList[2].Maxhp;
-        else if(characterType == CharacterType.Hard)
-            _enemyHp = characterDate.achievementList[3].Maxhp;
+        if (_characterDate)
+            _enemyHp = _characterDate.Maxhp;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.color = Color.white;
-        _anim = _player.GetComponent<Animator>();
         _col2d = GetComponent<Collider2D>(); 
     }
 
@@ -58,7 +45,8 @@ public class EnemyController : MonoBehaviour
     {
         if (coll.gameObject.tag == "Weapon") 
         {
-            AttackController scr = coll.transform.root.gameObject.GetComponent<AttackController>();
+            // 攻撃値 
+            AttackValueController scr = coll.transform.root.gameObject.GetComponent<AttackValueController>();
             scr.Attack();
             _damageValue = scr._attackValue;
 
@@ -68,6 +56,11 @@ public class EnemyController : MonoBehaviour
 
             if (_enemyHp < _damageValue)
             {
+                // エフェクトとなるプレハブが設定されていたら、それを生成する
+                if (_effectPrefab)
+                {
+                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
+                }
                 Destroy(gameObject);
             }
             Debug.Log(_enemyHp);
