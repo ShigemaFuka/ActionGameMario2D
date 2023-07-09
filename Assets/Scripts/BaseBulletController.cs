@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
@@ -10,14 +11,18 @@ using UnityEngine.Scripting.APIUpdating;
 /// </summary>
 public abstract class BaseBulletController : MonoBehaviour
 {
+    // GMをプレハブ化して直入れしても意味ない、シーン上にないとダメ 
+    [SerializeField] GameManager _gameManager;
+    [SerializeField, Tooltip("ScriptableObjectなキャラのパラメータ")] CharacterDates _characterDate; 
     [SerializeField, Tooltip("エフェクト")] GameObject _crashEffectPrefab = default;
     [SerializeField] float _destroyTime = 5f; 
 
     void Start()
     {
-        MoveBullet();
-        Destroy(gameObject, _destroyTime);
-        
+        MoveBullet(); 
+        Destroy(gameObject, _destroyTime); 
+        // シーンに１つしかないから 
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
     /// <summary>
@@ -33,6 +38,7 @@ public abstract class BaseBulletController : MonoBehaviour
             {
                 Instantiate(_crashEffectPrefab, this.transform.position, this.transform.rotation);
             }
+            _gameManager.AddScore(_characterDate.Score);
             Destroy(gameObject);
         }
     }

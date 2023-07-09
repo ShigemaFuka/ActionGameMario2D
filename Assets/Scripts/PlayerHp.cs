@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerHp : MonoBehaviour
 {
 
-    [SerializeField] GameManager _gm = default; 
+    [SerializeField] GameManager _gameManager = default; 
 
     // HP
     [Tooltip("現在のプレイヤーのHP")] int _playerCurrentHp;
@@ -18,7 +18,7 @@ public class PlayerHp : MonoBehaviour
     [SerializeField, Tooltip("プレイヤーが受けるダメージ")] int _damageValue;
 
     // その他
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate characterDate; 
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates characterDate; 
     [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
 
 
@@ -27,6 +27,7 @@ public class PlayerHp : MonoBehaviour
         // プレイヤーのHPの初期化
         if (characterDate)
             _playerCurrentHp = characterDate.Maxhp;
+        _gameManager = FindAnyObjectByType<GameManager>(); 
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -39,6 +40,8 @@ public class PlayerHp : MonoBehaviour
 
             // HP減らしていく
             _playerCurrentHp = _playerCurrentHp - _damageValue;
+            // 残りHPをリザルト用に記録 
+            _gameManager.RemainingHp = _playerCurrentHp; 
             
             if (_playerCurrentHp < _damageValue)
             {
@@ -48,7 +51,7 @@ public class PlayerHp : MonoBehaviour
                     Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
                 } 
                 GetComponent<Animator>().Play("Death"); 
-                _gm.GameOver(); 
+                _gameManager.GameOver(); 
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
             Debug.Log(_playerCurrentHp);

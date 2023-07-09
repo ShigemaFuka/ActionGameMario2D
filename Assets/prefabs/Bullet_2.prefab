@@ -109,7 +109,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 0
 --- !u!61 &-4207060668980397793
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -179,6 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa366fb7ef825341a4f6a7d452c2bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 4238572069894758207, guid: 5e4a1f7cc1567714aaa3f676ebed9e39, type: 3}
+  _characterDate: {fileID: 11400000, guid: 881838c599b90204bbfe8fbf39da007e, type: 2}
   _crashEffectPrefab: {fileID: 8675353245122752699, guid: bb36ca2f129a0794dbd773294fd6ca36, type: 3}
   _destroyTime: 3
   _target: {fileID: 0}

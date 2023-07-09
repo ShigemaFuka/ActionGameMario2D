@@ -8,10 +8,8 @@ using UnityEngine;
 /// </summary>
 public class EnemyController : MonoBehaviour
 {
-    // 参照
-    [SerializeField, Tooltip("「Player」スクリプトの「_attackValue」")] int _damageValue;
-    [SerializeField, Tooltip("プレイヤーNameを入れる")] string _playerName;
-    [SerializeField, Tooltip("「Player」スクリプト")] PlayerController _scPlayer;
+    [SerializeField] GameManager _gameManager; 
+    int _damageValue; 
     // HP
     [SerializeField, Header("入力不要")] int _enemyHp;
     
@@ -20,8 +18,7 @@ public class EnemyController : MonoBehaviour
     Animator _anim;
     Collider2D _col2d;
 
-
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDate _characterDate;
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterDate;
     [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
 
     void Start()
@@ -61,6 +58,10 @@ public class EnemyController : MonoBehaviour
                 {
                     Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
                 }
+                // スコア加算 
+                _gameManager.AddScore(_characterDate.Score);
+                // キル数加算  
+                _gameManager.KillCount++; 
                 Destroy(gameObject);
             }
             Debug.Log(_enemyHp);

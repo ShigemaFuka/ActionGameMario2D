@@ -132,13 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd797b687ee18ab4cb856b75215f4bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageValue: 0
-  _playerName: MyRogue_03
-  _scPlayer: {fileID: 0}
-  _enemyHpMax: 35
+  _gameManager: {fileID: 0}
   _enemyHp: 0
-  _atVa: 5
-  _attackValue: 0
+  _characterDate: {fileID: 11400000, guid: 0da1998349c31344aac9bd6e88e94145, type: 2}
+  _effectPrefab: {fileID: 8675353245122752699, guid: 25f772b7893be0b41aec03be7a50b220, type: 3}
 --- !u!50 &1194836870
 Rigidbody2D:
   serializedVersion: 4
@@ -159,7 +156,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!114 &1194836869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,10 +170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 1507012249380705141, guid: cd91bd00bf357bb4db61e57478e18a5d, type: 3}
-  _timeCount: 0
-  _shotCount: 0
-  _timer: 0
-  _isShot: 0
 --- !u!58 &3013506410530012570
 CircleCollider2D:
   m_ObjectHideFlags: 0

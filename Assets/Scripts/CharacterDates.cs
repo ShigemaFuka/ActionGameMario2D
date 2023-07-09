@@ -1,13 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObject/CharacterDate")]
 
 // インスペクター上に表示 
 [Serializable]
-public class CharacterDate : ScriptableObject
+
+/// <summary>
+/// キャラのデータ 
+/// </summary>
+public class CharacterDates : ScriptableObject
 {
     [SerializeField] CharacterKind characterKind; 
     [SerializeField] int maxHp;
@@ -17,7 +19,7 @@ public class CharacterDate : ScriptableObject
     [SerializeField] float speed;
     public float Speed { get { return speed; } }
     [SerializeField, Tooltip("このキャラをキルしたときのスコア")] int score;
-    public float Score { get { return score; } }
+    public int Score { get { return score; } }
     [SerializeField, Tooltip("説明文"), TextArea(1, 5)] string info; 
 }
 

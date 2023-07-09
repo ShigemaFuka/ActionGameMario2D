@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine; 
 
+/// <summary>
+/// プレイヤーの移動、ジャンプ、初期位置を制御 
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     Animator _anim;
@@ -13,19 +15,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("歩きの速さ")] float _movePowerDef = 30f;
     [SerializeField, Tooltip("走りの速さ")] float _movePowerUp;
     [Tooltip("水平方向の入力値")] float _h;
-    [Header("5以上を推奨")] [SerializeField, Tooltip("「_attackValue」を決めるための値")] int _atVa;
-    [Header("これに値入力禁止")] [Tooltip("敵に使う攻撃値")] public int _attackValue;
     [Tooltip("左右反転")]  Vector3 _scale;
     [SerializeField, Tooltip("ジャンプできるかの接地判定")] bool _isJump;
     [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount;
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables;
-    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;  
+    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;
+    [SerializeField] GameManager _gameManager = default;
+
 
     /// <summary>プレイヤーの状態を表す</summary>
     [SerializeField] PlayerState _state = PlayerState.Normal;
 
     void Start()
     {
+        _gameManager = FindAnyObjectByType<GameManager>(); 
         _movePowerUp = _movePowerDef * 2f;
         _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
@@ -39,7 +42,19 @@ public class PlayerController : MonoBehaviour
         FlipX(_h);
 
         MoveControl();
+        Jump(); 
 
+        if (gameObject.transform.position.y < -13)
+        {
+            _gameManager.GameOver(); 
+        }
+
+        _rb.AddForce(Vector2.right * _h * _movePower, ForceMode2D.Force);
+
+    }
+
+    void Jump()
+    {
         // ジャンプ
         if (_isJump && _jumpCount < 2)
         {
@@ -49,16 +64,10 @@ public class PlayerController : MonoBehaviour
                 _jumpCount++;
             }
         }
-        else if(_jumpCount >= 2)
+        else if (_jumpCount >= 2)
         {
             _isJump = false;
         }
-    }
-
-    private void FixedUpdate()
-    {
-        // 力を加えるのは FixedUpdate で行う
-        _rb.AddForce(Vector2.right * _h * _movePower, ForceMode2D.Force);
     }
 
     void MoveControl()
@@ -134,16 +143,15 @@ public class PlayerController : MonoBehaviour
         if (coll.gameObject.tag == "Bullet" && playerHp.PlayerCurrentHp > 0)
         {
             ResetAnim(); 
-            _anim.SetBool("isHit", true); 
+            _anim.Play("Hit"); 
         }
 
     }
 
     void ResetAnim()
     {
-        _anim.SetBool("isWalk", false);
-        _anim.SetBool("isRun", false);
-        _anim.SetBool("isHit", false);  
+        _anim.SetBool("isWalk", false); 
+        _anim.SetBool("isRun", false);  
     }
 
     enum PlayerState
