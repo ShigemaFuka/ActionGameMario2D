@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c46c3934dedcf44bba3bf53e50d1fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialLimit: 5
+  _initialLimit: 10
   _nowTime: 0
   _timerText: {fileID: 0}
   _scoreText: {fileID: 0}

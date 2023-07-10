@@ -23,6 +23,8 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        _gameManager = FindObjectOfType<GameManager>(); 
+
         // エネミーのHPの初期化
         if (_characterDate)
             _enemyHp = _characterDate.Maxhp;
@@ -61,7 +63,8 @@ public class EnemyController : MonoBehaviour
                 // スコア加算 
                 _gameManager.AddScore(_characterDate.Score);
                 // キル数加算  
-                _gameManager.KillCount++; 
+                _gameManager.KillCount += 1;
+                Debug.Log(_gameManager.KillCount); 
                 Destroy(gameObject);
             }
             Debug.Log(_enemyHp);

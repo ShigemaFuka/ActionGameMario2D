@@ -11,25 +11,22 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField, Tooltip("現在のスコア")] static int _score = 0;
-    public int Score { get => _score; set => value = _score; }
+    public int Score { get => _score; set => _score = value; }
     [SerializeField, Tooltip("制限時間(初期設定)")] float _initialLimit = 0f;
     [SerializeField, Tooltip("現在の残り時間")] float _nowTime = 0f;
     [SerializeField, Tooltip("時間テキスト")] Text _timerText ;
     [SerializeField, Tooltip("スコアテキスト")] Text _scoreText ;
     [SerializeField, Tooltip("スコアのカンスト値")] float _maxScore = 100000;
     [Tooltip("前フレームのステート"), SerializeField] GameState _oldState = GameState.InGame;
-    //[Tooltip("クリア時の残り時間")] public static float _leftTime = 0f;
-    //public float LeftTime { get { return _leftTime; } }
     [SerializeField, Tooltip("現在のキル数")] static int _killCount = 0; 
-    public int KillCount { get => _killCount; set => value = _killCount; }
+    public int KillCount { get => _killCount; set => _killCount = value; }
     [SerializeField, Tooltip("残りのHP")] static int _remainingHp = 0; 
-    public int RemainingHp { get => _remainingHp; set => value = _remainingHp; }
+    public int RemainingHp { get => _remainingHp; set => _remainingHp = value; }
 
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
     {
         InGame, //ゲーム中
-    //    Clear,  //クリア
         GameOver,   //ゲームオーバー
         None,
         Result,
@@ -39,29 +36,29 @@ public class GameManager : MonoBehaviour
     /// <summary> GameStateのプロパティ </summary>
     public GameState NowState { get => _nowState; set => _nowState = value; }
 
-    void Awake()
+    void Start()
     {
-        //_nowState = GameState.InGame;
-        //_leftTime = _initialLimit;
-        //if (SceneManager.GetActiveScene().name == "MainScene_1")
-        //{
-        //    //_nowState = GameState.InGame;
-        //    _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
-        //    _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
-        //}
-        _nowTime = _initialLimit;
-        _score = 0;
+        // デバッグ時メインシーンから開始してもいいように  
+        if (_nowState == GameState.InGame)
+        {
+            Reset();
+        }
     }
-    
+
     void Update()
     {
-         
-
-        // 現在のステートと実行中のシーン 
-        if (SceneManager.GetActiveScene().name == "MainScene_1")
+        // ゲーム中 → ゲームオーバー 遷移した瞬間 
+        if (_nowState == GameState.GameOver && _oldState == GameState.InGame)
         {
-            InGame(); 
-            Timer(); 
+            SceneManager.LoadScene("GameOverScene");
+        }
+        // 現在のステートと実行中のシーン 
+        else if (SceneManager.GetActiveScene().name == "MainScene_1")
+        {
+            InGame();
+            if (_scoreText)
+                _scoreText.text = "Score:" + _score.ToString("00000");
+            Timer();
         }
         if (SceneManager.GetActiveScene().name == "SelectScene")
         {
@@ -72,20 +69,11 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Result");
         }
-        // ゲーム中 → ゲームオーバー 遷移した瞬間 
-        if(_nowState == GameState.GameOver && _oldState == GameState.InGame)
+        // 遷移した瞬間だけ取得 
+        if(_nowState == GameState.InGame && _oldState == GameState.None)
         {
-            SceneManager.LoadScene("GameOverScene");
-        }
-        // リザルト → ゲーム中や、ゲームオーバー → ゲーム中に遷移したあと
-        // スコアや時間を初期化する 
-        if(_nowState == GameState.InGame && ( _oldState == GameState.GameOver || _oldState == GameState.Result || _oldState == GameState.None ) )
-        {
-            Reset(); 
-            _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>(); 
-            _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>(); 
-            if (_scoreText)
-                _scoreText.text = "Score:" + _score.ToString("00000");
+            _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
+            _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
         }
 
         _oldState = _nowState;
@@ -111,8 +99,6 @@ public class GameManager : MonoBehaviour
         if (_nowTime <= 0f)
         {
             Result();
-            // _nowTimeを初期化する必要がある 
-            Reset(); 
         }
     }
 
@@ -135,6 +121,7 @@ public class GameManager : MonoBehaviour
     public void None()
     {
         _nowState = GameState.None;
+        Reset(); 
     }
 
     /// <summary> 現在の時間、スコア、キル数、残りHPを初期化 </summary>

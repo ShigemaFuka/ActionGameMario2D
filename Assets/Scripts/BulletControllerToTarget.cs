@@ -14,7 +14,7 @@ public class BulletControllerToTarget : BaseBulletController
         _target = GameObject.FindGameObjectWithTag("Player");
         // ポジションをそのままにしてしまうと、見た目では足元を狙ってしまう 
         _pos = _target.transform.position;
-        _pos.y += 1f;
+        _pos.y += 1.5f;
     }
 
     private void Update()

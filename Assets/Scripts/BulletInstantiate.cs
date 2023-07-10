@@ -19,11 +19,6 @@ public class BulletInstantiate : MonoBehaviour
     [Tooltip("発射フラグ")] bool _isShot;
     GameObject _muzzle;
 
-    //Rigidbody2D _rb;
-    //[SerializeField, Tooltip("これの弾を生成する一番上の親オブジェクト")] Vector2 _startPointPos;
-    //[SerializeField] Vector2 _endPointPos;
-
-
     // Time.deltaTime で時間カウント、数秒毎に生成
     // そのために、エネミーにアタッチ
     // プレハブセット、削除を行う
@@ -36,9 +31,6 @@ public class BulletInstantiate : MonoBehaviour
         _shotCount = 0;
 
         _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
-        //_endPointPos = this.transform.position;
-        //_startPointPos = this.transform.root.gameObject.transform.position;
-        //_velo = _endPointPos - _startPointPos;
     }
 
     void Update()
@@ -81,12 +73,7 @@ public class BulletInstantiate : MonoBehaviour
                 }
                 else if (_shotCount <= 2)
                 {
-                    // ３回までは弾丸を生成
-                    // ベクトルを角度に変換 
-                    //    float rota = Mathf.Atan2(_muzzle.transform.position.y - this.transform.position.y, _muzzle.transform.position.x - this.transform.position.x);
-                    // クォーテーション型変数に代入 
-                    //   Quaternion offset = Quaternion.Euler(_muzzle.transform.position.x, _muzzle.transform.position.y, rota); 
-                    //    GameObject prefabObject = Instantiate(_bulletPrefab, _muzzle.transform.position, offset, this.gameObject.transform); 
+                    // ３回までは弾丸を生成 
                     GameObject prefabObject = Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
                     _shotCount++;
                 }
