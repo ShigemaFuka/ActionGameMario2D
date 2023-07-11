@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         // UŒ‚        
         if (Input.GetKeyDown(KeyCode.N))
         {
-            _anim.SetTrigger("isAttack"); 
+           // _anim.SetTrigger("isAttack"); 
         }
         // •ûŒüw¦‚ª‚ ‚é‚Æ‚« 
         if(_h != 0)

@@ -14,14 +14,15 @@ public class GameManager : MonoBehaviour
     public int Score { get => _score; set => _score = value; }
     [SerializeField, Tooltip("制限時間(初期設定)")] float _initialLimit = 0f;
     [SerializeField, Tooltip("現在の残り時間")] float _nowTime = 0f;
-    [SerializeField, Tooltip("時間テキスト")] Text _timerText ;
-    [SerializeField, Tooltip("スコアテキスト")] Text _scoreText ;
+    [SerializeField, Tooltip("時間テキスト")] Text _timerText = default;
+    [SerializeField, Tooltip("スコアテキスト")] Text _scoreText = default;
     [SerializeField, Tooltip("スコアのカンスト値")] float _maxScore = 100000;
     [Tooltip("前フレームのステート"), SerializeField] GameState _oldState = GameState.InGame;
     [SerializeField, Tooltip("現在のキル数")] static int _killCount = 0; 
     public int KillCount { get => _killCount; set => _killCount = value; }
     [SerializeField, Tooltip("残りのHP")] static int _remainingHp = 0; 
     public int RemainingHp { get => _remainingHp; set => _remainingHp = value; }
+    PlayerHp _playerHp = default; 
 
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
@@ -41,7 +42,11 @@ public class GameManager : MonoBehaviour
         // デバッグ時メインシーンから開始してもいいように  
         if (_nowState == GameState.InGame)
         {
+            // シーンに1つだけ存在する 
+            _playerHp = FindAnyObjectByType<PlayerHp>();
             Reset();
+            _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
+            _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>(); 
         }
     }
 
@@ -62,7 +67,8 @@ public class GameManager : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "SelectScene")
         {
-            None(); 
+            None();
+            Reset();
         }
         // ゲーム中 → クリア 遷移した瞬間 
         if (_nowState == GameState.Result && _oldState == GameState.InGame)
@@ -121,7 +127,7 @@ public class GameManager : MonoBehaviour
     public void None()
     {
         _nowState = GameState.None;
-        Reset(); 
+         
     }
 
     /// <summary> 現在の時間、スコア、キル数、残りHPを初期化 </summary>
@@ -134,6 +140,6 @@ public class GameManager : MonoBehaviour
         if(_scoreText)
             _scoreText.text = "Score:" + _score.ToString("00000"); 
         _killCount = 0;
-        _remainingHp = 0; 
+        _remainingHp = _playerHp.PlayerCurrentHp; 
     }
 }

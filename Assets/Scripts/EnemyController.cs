@@ -64,7 +64,6 @@ public class EnemyController : MonoBehaviour
                 _gameManager.AddScore(_characterDate.Score);
                 // ƒLƒ‹”‰ÁZ  
                 _gameManager.KillCount += 1;
-                Debug.Log(_gameManager.KillCount); 
                 Destroy(gameObject);
             }
             Debug.Log(_enemyHp);
