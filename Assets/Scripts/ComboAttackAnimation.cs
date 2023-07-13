@@ -13,85 +13,226 @@ using UnityEngine;
 public class ComboAttackAnimation : MonoBehaviour
 {
     Animator _animator; 
-    [SerializeField, Tooltip("コンボ攻撃の段階")] int _count;
-    [SerializeField, Tooltip("コンボ攻撃の受け付け時間")] float _time;
-    //[SerializeField] bool _timeCountBool = false;
-    bool _canCombo = false; 
+    [SerializeField] bool combo1enable;
+    [SerializeField] bool combo2enable;
+    [SerializeField] bool combocombo = true;
+    [SerializeField] bool cancombo = false;
+    [SerializeField] float combo1time;
+    [SerializeField] float combo2time;
+    [SerializeField] float combo3time;
     void Start()
     {
-        _animator = GetComponent<Animator>(); 
-        _count = 0;
-        _time = 0;
+        _animator = GetComponent<Animator>();
+
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // 攻撃モーションに初めて入ったら ※ = コンボ開始していない  
-        if(Input.GetKeyDown(KeyCode.N) && _count == 0)
+        if (Input.GetKeyDown(KeyCode.N) && !cancombo && !combo1enable && !combo2enable)
+        { cancombo = true; }
+
+        if (cancombo && !combo1enable && combocombo)
         {
-            _canCombo = true; 
+            //入力したら一定期間入力を受け付け、入力があったらコンボ２へ移行、なかったらキャンセル
+            //コンボ１
+            _animator.SetBool("isAtt_1", true);
+            Debug.Log("コンボ１");
+
+            combo1time += Time.deltaTime;
+            if (combo1time > 0.1 && combo1time < 1)
+            {
+                //入力受付期間
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    combo1time = 0;
+
+                    //combo1enable = false;
+                    combo1enable = true;
+                    combocombo = false;
+                    //タイマーを初期化し、コンボ１をオフにして、コンボ２をTrueにする
+                }
+            }
+            if (combo1time > 1)
+            {
+                //入力されなかったときの処理
+                StartCoroutine("cancombocorutine");
+            }
         }
-        
-        if (_canCombo)
+
+        if (combo1enable)
         {
-            if (Input.GetKeyDown(KeyCode.N))
+            Debug.Log("コンボ２");
+            //AttackReset(); 
+            _animator.SetBool("isAtt_1", false);
+            //コンボ２
+            _animator.SetBool("isAtt_2", true);
+            combo2time += Time.deltaTime;
+            if (combo2time < 1 && combo2time > 0.7)
             {
-                //_timeCountBool = true; 
-                _count ++; 
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    combo2time = 0;
+                    combo2enable = true;
+                    combo1enable = false;
+                }
             }
-
-            if (_count == 1)
+            if (combo2time > 1)
             {
-                // Play Anim_3
-                _animator.Play("Right Hand");
-
-                _time += Time.deltaTime;
-                if (_time < 1 && _time > 0.1 && Input.GetKeyDown(KeyCode.N))
-                {
-                    _count++;
-                }
-                if (_time > 1)
-                {
-                    StartCoroutine("CanceleCombo");
-                }
-                Debug.Log("a");
+                combo1enable = false;
+                StartCoroutine("cancombocorutine");
             }
-            else if (_count == 2)
-            {
-                // Play Anim_2
-                _animator.Play("Left Hand");
+        }
 
-                _time += Time.deltaTime;
-                if (_time < 1 && _time > 0.1 && Input.GetKeyDown(KeyCode.N))
-                {
-                    _count++;
-                }
-                if (_time > 1)
-                {
-                    StartCoroutine("CanceleCombo"); 
-                }
-                Debug.Log("b");
-            }
-            else if (_count == 3)
-            {
-                // Play Anim_1
-                _animator.Play("Both Hands");
+        if (combo2enable)
+        {
+            Debug.Log("コンボ３");
+            _animator.SetBool("isAtt_2", false);
 
-                _time += Time.deltaTime; 
-                if (_time > 1)
-                {
-                    StartCoroutine("CanceleCombo");
-                }
-                Debug.Log("c");
+            //コンボ３
+            _animator.SetBool("isAtt_3", true);
+            combo3time += Time.deltaTime;
+            if (combo3time > 1)
+            {
+                StartCoroutine("cancombocorutine");
+                combo2enable = false;
             }
         }
     }
 
-    IEnumerator CanceleCombo()
+    IEnumerator cancombocorutine()
     {
-        _time = 0; 
-        _count = 0; 
+
+        Debug.Log("こーるちん");
+        cancombo = false;
+        combocombo = false;
+        combo1enable = false;
+        combo2enable = false;
+        AttackReset();
         yield return new WaitForSeconds(0.5f);
-        _canCombo = false; 
+        combocombo = true;
+    }
+
+    void AttackReset()
+    {
+        _animator.SetBool("isAtt_1", false);
+        _animator.SetBool("isAtt_2", false);
+        _animator.SetBool("isAtt_3", false);
+        combo1time = 0;
+        combo2time = 0;
+        combo3time = 0;
     }
 }
+
+
+
+
+
+    //Animator _animator; 
+    //[SerializeField, Tooltip("コンボ攻撃の段階")] int _count;
+    //[SerializeField, Tooltip("コンボ攻撃の受け付け時間")] float _time;
+    ////[SerializeField] bool _timeCountBool = false;
+    //[SerializeField] bool _canCombo = false;
+    //bool _canAttack_1; 
+    //bool _canAttack_2;
+    //bool _canAttack_3;
+    //void Start()
+    //{
+    //    _animator = GetComponent<Animator>(); 
+    //    _count = 0;
+    //    _time = 0;
+    //    ResetCanAttack(); 
+    //}
+
+    //void Update()
+    //{
+    //    // 攻撃モーションに初めて入ったら ※ = コンボ開始していない  
+    //    if(Input.GetKeyDown(KeyCode.N) && _count == 0 && !_canCombo)
+    //    {
+    //        _canCombo = true;
+    //        ResetTrigger(); 
+    //        //_canAttack_1 = true; 
+    //    }
+        
+    //    if (_canCombo)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.N))
+    //        {
+    //            _count ++; 
+    //        }
+
+    //        if (_count == 1)
+    //        {
+    //            _animator.SetBool("isAtt_1", true); 
+                
+    //            _time += Time.deltaTime;
+    //            if (_time < 1 && _time > 0.5 && Input.GetKeyDown(KeyCode.N))
+    //            {
+    //                ResetTrigger();
+    //                _count++;
+                    
+    //                //_canAttack_2 = true; 
+                    
+    //            }
+    //            if (_time > 1)
+    //            {
+    //                StartCoroutine("CanceleCombo");
+    //            }
+    //            Debug.Log("Attack＿1");
+    //        }
+    //        else if (_count == 2)
+    //        {
+    //            _animator.SetBool("isAtt_2", true); 
+
+    //            _time += Time.deltaTime;
+    //            if (_time < 1.3 && _time > 0.7 && Input.GetKeyDown(KeyCode.N))
+    //            {
+    //                ResetTrigger();
+    //                _count++;
+                    
+                    
+    //                //_canAttack_3 = true;
+    //            }
+    //            if (_time > 1)
+    //            {
+    //                StartCoroutine("CanceleCombo"); 
+    //            }
+    //        }
+    //        else if (_count == 3)
+    //        {
+    //            _animator.SetBool("isAtt_3", true);
+    //            _time += Time.deltaTime; 
+    //            StartCoroutine("CanceleCombo"); 
+    //        }
+    //    }
+    //    Debug.Log(_count);
+    //}
+    
+
+    //IEnumerator CanceleCombo()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    _time = 0;
+    //    _count = 0;
+    //    _canCombo = false;
+    //    ResetCanAttack(); 
+    //}
+
+    ///// <summary>
+    ///// アニメーションが繰り返さないようにするBool
+    ///// </summary>
+    //void ResetCanAttack()
+    //{
+    //    //_canAttack_1 = false; 
+    //    //_canAttack_2 = false; 
+    //    //_canAttack_3 = false; 
+    //    ResetTrigger(); 
+    //}
+
+    //void ResetTrigger()
+    //{
+    //    _animator.SetBool("isAtt_1", false); 
+    //    _animator.SetBool("isAtt_2", false); 
+    //    _animator.SetBool("isAtt_3", false); 
+    //}
+//}

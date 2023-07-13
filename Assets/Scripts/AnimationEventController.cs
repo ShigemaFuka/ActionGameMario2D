@@ -6,21 +6,18 @@ using UnityEngine;
 /// </summary>
 public class AnimationEventController : MonoBehaviour
 {
-    //[SerializeField] Collider2D[] _colliders;   // 要らなくね、、、？　
+    Animator _anim;
     [SerializeField] Collider2D _rightColl;
     [SerializeField] Collider2D _leftColl; 
-    Animator _anim;
-    [SerializeField, Tooltip("右武器の軌跡")] TrailRenderer _rightTrail; 
-    [SerializeField, Tooltip("左武器の軌跡")] TrailRenderer _leftTrail; 
+    [Tooltip("右武器の軌跡")] TrailRenderer _rightTrail; 
+    [Tooltip("左武器の軌跡")] TrailRenderer _leftTrail; 
 
     void Start()
     {
-        ColliderOff(); 
         _rightTrail = GameObject.Find("RightTrail").GetComponent<TrailRenderer>(); 
-        _rightTrail.emitting = false; 
-        _leftTrail = GameObject.Find("LeftTrail").GetComponent<TrailRenderer>(); 
-        _leftTrail.emitting = false; 
-
+        _leftTrail = GameObject.Find("LeftTrail").GetComponent<TrailRenderer>();
+        ColliderOff();
+        TrailOff(); 
         _anim = GetComponent<Animator>();
     }
 

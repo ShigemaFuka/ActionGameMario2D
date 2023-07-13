@@ -72,11 +72,6 @@ public class PlayerController : MonoBehaviour
 
     void MoveControl()
     {
-        // UŒ‚        
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-           // _anim.SetTrigger("isAttack"); 
-        }
         // •ûŒüw¦‚ª‚ ‚é‚Æ‚« 
         if(_h != 0)
         {
