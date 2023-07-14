@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables;
     [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;
     [SerializeField] GameManager _gameManager = default;
+    [SerializeField] GameObject _player; 
 
 
     /// <summary>プレイヤーの状態を表す</summary>
@@ -102,15 +103,18 @@ public class PlayerController : MonoBehaviour
     void FlipX(float horizontal)
     {
          _scale = this.transform.localScale;
+         //_scale = _player.transform.localScale;
 
         if(horizontal > 0)
         {
             //_scaleX
             this.transform.localScale = new Vector3(Mathf.Abs(_scale.x), _scale.y, _scale.z);
+            //_player.transform.localScale = new Vector3(Mathf.Abs(_scale.x), _scale.y, _scale.z);
         }
         else if(horizontal < 0)
         {
-            this.transform.localScale = new Vector3(-1 * Mathf.Abs(_scale.x), _scale.y, _scale.z);
+           this.transform.localScale = new Vector3(-1 * Mathf.Abs(_scale.x), _scale.y, _scale.z);
+           // _player.transform.localScale = new Vector3(-1 * Mathf.Abs(_scale.x), _scale.y, _scale.z);
         }
     }
 
