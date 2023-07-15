@@ -38,23 +38,21 @@ public class PlayerHp : MonoBehaviour
             scr.Attack(); 
             _damageValue = scr._attackValue; 
 
-            // HP減らしていく
+            // HP減らしていく 
             _playerCurrentHp = _playerCurrentHp - _damageValue;
             // 残りHPをリザルト用に記録 
             _gameManager.RemainingHp = _playerCurrentHp; 
             
-            if (_playerCurrentHp < _damageValue)
+            if (_playerCurrentHp <= 0)
             {
                 // エフェクトとなるプレハブが設定されていたら、それを生成する
                 if (_effectPrefab)
-                {
                     Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
-                } 
-                GetComponent<Animator>().Play("Death"); 
+                //GetComponent<Animator>().Play("Death"); 
                 _gameManager.GameOver(); 
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
-            Debug.Log(_playerCurrentHp);
+            Debug.Log(_playerCurrentHp); 
         }
     }
 }

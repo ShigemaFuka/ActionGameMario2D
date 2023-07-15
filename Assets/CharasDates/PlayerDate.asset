@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerDate
   m_EditorClassIdentifier: 
   characterKind: 0
-  maxHp: 200
+  maxHp: 5
   attack: 5
   speed: 0
   score: -100

@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("現在のキル数")] static int _killCount = 0; 
     public int KillCount { get => _killCount; set => _killCount = value; }
     [SerializeField, Tooltip("残りのHP")] static int _remainingHp = 0; 
-    public int RemainingHp { get => _remainingHp; set => _remainingHp = value; }
-    PlayerHp _playerHp = default; 
+    public int RemainingHp { get => _remainingHp; set => _remainingHp = value; } 
+    PlayerHp _playerHp = default;
+    [SerializeField] FadeOut _fadeOut; 
 
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
@@ -55,7 +56,8 @@ public class GameManager : MonoBehaviour
         // ゲーム中 → ゲームオーバー 遷移した瞬間 
         if (_nowState == GameState.GameOver && _oldState == GameState.InGame)
         {
-            SceneManager.LoadScene("GameOverScene");
+            //SceneManager.LoadScene("GameOverScene"); 
+            //_fadeOut.ToFadeOut("GameOverScene"); 
         }
         // 現在のステートと実行中のシーン 
         else if (SceneManager.GetActiveScene().name == "MainScene_1")
@@ -73,10 +75,11 @@ public class GameManager : MonoBehaviour
         // ゲーム中 → クリア 遷移した瞬間 
         if (_nowState == GameState.Result && _oldState == GameState.InGame)
         {
-            SceneManager.LoadScene("Result");
+            //SceneManager.LoadScene("Result");
+            _fadeOut.ToFadeOut("Result"); 
         }
-        // 遷移した瞬間だけ取得 
-        if(_nowState == GameState.InGame && _oldState == GameState.None)
+        // Select → ゲーム中 遷移した瞬間だけ取得 
+        if (_nowState == GameState.InGame && _oldState == GameState.None)
         {
             _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
             _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
@@ -126,8 +129,7 @@ public class GameManager : MonoBehaviour
 
     public void None()
     {
-        _nowState = GameState.None;
-         
+        _nowState = GameState.None; 
     }
 
     /// <summary> 現在の時間、スコア、キル数、残りHPを初期化 </summary>
@@ -140,6 +142,7 @@ public class GameManager : MonoBehaviour
         if(_scoreText)
             _scoreText.text = "Score:" + _score.ToString("00000"); 
         _killCount = 0;
-        _remainingHp = _playerHp.PlayerCurrentHp; 
+        _remainingHp = _playerHp.PlayerCurrentHp;
+        _fadeOut.ToFadeIn(); 
     }
 }
