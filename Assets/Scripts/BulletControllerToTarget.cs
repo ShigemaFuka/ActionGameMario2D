@@ -17,7 +17,7 @@ public class BulletControllerToTarget : BaseBulletController
         _pos.y += 1.5f;
     }
 
-    private void Update()
+    void Update()
     {
         // ターゲットへ向くようにする 
         transform.up = _target.transform.position; 

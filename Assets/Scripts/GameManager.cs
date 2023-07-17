@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         if (_nowState == GameState.GameOver && _oldState == GameState.InGame)
         {
             //SceneManager.LoadScene("GameOverScene"); 
-            //_fadeOut.ToFadeOut("GameOverScene"); 
+            _fadeOut.ToFadeOut("GameOverScene"); 
         }
         // 現在のステートと実行中のシーン 
         else if (SceneManager.GetActiveScene().name == "MainScene_1")

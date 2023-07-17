@@ -47,9 +47,8 @@ public class PlayerHp : MonoBehaviour
             {
                 // エフェクトとなるプレハブが設定されていたら、それを生成する
                 if (_effectPrefab)
-                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
-                //GetComponent<Animator>().Play("Death"); 
-                _gameManager.GameOver(); 
+                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation); 
+                //_gameManager.GameOver();  
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
             Debug.Log(_playerCurrentHp); 
