@@ -4,7 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// プレイヤーのHPを制御
-/// 「　Bullet　」に接触したときのみダメージを受ける 
+/// 「 Bullet 」に接触したときのみダメージを受ける 
+/// Deathアニメーション内でGameOver関数を呼び出している 
 /// </summary>
 public class PlayerHp : MonoBehaviour
 {
@@ -39,16 +40,17 @@ public class PlayerHp : MonoBehaviour
             _damageValue = scr._attackValue; 
 
             // HP減らしていく 
-            _playerCurrentHp = _playerCurrentHp - _damageValue;
+            _playerCurrentHp = _playerCurrentHp - _damageValue; 
             // 残りHPをリザルト用に記録 
             _gameManager.RemainingHp = _playerCurrentHp; 
             
-            if (_playerCurrentHp <= 0)
+            if (_playerCurrentHp <= 0) 
             {
-                // エフェクトとなるプレハブが設定されていたら、それを生成する
+                // エフェクトとなるプレハブが設定されていたら、それを生成する 
                 if (_effectPrefab)
                     Instantiate(_effectPrefab, this.transform.position, this.transform.rotation); 
-                //_gameManager.GameOver();  
+                // プレイヤーを消したい 
+                
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
             Debug.Log(_playerCurrentHp); 

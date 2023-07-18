@@ -45,6 +45,7 @@ public class FadeOut : MonoBehaviour
         }
     }
 
+    /// <summary> ‰æ–Ê‚ªŒ©‚¦‚é‚æ‚¤‚É‚È‚é(ƒpƒlƒ‹”ñ•\Ž¦) </summary>
     public void ToFadeIn()
     {
         c.a = 0;

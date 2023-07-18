@@ -11,10 +11,10 @@ using UnityEngine.Scripting.APIUpdating;
 /// </summary>
 public abstract class BaseBulletController : MonoBehaviour
 {
-    // GMをプレハブ化して直入れしても意味ない、シーン上にないとダメ 
-    [SerializeField] GameManager _gameManager;
-    [SerializeField, Tooltip("ScriptableObjectなキャラのパラメータ")] CharacterDates _characterDate; 
-    [SerializeField, Tooltip("エフェクト")] GameObject _crashEffectPrefab = default;
+    // GMをプレハブ化して直入れしても意味ない、シーン上にないとダメ(インスタンス化) 
+    [SerializeField] GameManager _gameManager = default;
+    [SerializeField, Tooltip("ScriptableObjectなキャラのパラメータ")] CharacterDates _characterDate = default; 
+    [SerializeField, Tooltip("エフェクト")] GameObject _crashEffectPrefab = default; 
     [SerializeField] float _destroyTime = 5f; 
 
     void Start()

@@ -12,7 +12,6 @@ public class ArrowController : MonoBehaviour
     int _num; 
     SceneChanger _sceneChanger; 
 
-
     void Start()
     {
         _num = 0;

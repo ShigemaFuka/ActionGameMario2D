@@ -41,22 +41,20 @@ public class PlayerController : MonoBehaviour
     {
         _h = Input.GetAxis("Horizontal");
         FlipX(_h);
-
-        MoveControl();
-        Jump(); 
-
+        Jump();
+        MoveControl(); 
         if (gameObject.transform.position.y < -13)
         {
             _gameManager.GameOver(); 
         }
-
-        _rb.AddForce(Vector2.right * _h * _movePower, ForceMode2D.Force);
-
     }
-
+    void FixedUpdate()
+    {
+        _rb.AddForce(Vector2.right * _h * _movePower, ForceMode2D.Force);
+    }
+    /// <summary> 2段階ジャンプ </summary>
     void Jump()
     {
-        // ジャンプ
         if (_isJump && _jumpCount < 2)
         {
             if (Input.GetButtonDown("Jump"))
@@ -92,10 +90,9 @@ public class PlayerController : MonoBehaviour
         }
         // 方向指示がないとき
         else
-        {
-            _anim.SetBool("isWalk", false);
-            _anim.SetBool("isRun", false);
-        }        
+        {  
+            ResetAnim(); 
+        }
     }
 
     //左右反転
@@ -103,18 +100,14 @@ public class PlayerController : MonoBehaviour
     void FlipX(float horizontal)
     {
          _scale = this.transform.localScale;
-         //_scale = _player.transform.localScale;
-
         if(horizontal > 0)
         {
             //_scaleX
             this.transform.localScale = new Vector3(Mathf.Abs(_scale.x), _scale.y, _scale.z);
-            //_player.transform.localScale = new Vector3(Mathf.Abs(_scale.x), _scale.y, _scale.z);
         }
         else if(horizontal < 0)
         {
            this.transform.localScale = new Vector3(-1 * Mathf.Abs(_scale.x), _scale.y, _scale.z);
-           // _player.transform.localScale = new Vector3(-1 * Mathf.Abs(_scale.x), _scale.y, _scale.z);
         }
     }
 
@@ -144,7 +137,6 @@ public class PlayerController : MonoBehaviour
             ResetAnim(); 
             _anim.Play("Hit"); 
         }
-
     }
 
     void ResetAnim()
