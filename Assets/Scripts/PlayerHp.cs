@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// プレイヤーのHPを制御
@@ -16,18 +17,22 @@ public class PlayerHp : MonoBehaviour
     [Tooltip("現在のプレイヤーのHP")] int _playerCurrentHp;
     public int PlayerCurrentHp { get { return _playerCurrentHp; } }
 
-    [SerializeField, Tooltip("プレイヤーが受けるダメージ")] int _damageValue;
+    [SerializeField, Tooltip("プレイヤーが受けるダメージ")] int _damageValue = 0;
 
     // その他
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates characterDate; 
-    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates characterDate = null; 
+    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = null;
+    [SerializeField, Tooltip("Hpのスライダー")] Slider _slider = null; 
 
 
     void Start()
     {
         // プレイヤーのHPの初期化
         if (characterDate)
+        {
             _playerCurrentHp = characterDate.Maxhp;
+            _slider.maxValue = characterDate.Maxhp; 
+        }
         _gameManager = FindAnyObjectByType<GameManager>(); 
     }
 
@@ -42,8 +47,9 @@ public class PlayerHp : MonoBehaviour
             // HP減らしていく 
             _playerCurrentHp = _playerCurrentHp - _damageValue; 
             // 残りHPをリザルト用に記録 
-            _gameManager.RemainingHp = _playerCurrentHp; 
-            
+            _gameManager.RemainingHp = _playerCurrentHp;
+            _slider.value = _playerCurrentHp;
+
             if (_playerCurrentHp <= 0) 
             {
                 // エフェクトとなるプレハブが設定されていたら、それを生成する 
