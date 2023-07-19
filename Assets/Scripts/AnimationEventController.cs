@@ -6,11 +6,11 @@ using UnityEngine;
 /// </summary>
 public class AnimationEventController : MonoBehaviour
 {
-    Animator _anim;
-    [SerializeField] Collider2D _rightColl;
-    [SerializeField] Collider2D _leftColl; 
-    [Tooltip("‰E•Ší‚Ì‹OÕ")] TrailRenderer _rightTrail; 
-    [Tooltip("¶•Ší‚Ì‹OÕ")] TrailRenderer _leftTrail; 
+    Animator _anim = null;
+    [SerializeField] Collider2D _rightColl = null;
+    [SerializeField] Collider2D _leftColl = null; 
+    [Tooltip("‰E•Ší‚Ì‹OÕ")] TrailRenderer _rightTrail = null; 
+    [Tooltip("¶•Ší‚Ì‹OÕ")] TrailRenderer _leftTrail = null; 
 
     void Start()
     {

@@ -29,12 +29,11 @@ public class ComboAttackAnimation : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.N) && !_canCombo && !_attack2Enable && !_attack3Enable)
-            _canCombo = true; 
-
+            _canCombo = true;
+        // コンボ１ 
         if (_canCombo && !_attack2Enable && combocombo)
         {
             //入力したら一定期間入力を受け付け、入力があったらコンボ２へ移行、なかったらキャンセル
-            //コンボ１
             _animator.SetBool("isAtt_1", true);
 
             _time1 += Time.deltaTime;
@@ -55,12 +54,10 @@ public class ComboAttackAnimation : MonoBehaviour
                 StartCoroutine(nameof(cancombocorutine)); 
             }
         }
-
+        // コンボ２ 
         if (_attack2Enable)
         {
-            Debug.Log("コンボ２");
             _animator.SetBool("isAtt_1", false);
-            //コンボ２
             _animator.SetBool("isAtt_2", true);
             _time2 += Time.deltaTime; 
             if (_time2 > 0.5 && _time2 < 1)
@@ -82,8 +79,6 @@ public class ComboAttackAnimation : MonoBehaviour
         if (_attack3Enable)
         {
             _animator.SetBool("isAtt_2", false);
-
-            //コンボ３
             _animator.SetBool("isAtt_3", true);
             _time3 += Time.deltaTime;
             if (_time3 > 1)
@@ -96,7 +91,6 @@ public class ComboAttackAnimation : MonoBehaviour
 
     IEnumerator cancombocorutine()
     {
-        Debug.Log("こーるちん");
         _canCombo = false;
         combocombo = false;
         _attack2Enable = false;

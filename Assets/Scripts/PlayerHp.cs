@@ -32,6 +32,7 @@ public class PlayerHp : MonoBehaviour
         {
             _playerCurrentHp = characterDate.Maxhp;
             _slider.maxValue = characterDate.Maxhp; 
+            _slider.value = characterDate.Maxhp; 
         }
         _gameManager = FindAnyObjectByType<GameManager>(); 
     }

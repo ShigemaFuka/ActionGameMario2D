@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             _isJump = false;
         }
     }
-
+    /// <summary> 歩く・走る・それらのアニメーション </summary>
     void MoveControl()
     {
         // 方向指示があるとき 
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //左右反転
+    ///<summary>左右反転</summary>
     /// <param name="horizontal">水平方向の入力値</param>
     void FlipX(float horizontal)
     {

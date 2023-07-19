@@ -11,9 +11,9 @@ public class BulletControllerStraight : BaseBulletController
 {
     [SerializeField, Tooltip("弾が飛ぶ速さ")] float _speed = 3f; 
     Rigidbody2D _rb; 
-    [SerializeField, Tooltip("これの弾を生成する一番上の親オブジェクト")] Vector2 _startPointPos; 
-    [SerializeField] Vector2 _endPointPos; 
-    [SerializeField] Vector2 _velo; 
+    [Tooltip("これの弾を生成する一番上の親オブジェクトの位置")] Vector2 _startPointPos; 
+    [Tooltip("ベクトル取得時に使う自身の生成時の位置")] Vector2 _endPointPos; 
+    [Tooltip("生成時の方向決めのベクトル")] Vector2 _velo; 
 
 
     public override void MoveBullet()

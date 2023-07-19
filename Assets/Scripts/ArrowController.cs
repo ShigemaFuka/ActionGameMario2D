@@ -8,9 +8,9 @@ using UnityEngine;
 /// </summary>
 public class ArrowController : MonoBehaviour
 {
-    [SerializeField, Tooltip("シーン遷移のために設置しているUI")] GameObject[] _images; 
-    int _num; 
-    SceneChanger _sceneChanger; 
+    [SerializeField, Tooltip("シーン遷移のために設置しているUI")] GameObject[] _images = null; 
+    int _num = 0; 
+    SceneChanger _sceneChanger = null; 
 
     void Start()
     {

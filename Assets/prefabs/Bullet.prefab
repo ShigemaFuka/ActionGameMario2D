@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1507012249380705136}
   - component: {fileID: 1507012249380705143}
   - component: {fileID: -4207060668980397793}
-  - component: {fileID: -298925518054574782}
   - component: {fileID: 4082034440066781880}
+  - component: {fileID: -298925518054574782}
   - component: {fileID: 6179054162037149976}
   m_Layer: 8
   m_Name: Bullet
@@ -136,6 +136,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4470687, y: 2.6411538}
   m_EdgeRadius: 0
+--- !u!70 &4082034440066781880
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507012249380705141}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1}
+  m_Size: {x: 1, y: 1.2}
+  m_Direction: 0
 --- !u!114 &-298925518054574782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,25 +169,6 @@ MonoBehaviour:
   _crashEffectPrefab: {fileID: 8675353245122752699, guid: bb36ca2f129a0794dbd773294fd6ca36, type: 3}
   _destroyTime: 5
   _speed: 3
-  _startPointPos: {x: 0, y: 0}
-  _endPointPos: {x: 0, y: 0}
-  _velo: {x: 0, y: 0}
---- !u!70 &4082034440066781880
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507012249380705141}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.059040323, y: 0.86280084}
-  m_Size: {x: 1.4895334, y: 1.6868992}
-  m_Direction: 0
 --- !u!114 &6179054162037149976
 MonoBehaviour:
   m_ObjectHideFlags: 0

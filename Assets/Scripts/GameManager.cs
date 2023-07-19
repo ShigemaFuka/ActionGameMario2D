@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-/// <summary> ゲームマネージャー制限時間やスコアを管理する 
+/// <summary> ゲームマネージャー
+/// 制限時間やスコア、キル数、残りHP、フェードアウト、(自動)シーン遷移を管理する 
 /// HPゼロでゲームオーバー、リザルトシーンへは行かない
 /// 時間いっぱいまで生き残ればクリア扱いとなり、必ずリザルトシーンへ行く
 /// </summary>
