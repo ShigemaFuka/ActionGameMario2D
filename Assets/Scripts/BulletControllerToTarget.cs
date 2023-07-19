@@ -13,14 +13,20 @@ public class BulletControllerToTarget : BaseBulletController
     {
         _target = GameObject.FindGameObjectWithTag("Player");
         // ポジションをそのままにしてしまうと、見た目では足元を狙ってしまう 
-        _pos = _target.transform.position;
-        _pos.y += 1.5f;
+        if(_target)
+        {
+            _pos = _target.transform.position;
+            _pos.y += 1.5f;
+        }
     }
 
     void Update()
     {
         // ターゲットへ向くようにする 
-        transform.up = _target.transform.position; 
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _target.transform.position, _speed * Time.deltaTime);
+        if(_target)
+        {
+            transform.up = _target.transform.position;
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _target.transform.position, _speed * Time.deltaTime);
+        }
     }
 }

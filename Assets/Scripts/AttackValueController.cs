@@ -20,6 +20,10 @@ public class AttackValueController : MonoBehaviour
         _atVa = _characterDate.Attack; 
     }
 
+    /// <summary>
+    /// ATK’l‚ğ•Ï“®‚³‚¹‚é
+    /// +-num‚Ì”ÍˆÍ‚ÅUŒ‚‚Ì‚½‚Ñ‚É•Ï“® 
+    /// </summary>
     public void Attack()
     {
         // +-2‚ÅUŒ‚

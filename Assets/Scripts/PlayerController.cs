@@ -8,24 +8,21 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    Animator _anim;
-    Rigidbody2D _rb;
-    [SerializeField, Tooltip("ジャンプ時の計算で使う")] float _jumpPower;
-    [Tooltip("移動速度の計算で使う")] float _movePower;
+    Animator _anim = default;
+    Rigidbody2D _rb = default;
+    [SerializeField, Tooltip("ジャンプ時の計算で使う")] float _jumpPower = 0;
+    [Tooltip("移動速度の計算で使う")] float _movePower = 0;
     [SerializeField, Tooltip("歩きの速さ")] float _movePowerDef = 30f;
-    [SerializeField, Tooltip("走りの速さ")] float _movePowerUp;
-    [Tooltip("水平方向の入力値")] float _h;
-    [Tooltip("左右反転")]  Vector3 _scale;
-    [SerializeField, Tooltip("ジャンプできるかの接地判定")] bool _isJump;
-    [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount;
-    [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables;
-    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition;
+    [SerializeField, Tooltip("走りの速さ")] float _movePowerUp = 0;
+    [Tooltip("水平方向の入力値")] float _h = 0;
+    [Tooltip("左右反転")]  Vector3 _scale = default;
+    [SerializeField, Tooltip("ジャンプできるかの接地判定")] bool _isJump = false;
+    [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount = 0;
+    [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables = null;
+    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition = default;
     [SerializeField] GameManager _gameManager = default;
-    [SerializeField] GameObject _player; 
-
-
-    /// <summary>プレイヤーの状態を表す</summary>
-    [SerializeField] PlayerState _state = PlayerState.Normal;
+    [SerializeField] GameObject _player = default; 
+    //[SerializeField, Tooltip("プレイヤーの状態を表す")] public PlayerState _state = PlayerState.Alive; 
 
     void Start()
     {
@@ -39,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _h = Input.GetAxis("Horizontal");
+        _h = Input.GetAxis("Horizontal"); 
         FlipX(_h);
         Jump();
         MoveControl(); 
@@ -145,15 +142,12 @@ public class PlayerController : MonoBehaviour
         _anim.SetBool("isRun", false);  
     }
 
-    enum PlayerState
-    {
-        /// <summary>通常</summary>
-        Normal,
-        /// <summary>毒 ライフが減る</summary>
-        Poisoned,
-        /// <summary>麻痺 移動が遅くなる</summary>
-        Paralyzed,
-        /// <summary>死</summary>
-        Dead,
-    }
+
+    //public enum PlayerState
+    //{
+    //    /// <summary>通常</summary>
+    //    Alive,
+    //    /// <summary>死</summary>
+    //    Dead,
+    //}
 }

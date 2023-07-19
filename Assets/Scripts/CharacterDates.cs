@@ -10,8 +10,7 @@ using UnityEngine;
 /// キャラのデータ 
 /// </summary>
 public class CharacterDates : ScriptableObject
-{
-    //[SerializeField, Header("インスペクタ上で見分けるためのもの")] CharacterKind characterKind; 
+{ 
     [SerializeField] int maxHp;
     public int Maxhp { get { return maxHp; } }
     [SerializeField, Tooltip("固定のATK値")] int attack;

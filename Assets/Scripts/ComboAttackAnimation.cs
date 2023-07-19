@@ -13,14 +13,14 @@ using UnityEngine;
 /// </summary>
 public class ComboAttackAnimation : MonoBehaviour
 {
-    Animator _animator; 
-    [SerializeField, Tooltip("第2攻撃フラグ")] bool _attack2Enable;
-    [SerializeField, Tooltip("第3攻撃フラグ")] bool _attack3Enable;
-    [SerializeField, Tooltip("必ずAtt_1から始めるためのフラグ")] bool combocombo = true;
-    [SerializeField] bool _canCombo = false;
-    [SerializeField] float _time1;
-    [SerializeField] float _time2;
-    [SerializeField] float _time3;
+    Animator _animator = default; 
+    [SerializeField, Tooltip("第2攻撃フラグ")] bool _attack2Enable = false;
+    [SerializeField, Tooltip("第3攻撃フラグ")] bool _attack3Enable = false;
+    [SerializeField, Tooltip("第1攻撃の連続使用防止＆必ずAtt_1から始めるためのフラグ")] bool _startCombo = true;
+    [SerializeField, Tooltip("コンボ攻撃使用可能かのフラグ")] bool _canCombo = false;
+    [SerializeField, Tooltip("第2攻撃受け付け時間＆リセット時間")] float _time1 = 0;
+    [SerializeField, Tooltip("第3攻撃受け付け時間＆リセット時間")] float _time2 = 0;
+    [SerializeField, Tooltip("リセット時間")] float _time3 = 0;
     void Start()
     {
         _animator = GetComponent<Animator>(); 
@@ -31,7 +31,7 @@ public class ComboAttackAnimation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N) && !_canCombo && !_attack2Enable && !_attack3Enable)
             _canCombo = true;
         // コンボ１ 
-        if (_canCombo && !_attack2Enable && combocombo)
+        if (_canCombo && !_attack2Enable && _startCombo)
         {
             //入力したら一定期間入力を受け付け、入力があったらコンボ２へ移行、なかったらキャンセル
             _animator.SetBool("isAtt_1", true);
@@ -42,16 +42,17 @@ public class ComboAttackAnimation : MonoBehaviour
                 //入力受付期間
                 if (Input.GetKeyDown(KeyCode.N))
                 {
+                    // 第2攻撃に遷移 
                     _time1 = 0;
                     _attack2Enable = true;
-                    combocombo = false;
-                    //タイマーを初期化し、コンボ１をオフにして、コンボ２をTrueにする
+                    _startCombo = false; 
                 }
             }
             if (_time1 > 1)
             {
-                //入力されなかったときの処理
-                StartCoroutine(nameof(cancombocorutine)); 
+                //入力されなかったときの処理(第2攻撃に遷移しない)
+                // アニメーションが大体実行されたら(1秒くらい)第1攻撃使用不可にする
+                StartCoroutine(nameof(CanComboCorutine)); 
             }
         }
         // コンボ２ 
@@ -59,11 +60,13 @@ public class ComboAttackAnimation : MonoBehaviour
         {
             _animator.SetBool("isAtt_1", false);
             _animator.SetBool("isAtt_2", true);
-            _time2 += Time.deltaTime; 
+            _time2 += Time.deltaTime;
+            // 「_time2 > 0.1」だと早すぎて、アニメーションが途中でも遷移する 
             if (_time2 > 0.5 && _time2 < 1)
             {
                 if (Input.GetKeyDown(KeyCode.N))
                 {
+                    // 第3攻撃に遷移 
                     _time2 = 0;
                     _attack3Enable = true;
                     _attack2Enable = false;
@@ -71,8 +74,10 @@ public class ComboAttackAnimation : MonoBehaviour
             }
             if (_time2 > 1)
             {
+                //入力されなかったときの処理(第3攻撃に遷移しない)
+                // アニメーションが大体実行されたら(1秒くらい)第2攻撃使用不可にする
                 _attack2Enable = false;
-                StartCoroutine(nameof(cancombocorutine));
+                StartCoroutine(nameof(CanComboCorutine));
             }
         }
         // コンボ３ 
@@ -80,26 +85,30 @@ public class ComboAttackAnimation : MonoBehaviour
         {
             _animator.SetBool("isAtt_2", false);
             _animator.SetBool("isAtt_3", true);
-            _time3 += Time.deltaTime;
+            _time3 += Time.deltaTime; 
             if (_time3 > 1)
             {
-                StartCoroutine(nameof(cancombocorutine));
+                // アニメーションが大体実行されたら(1秒くらい)第3攻撃使用不可にする  
+                StartCoroutine(nameof(CanComboCorutine));
                 _attack3Enable = false;
             }
         }
     }
 
-    IEnumerator cancombocorutine()
+    IEnumerator CanComboCorutine()
     {
         _canCombo = false;
-        combocombo = false;
+        _startCombo = false;
         _attack2Enable = false;
         _attack3Enable = false;
         AttackReset();
         yield return new WaitForSeconds(0.5f);
-        combocombo = true;
+        _startCombo = true;
     }
 
+    /// <summary>
+    /// アニメーションとタイマーを初期化
+    /// </summary>
     void AttackReset()
     {
         _animator.SetBool("isAtt_1", false);

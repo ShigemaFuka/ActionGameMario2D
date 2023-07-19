@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameManager;
+using static PlayerController;
 
 /// <summary>
 /// プレイヤーのHPを制御
@@ -21,7 +23,7 @@ public class PlayerHp : MonoBehaviour
 
     // その他
     [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates characterDate = null; 
-    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = null;
+    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = null; 
     [SerializeField, Tooltip("Hpのスライダー")] Slider _slider = null; 
 
 
@@ -34,7 +36,8 @@ public class PlayerHp : MonoBehaviour
             _slider.maxValue = characterDate.Maxhp; 
             _slider.value = characterDate.Maxhp; 
         }
-        _gameManager = FindAnyObjectByType<GameManager>(); 
+        _gameManager = FindAnyObjectByType<GameManager>();
+        //_gameManager._state = PlayerState.Alive; 
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -55,12 +58,21 @@ public class PlayerHp : MonoBehaviour
             {
                 // エフェクトとなるプレハブが設定されていたら、それを生成する 
                 if (_effectPrefab)
-                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation); 
+                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
                 // プレイヤーを消したい 
-                
+                PlayerHide(); 
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
             Debug.Log(_playerCurrentHp); 
         }
+    }
+
+    /// <summary>
+    /// 死亡時にDeathプレイヤーを生成し、代わりにプレイヤーを非アクティブにする 
+    /// SetActive(true)にしなくてもシーンロードされたときに復活する 
+    /// </summary>
+    void PlayerHide()
+    {
+        this.gameObject.SetActive(false); 
     }
 }

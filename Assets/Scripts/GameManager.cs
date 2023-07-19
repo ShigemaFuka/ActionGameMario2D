@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using static PlayerController;
 
 /// <summary> ゲームマネージャー
 /// 制限時間やスコア、キル数、残りHP、フェードアウト、(自動)シーン遷移を管理する 
@@ -22,7 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("現在のキル数")] static int _killCount = 0; 
     public int KillCount { get => _killCount; set => _killCount = value; }
     [SerializeField, Tooltip("残りのHP")] static int _remainingHp = 0; 
-    public int RemainingHp { get => _remainingHp; set => _remainingHp = value; } 
+    public int RemainingHp { get => _remainingHp; set => _remainingHp = value; }
+    //[SerializeField, Tooltip("プレイヤーの状態を表す")] public PlayerState _state = PlayerState.Alive; 
+
     PlayerHp _playerHp = default;
     [SerializeField] FadeOut _fadeOut; 
 
@@ -31,9 +34,17 @@ public class GameManager : MonoBehaviour
     {
         InGame, //ゲーム中
         GameOver,   //ゲームオーバー
-        None,
+        Select,
         Result,
     }
+    ///// <summary> プレイヤーの状態を表す </summary>
+    //public enum PlayerState
+    //{
+    //    /// <summary>通常</summary>
+    //    Alive,
+    //    /// <summary>死</summary>
+    //    Dead,
+    //}
 
     [SerializeField] GameState _nowState = GameState.InGame;
     /// <summary> GameStateのプロパティ </summary>
@@ -80,7 +91,7 @@ public class GameManager : MonoBehaviour
             _fadeOut.ToFadeOut("Result"); 
         }
         // Select → ゲーム中 遷移した瞬間だけ取得 
-        if (_nowState == GameState.InGame && _oldState == GameState.None)
+        if (_nowState == GameState.InGame && _oldState == GameState.Select)
         {
             _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
             _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
@@ -130,7 +141,7 @@ public class GameManager : MonoBehaviour
 
     public void None()
     {
-        _nowState = GameState.None; 
+        _nowState = GameState.Select; 
     }
 
     /// <summary> 現在の時間、スコア、キル数、残りHPを初期化 </summary>
