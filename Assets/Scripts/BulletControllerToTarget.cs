@@ -17,6 +17,7 @@ public class BulletControllerToTarget : BaseBulletController
         {
             _pos = _target.transform.position;
             _pos.y += 1.5f;
+            _pos = new Vector2(_pos.x, _pos.y);
         }
     }
 
@@ -26,7 +27,7 @@ public class BulletControllerToTarget : BaseBulletController
         if(_target)
         {
             transform.up = _target.transform.position;
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _target.transform.position, _speed * Time.deltaTime);
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _pos/*_target.transform.position*/, _speed * Time.deltaTime);
         }
     }
 }

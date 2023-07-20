@@ -5,11 +5,11 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField, Tooltip("’Ç”ö‚·‚é‘ÎÛ")] GameObject _target;
-    [SerializeField, Tooltip("’Ç”ö‚·‚é‘ÎÛ‚Ì–¼‘O")] string _targetName;
+    //[SerializeField, Tooltip("’Ç”ö‚·‚é‘ÎÛ‚Ì–¼‘O")] string _targetName;
 
     void Start()
     {
-        _target = GameObject.Find(_targetName);
+        _target = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame

@@ -124,6 +124,16 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    //void OnTriggerExit2D(Collider2D col)
+    //{
+    //    for (var i = 0; i < _jumpables.Length; i++)
+    //    {
+    //        if (col.gameObject.name.Contains(_jumpables[i]))
+    //        {
+    //            _jumpCount++;
+    //        }
+    //    }
+    //}
 
     void OnCollisionEnter2D(Collision2D coll)
     {

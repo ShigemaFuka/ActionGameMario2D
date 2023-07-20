@@ -86,7 +86,7 @@ public class ComboAttackAnimation : MonoBehaviour
             _animator.SetBool("isAtt_2", false);
             _animator.SetBool("isAtt_3", true);
             _time3 += Time.deltaTime; 
-            if (_time3 > 1)
+            if (_time3 > 0.4)
             {
                 // アニメーションが大体実行されたら(1秒くらい)第3攻撃使用不可にする  
                 StartCoroutine(nameof(CanComboCorutine));
@@ -102,7 +102,7 @@ public class ComboAttackAnimation : MonoBehaviour
         _attack2Enable = false;
         _attack3Enable = false;
         AttackReset();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         _startCombo = true;
     }
 
