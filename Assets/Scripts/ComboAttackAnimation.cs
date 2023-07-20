@@ -37,7 +37,7 @@ public class ComboAttackAnimation : MonoBehaviour
             _animator.SetBool("isAtt_1", true);
 
             _time1 += Time.deltaTime;
-            if (_time1 > 0.1 && _time1 < 1)
+            if (_time1 > 0.05 && _time1 < 1)
             {
                 //“ü—ÍŽó•tŠúŠÔ
                 if (Input.GetKeyDown(KeyCode.N))

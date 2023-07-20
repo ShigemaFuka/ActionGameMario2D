@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using UnityEngine.UIElements;
 using static GameManager;
 using static PlayerController;
 
@@ -33,6 +34,7 @@ public class PlayerHp : MonoBehaviour
         if (characterDate)
         {
             _playerCurrentHp = characterDate.Maxhp;
+            _slider = GameObject.Find("HpSlider").GetComponent<Slider>(); 
             _slider.maxValue = characterDate.Maxhp; 
             _slider.value = characterDate.Maxhp; 
         }
