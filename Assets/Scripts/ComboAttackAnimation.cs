@@ -34,7 +34,12 @@ public class ComboAttackAnimation : MonoBehaviour
         if (_canCombo && !_attack2Enable && _startCombo)
         {
             //入力したら一定期間入力を受け付け、入力があったらコンボ２へ移行、なかったらキャンセル
-            _animator.SetBool("isAtt_1", true);
+            if(Input.GetAxis("Horizontal") != 0)
+            {
+                _animator.SetBool("isAttAndWalk_1", true); 
+            }
+            else
+                _animator.SetBool("isAtt_1", true);
 
             _time1 += Time.deltaTime;
             if (_time1 > 0.05 && _time1 < 1)
@@ -58,8 +63,16 @@ public class ComboAttackAnimation : MonoBehaviour
         // コンボ２ 
         if (_attack2Enable)
         {
+            //_animator.SetBool("isAttAndWalk_1", false);
             _animator.SetBool("isAtt_1", false);
-            _animator.SetBool("isAtt_2", true);
+            //_animator.SetBool("isAtt_1", false);
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                _animator.SetBool("isAttAndWalk_2", true);
+            }
+            else
+                _animator.SetBool("isAtt_2", true);
+            //_animator.SetBool("isAtt_2", true);
             _time2 += Time.deltaTime;
             // 「_time2 > 0.1」だと早すぎて、アニメーションが途中でも遷移する 
             if (_time2 > 0.5 && _time2 < 1)
@@ -97,6 +110,10 @@ public class ComboAttackAnimation : MonoBehaviour
 
     IEnumerator CanComboCorutine()
     {
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            _animator.SetBool("isWalk", true);
+        }
         _canCombo = false;
         _startCombo = false;
         _attack2Enable = false;
@@ -111,6 +128,8 @@ public class ComboAttackAnimation : MonoBehaviour
     /// </summary>
     void AttackReset()
     {
+        _animator.SetBool("isAttAndWalk_1", false);
+
         _animator.SetBool("isAtt_1", false);
         _animator.SetBool("isAtt_2", false);
         _animator.SetBool("isAtt_3", false);

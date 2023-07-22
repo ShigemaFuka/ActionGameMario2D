@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _gameManager = FindAnyObjectByType<GameManager>(); 
-        _movePowerUp = _movePowerDef * 2f;
+        _movePowerUp = _movePowerDef * 1.5f;
         _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _startPosition = GameObject.Find("StartPos");
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     void MoveControl()
     {
         // ï˚å¸éwé¶Ç™Ç†ÇÈÇ∆Ç´ 
-        if(_h != 0)
+        if(_h != 0 /*&& !Input.GetKey(KeyCode.N)*/)
         {
             if (Input.GetKey(KeyCode.B))
             {
@@ -124,16 +124,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    //void OnTriggerExit2D(Collider2D col)
-    //{
-    //    for (var i = 0; i < _jumpables.Length; i++)
-    //    {
-    //        if (col.gameObject.name.Contains(_jumpables[i]))
-    //        {
-    //            _jumpCount++;
-    //        }
-    //    }
-    //}
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -151,13 +141,4 @@ public class PlayerController : MonoBehaviour
         _anim.SetBool("isWalk", false); 
         _anim.SetBool("isRun", false);  
     }
-
-
-    //public enum PlayerState
-    //{
-    //    /// <summary>í èÌ</summary>
-    //    Alive,
-    //    /// <summary>éÄ</summary>
-    //    Dead,
-    //}
 }
