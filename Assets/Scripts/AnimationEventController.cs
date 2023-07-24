@@ -103,14 +103,4 @@ public class AnimationEventController : MonoBehaviour
     {
         _leftTrail.emitting = false; 
     }
-
-    void AnimAttaAndWalkOff()
-    {
-        _anim.SetBool("isAttAndWalk_1", false);
-        _anim.SetBool("isAttAndWalk_2", false);
-        _anim.SetBool("isAttAndWalk_3", false);
-        _anim.ResetTrigger("isAttAndWalk_1Tri");
-        _anim.ResetTrigger("isAttAndWalk_2Tri");
-        _anim.ResetTrigger("isAttAndWalk_3Tri");
-    }
 }

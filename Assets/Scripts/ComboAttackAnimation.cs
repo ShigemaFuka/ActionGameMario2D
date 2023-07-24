@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -14,7 +13,6 @@ using UnityEngine;
 public class ComboAttackAnimation : MonoBehaviour
 {
     Animator _animator = default; 
-    [SerializeField, Tooltip("第1攻撃フラグ")] bool _attack1Enable = false;
     [SerializeField, Tooltip("第2攻撃フラグ")] bool _attack2Enable = false;
     [SerializeField, Tooltip("第3攻撃フラグ")] bool _attack3Enable = false;
     [SerializeField, Tooltip("第1攻撃の連続使用防止＆必ずAtt_1から始めるためのフラグ")] bool _startCombo = true;
@@ -22,11 +20,10 @@ public class ComboAttackAnimation : MonoBehaviour
     [SerializeField, Tooltip("第2攻撃受け付け時間＆リセット時間")] float _time1 = 0;
     [SerializeField, Tooltip("第3攻撃受け付け時間＆リセット時間")] float _time2 = 0;
     [SerializeField, Tooltip("リセット時間")] float _time3 = 0;
-    [SerializeField] int count = 0; 
+    [SerializeField, Tooltip("トリガー連続使用防止カウント")] int _count = 0;
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _attack1Enable = true; 
     }
 
     void Update()
@@ -35,23 +32,24 @@ public class ComboAttackAnimation : MonoBehaviour
         {
             _canCombo = true;
 
-            count = 0;
+            _count = 0;
         }
-           
+
         // コンボ１ 
         if (_canCombo && !_attack2Enable && _startCombo)
         {
-            //入力したら一定期間入力を受け付け、入力があったらコンボ２へ移行、なかったらキャンセル
-            if (Input.GetAxis("Horizontal") != 0 && count == 0)
+            // 一回だけトリガー起動させる  
+            if(_count == 0)
             {
-                //_animator.SetBool("isAttAndWalk_1", true);
-                _animator.SetTrigger("isAttAndWalk_1Tri"); 
-
-                count = 1;
+                if (Input.GetAxis("Horizontal") != 0)
+                {
+                    // 移動しながらの攻撃アニメーション 
+                    _animator.SetTrigger("isAttAndWalk_1Tri");   
+                } // 攻撃のみのアニメーション 
+                else _animator.SetTrigger("isAtt_1Tri"); 
+                // 連続再生不可  
+                _count = 1;
             }
-            else _animator.SetBool("isAtt_1", true);
-
-
             _time1 += Time.deltaTime;
             if (_time1 > 0.1 && _time1 < 1)
             {
@@ -62,33 +60,28 @@ public class ComboAttackAnimation : MonoBehaviour
                     _time1 = 0;
                     _attack2Enable = true;
                     _startCombo = false; 
-
-                    count = 0;
+                    _count = 0;
                 }
             }
             if (_time1 > 1)
             {
                 //入力されなかったときの処理(第2攻撃に遷移しない)
-                // アニメーションが大体実行されたら(1秒くらい)第1攻撃使用不可にする
+                // アニメーションが大体実行されたら(n秒間)第1攻撃～使用不可にする
                 StartCoroutine(nameof(CanComboCorutine)); 
             }
         }
         // コンボ２ 
         if (_attack2Enable)
         {
-            if (_animator.GetBool("isAttAndWalk_1")) _animator.SetBool("isAttAndWalk_1", false);
-            else if (_animator.GetBool("isAtt_1")) _animator.SetBool("isAtt_1", false);
-
-            if (Input.GetAxis("Horizontal") != 0 && count == 0)
+            if (_count == 0)
             {
-                //_animator.SetBool("isAttAndWalk_2", true);
-                _animator.SetTrigger("isAttAndWalk_2Tri");
-
-                count = 1; 
+                if (Input.GetAxis("Horizontal") != 0)
+                {
+                    _animator.SetTrigger("isAttAndWalk_2Tri");              
+                }
+                else _animator.SetTrigger("isAtt_2Tri"); 
+                _count = 1;
             }
-            else _animator.SetBool("isAtt_2", true);
-            
-
             _time2 += Time.deltaTime;
             // 「_time2 > 0.1」だと早すぎて、アニメーションが途中でも遷移する 
             if (_time2 > 0.4 && _time2 < 1)
@@ -100,13 +93,13 @@ public class ComboAttackAnimation : MonoBehaviour
                     _attack3Enable = true;
                     _attack2Enable = false;
 
-                    count = 0; 
+                    _count = 0; 
                 }
             }
             if (_time2 > 1)
             {
                 //入力されなかったときの処理(第3攻撃に遷移しない)
-                // アニメーションが大体実行されたら(1秒くらい)第2攻撃使用不可にする
+                // アニメーションが大体実行されたら(n秒間)第2攻撃使用不可にする
                 _attack2Enable = false;
                 StartCoroutine(nameof(CanComboCorutine));
             }
@@ -114,25 +107,19 @@ public class ComboAttackAnimation : MonoBehaviour
         // コンボ３ 
         if (_attack3Enable)
         {
-            if (_animator.GetBool("isAttAndWalk_2")) _animator.SetBool("isAttAndWalk_2", false);
-            else if (_animator.GetBool("isAtt_2")) _animator.SetBool("isAtt_2", false);
-
-
-            if (Input.GetAxis("Horizontal") != 0 && count == 0)
+            if (_count == 0)
             {
-                //_animator.SetBool("isAttAndWalk_3", true);
-                _animator.SetTrigger("isAttAndWalk_3Tri");
-
-                count = 1; 
+                if (Input.GetAxis("Horizontal") != 0)
+                {
+                    _animator.SetTrigger("isAttAndWalk_3Tri");            
+                }
+                else _animator.SetTrigger("isAtt_3Tri"); 
+                _count = 1;
             }
-            else _animator.SetBool("isAtt_3", true);
-
-
-
             _time3 += Time.deltaTime; 
             if (_time3 > 1)
             {
-                // アニメーションが大体実行されたら(1秒くらい)第3攻撃使用不可にする  
+                // アニメーションが大体実行されたら(n秒間)第3攻撃使用不可にする  
                 StartCoroutine(nameof(CanComboCorutine));
                 _attack3Enable = false;
             }
@@ -141,20 +128,17 @@ public class ComboAttackAnimation : MonoBehaviour
 
     IEnumerator CanComboCorutine()
     {
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            _animator.SetBool("isWalk", true);
-        }
+        // スタン中のアニメーション 
+        if (Input.GetAxis("Horizontal") != 0) _animator.SetBool("isWalk", true);
+        else _animator.SetBool("isWalk", false); // アイドル アニメーション 
         _canCombo = false;
         _startCombo = false;
         _attack2Enable = false;
         _attack3Enable = false;
         AttackReset();
+        // n秒間スタン 
         yield return new WaitForSeconds(0.2f);
-        _startCombo = true;
-
-        _attack1Enable = true; 
-
+        _startCombo = true; 
     }
 
     /// <summary>
@@ -162,19 +146,9 @@ public class ComboAttackAnimation : MonoBehaviour
     /// </summary>
     void AttackReset()
     {
-        _animator.SetBool("isAttAndWalk_1", false);
-        _animator.SetBool("isAttAndWalk_2", false);
-        _animator.SetBool("isAttAndWalk_3", false);
-        //_animator.ResetTrigger("isAttAndWalk_1Tri"); 
-        //_animator.ResetTrigger("isAttAndWalk_2Tri"); 
-        //_animator.ResetTrigger("isAttAndWalk_3Tri"); 
-        _animator.SetBool("isAtt_1", false);
-        _animator.SetBool("isAtt_2", false);
-        _animator.SetBool("isAtt_3", false);
         _time1 = 0;
         _time2 = 0;
-        _time3 = 0;
-
-        count = 0; 
+        _time3 = 0; 
+        _count = 0; 
     }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine; 
 
 /// <summary>
@@ -20,10 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount = 0;
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables = null;
     [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition = default;
-    [SerializeField] GameManager _gameManager = default;
-    [SerializeField] GameObject _player = default; 
-    //[SerializeField, Tooltip("プレイヤーの状態を表す")] public PlayerState _state = PlayerState.Alive; 
-
+    [SerializeField] GameManager _gameManager = default; 
     void Start()
     {
         _gameManager = FindAnyObjectByType<GameManager>(); 
@@ -69,7 +63,7 @@ public class PlayerController : MonoBehaviour
     void MoveControl()
     {
         // 方向指示があるとき 
-        if(_h != 0 /*&& !Input.GetKey(KeyCode.N)*/)
+        if(_h != 0)
         {
             if (Input.GetKey(KeyCode.B))
             {
