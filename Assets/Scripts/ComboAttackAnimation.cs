@@ -28,6 +28,13 @@ public class ComboAttackAnimation : MonoBehaviour
 
     void Update()
     {
+        // 走っている最中はコンボ攻撃使用不可 
+        if(Input.GetKey(KeyCode.B))
+        {
+            _canCombo = false;
+            AttackReset();
+        }
+
         if (Input.GetKeyDown(KeyCode.N) && !_canCombo && !_attack2Enable && !_attack3Enable)
         {
             _canCombo = true;
@@ -146,6 +153,12 @@ public class ComboAttackAnimation : MonoBehaviour
     /// </summary>
     void AttackReset()
     {
+        _animator.ResetTrigger("isAtt_1Tri");
+        _animator.ResetTrigger("isAtt_2Tri");
+        _animator.ResetTrigger("isAtt_3Tri");
+        _animator.ResetTrigger("isAttAndWalk_1Tri"); 
+        _animator.ResetTrigger("isAttAndWalk_2Tri"); 
+        _animator.ResetTrigger("isAttAndWalk_3Tri"); 
         _time1 = 0;
         _time2 = 0;
         _time3 = 0; 
