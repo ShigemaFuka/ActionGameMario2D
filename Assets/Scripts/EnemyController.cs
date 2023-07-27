@@ -30,7 +30,10 @@ public class EnemyController : MonoBehaviour
             _enemyHp = _characterDate.Maxhp;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = Color.white;
+        if(_spriteRenderer) _spriteRenderer.color = Color.white;
+
+        _anim = GetComponent<Animator>();
+
         _col2d = GetComponent<Collider2D>(); 
     }
 
@@ -51,7 +54,8 @@ public class EnemyController : MonoBehaviour
 
             // HPŒ¸‚ç‚µ‚Ä‚¢‚­
             _enemyHp = _enemyHp - _damageValue;  
-            _spriteRenderer.color = Color.red;
+            if(_spriteRenderer) _spriteRenderer.color = Color.red;
+            if (_anim) _anim.Play("Hit");
 
             if (_enemyHp < _damageValue)
             {
@@ -74,7 +78,7 @@ public class EnemyController : MonoBehaviour
     {
         if(coll.gameObject.tag == "Weapon")
         {
-            _spriteRenderer.color = Color.white;
+            if(_spriteRenderer) _spriteRenderer.color = Color.white;
         }
     }
 }

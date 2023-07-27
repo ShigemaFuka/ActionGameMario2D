@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEngine.UIElements;
 using static GameManager;
 using static PlayerController;
 
@@ -25,7 +22,8 @@ public class PlayerHp : MonoBehaviour
     // その他
     [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates characterDate = null; 
     [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = null; 
-    [SerializeField, Tooltip("Hpのスライダー")] Slider _slider = null; 
+    [SerializeField, Tooltip("Hpのスライダー")] Slider _slider = null;
+    [SerializeField, Tooltip("デバッグ用の無敵モード")] bool _isInvincible = false; 
 
 
     void Start()
@@ -39,7 +37,6 @@ public class PlayerHp : MonoBehaviour
             _slider.value = characterDate.Maxhp; 
         }
         _gameManager = FindAnyObjectByType<GameManager>();
-        //_gameManager._state = PlayerState.Alive; 
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -51,7 +48,7 @@ public class PlayerHp : MonoBehaviour
             _damageValue = scr._attackValue; 
 
             // HP減らしていく 
-            _playerCurrentHp = _playerCurrentHp - _damageValue; 
+            if(!_isInvincible) _playerCurrentHp = _playerCurrentHp - _damageValue; 
             // 残りHPをリザルト用に記録 
             _gameManager.RemainingHp = _playerCurrentHp;
             _slider.value = _playerCurrentHp;
