@@ -12,8 +12,8 @@ public class AttackValueController : MonoBehaviour
 {
     [SerializeField, Tooltip("該当するキャラのデータ")] CharacterDates _characterDate = default;  
     int _atVa;
-    [SerializeField, Tooltip("ATK値のプラマイ")] int _num; 
-    [Header("入力不要")][Tooltip("プレイヤー相手に使う攻撃値")] public int _attackValue;
+    [SerializeField, Tooltip("ATK値のプラマイ")] int _num = 0; 
+    [Header("入力不要")][Tooltip("プレイヤー相手に使う攻撃値")] public int _attackValue = 0;
 
     void Start()
     {

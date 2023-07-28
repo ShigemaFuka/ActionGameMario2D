@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         FlipX(_h);
         Jump();
         MoveControl(); 
-        if (gameObject.transform.position.y < -13)
+        if (gameObject.transform.position.y <= -13)
         {
             _gameManager.GameOver(); 
         }

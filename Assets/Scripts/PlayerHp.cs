@@ -11,7 +11,7 @@ using static PlayerController;
 public class PlayerHp : MonoBehaviour
 {
 
-    [SerializeField] GameManager _gameManager = default; 
+    GameManager _gameManager = default; 
 
     // HP
     [Tooltip("現在のプレイヤーのHP")] int _playerCurrentHp;
@@ -22,7 +22,7 @@ public class PlayerHp : MonoBehaviour
     // その他
     [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates characterDate = null; 
     [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = null; 
-    [SerializeField, Tooltip("Hpのスライダー")] Slider _slider = null;
+    [Tooltip("Hpのスライダー")] Slider _slider = null;
     [SerializeField, Tooltip("デバッグ用の無敵モード")] bool _isInvincible = false; 
 
 

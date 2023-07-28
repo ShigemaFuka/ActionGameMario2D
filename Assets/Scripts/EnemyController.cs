@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] GameManager _gameManager; 
+    GameManager _gameManager; 
     int _damageValue; 
     // HP
     [SerializeField, Header("入力不要")] int _enemyHp;
@@ -16,7 +16,6 @@ public class EnemyController : MonoBehaviour
     // その他
     SpriteRenderer _spriteRenderer;
     Animator _anim;
-    Collider2D _col2d;
 
     [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterDate;
     [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
@@ -33,8 +32,6 @@ public class EnemyController : MonoBehaviour
         if(_spriteRenderer) _spriteRenderer.color = Color.white;
 
         _anim = GetComponent<Animator>();
-
-        _col2d = GetComponent<Collider2D>(); 
     }
 
     // Update is called once per frame
@@ -70,7 +67,7 @@ public class EnemyController : MonoBehaviour
                 _gameManager.KillCount += 1;
                 Destroy(gameObject);
             }
-            Debug.Log(_enemyHp);
+            Debug.Log($"_enemyHp : {_enemyHp}");
         }
     }
 

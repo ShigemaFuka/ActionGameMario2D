@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// ゲームオーバーや
+/// </summary>
 public class FadeOut : MonoBehaviour
 {
     [SerializeField, Tooltip("フェード用 Image")] Image _fadeImage = default; 
@@ -19,13 +22,12 @@ public class FadeOut : MonoBehaviour
 
     IEnumerator FadeOutRoutine(string sceneName)
     {
-        // Image から Color を取得し、時間の進行に合わせたアルファを設定して Image に戻す
+        // 無限ループ  
         while (true)
         {
             _timer += Time.deltaTime;
             c = _fadeImage.color;       // 現在の Image の色を取得する
             c.a = _timer / _fadeTime;   // 色のアルファを 1 に近づけていく
-            // TODO: 色を Image にセットする
             _fadeImage.color = c;
 
             // _fadeTime が経過したら処理は終了する
