@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1507012249380705141}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7dfb0e94628fca4b9cdb810ae69c5cb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1c9fb9a195197a14d8d3269c2a8eaf42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,8 +122,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
-  m_Size: {x: 1, y: 1.2}
+  m_Offset: {x: 0.0808979, y: 0.8749753}
+  m_Size: {x: 0.69111, y: 1.0382019}
   m_Direction: 0
 --- !u!114 &-298925518054574782
 MonoBehaviour:
