@@ -37,7 +37,8 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (gameObject.transform.position.y <= -13)
+            Destroy(gameObject); 
     }
 
     void OnTriggerEnter2D(Collider2D coll)

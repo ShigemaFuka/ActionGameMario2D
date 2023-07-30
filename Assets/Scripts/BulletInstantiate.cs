@@ -12,7 +12,6 @@ using UnityEngine;
 public class BulletInstantiate : MonoBehaviour
 {
     [SerializeField, Tooltip("弾丸のプレハブ")] GameObject _bulletPrefab;
-    GameObject _bullet;
     [Tooltip("時間をカウントする")] float _timeCount;
     [Tooltip("発射をカウントする")] int _shotCount;
     [Tooltip("時間")] float _timer;
@@ -74,7 +73,8 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= 2)
                 {
                     // ３回までは弾丸を生成 
-                    GameObject prefabObject = Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
+                    if(_muzzle)
+                    /*GameObject prefabObject = */ Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
                     _shotCount++;
                 }
                 _timeCount = 0;
