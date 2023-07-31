@@ -141,7 +141,7 @@ MonoBehaviour:
   _characterDate: {fileID: 11400000, guid: 881838c599b90204bbfe8fbf39da007e, type: 2}
   _crashEffectPrefab: {fileID: 8675353245122752699, guid: bb36ca2f129a0794dbd773294fd6ca36, type: 3}
   _destroyTime: 5
-  _speed: 3
+  _speed: 20
 --- !u!114 &6179054162037149976
 MonoBehaviour:
   m_ObjectHideFlags: 0

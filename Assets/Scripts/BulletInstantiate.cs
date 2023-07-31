@@ -7,6 +7,7 @@ using UnityEngine;
 /// 弾丸の生成だけ
 /// ３回生成したらインターバルが入る
 /// 一発生成するときもインターバルが少し入る 
+/// マズルを子オブジェクトにする必要がある 
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class BulletInstantiate : MonoBehaviour
@@ -28,8 +29,8 @@ public class BulletInstantiate : MonoBehaviour
         _timer = 0;       
         _isShot = true;
         _shotCount = 0;
-
         _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
+        Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
     }
 
     void Update()
@@ -73,7 +74,7 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= 2)
                 {
                     // ３回までは弾丸を生成 
-                    if(_muzzle)
+                    //if(_muzzle)
                     /*GameObject prefabObject = */ Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
                     _shotCount++;
                 }
