@@ -29,6 +29,10 @@ public class BulletInstantiate : MonoBehaviour
         _timer = 0;       
         _isShot = true;
         _shotCount = 0;
+    }
+
+    void OnEnable()
+    {
         _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
         Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
     }

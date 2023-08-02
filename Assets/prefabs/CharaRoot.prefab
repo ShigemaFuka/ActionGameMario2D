@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7685441875510348527}
   - component: {fileID: 595768185178942745}
   - component: {fileID: 7685441875510348515}
+  - component: {fileID: 1888862016925374887}
   m_Layer: 7
   m_Name: CharaRoot
   m_TagString: Enemy
@@ -89,7 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 1507012249380705141, guid: cd91bd00bf357bb4db61e57478e18a5d, type: 3}
-  _muzzle: {fileID: 0}
 --- !u!114 &7685441875510348527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +140,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1888862016925374887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685441875510348525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e9d2f81440d38499e163f1477bbb48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveRange: 5
+  _moveSpeed: 0.5
 --- !u!1 &7685441876027081217
 GameObject:
   m_ObjectHideFlags: 0
