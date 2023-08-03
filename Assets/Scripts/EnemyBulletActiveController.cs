@@ -10,11 +10,11 @@ public class EnemyBulletActiveController : MonoBehaviour
     [SerializeField, Tooltip("非アクティブにするスクリプト")] BulletInstantiate _script = default;
     [SerializeField, Tooltip("反応する範囲")] float _range = 5.0f;
     [Tooltip("プレイヤー")] GameObject _target = default;
-    [Tooltip("プレイヤーとの距離(^2)")]  float _distance = default; 
+    [SerializeField, Tooltip("プレイヤーとの距離(^2)")]  float _distance = default; 
 
     void Start()
     {
-        _script = GetComponent<BulletInstantiate>(); 
+        _script = GetComponent<BulletInstantiate>();
         _script.enabled = false;
         _target = GameObject.FindGameObjectWithTag("Player"); 
     }
@@ -32,13 +32,13 @@ public class EnemyBulletActiveController : MonoBehaviour
             _distance = offset.sqrMagnitude;
 
             // sqrMagnitudeは長さの2乗なので 
-            if (_distance <= _range * _range)
+            if (_distance < _range * _range)
             {
                 _script.enabled = true;
             }
             else
             {
-                _script.enabled = false; 
+               _script.enabled = false;
             }
         }
     }

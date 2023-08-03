@@ -7,9 +7,8 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class EnemyMove : MonoBehaviour
 {
-    [SerializeField, Tooltip("範囲")] float _moveRange = 5.0f;
+    //[SerializeField, Tooltip("範囲")] float _moveRange = 5.0f;
     [SerializeField, Tooltip("速度")] float _moveSpeed = 0.5f;
-    Vector2 _startPos = default;
     Vector3 _scale = default;
     [SerializeField] LayerMask _tile;
     Rigidbody2D _rb = default;
@@ -21,8 +20,8 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>(); 
-        _startPos = transform.position;
         _scale = this.transform.localScale;
+        //_scale = GameObject.Find(this.gameObject.name + "/Chara").transform.localScale;
         // 一度だけ、左向きを右向きに修正
         _scale.x = -_scale.x;
         transform.localScale = _scale; 
@@ -45,7 +44,6 @@ public class EnemyMove : MonoBehaviour
 
         if (hit.collider)
         {
-            Debug.Log("Hit Wall");
             _moveDirection = -_moveDirection;
             _lineForWall.x = -_lineForWall.x;
             _scale.x = -_scale.x;

@@ -54,13 +54,6 @@ public class AnimationEventController : MonoBehaviour
         _leftColl.enabled= false; 
     }
 
-    /// <summary>
-    /// 連続アニメーションを防止 
-    /// </summary>
-    void HitAnimToFalse()
-    {
-       _anim.SetBool("isHit", false);
-    }
 
     /// <summary>
     /// 武器の軌跡ON

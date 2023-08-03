@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 1507012249380705141, guid: cd91bd00bf357bb4db61e57478e18a5d, type: 3}
+  _timeCount: 0
+  _isShot: 0
 --- !u!114 &7685441875510348527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _script: {fileID: 0}
-  _range: 17
+  _range: 10
+  _distance: 0
 --- !u!95 &7685441875510348515
 Animator:
   serializedVersion: 5
@@ -153,7 +156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveRange: 5
-  _moveSpeed: 0.5
+  _moveSpeed: 2
+  _tile:
+    serializedVersion: 2
+    m_Bits: 512
+  _lineForWall: {x: 1, y: -0.5}
 --- !u!1 &7685441876027081217
 GameObject:
   m_ObjectHideFlags: 0

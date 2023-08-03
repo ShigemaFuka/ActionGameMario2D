@@ -20,7 +20,7 @@ public class BulletControllerStraight : BaseBulletController
     {
         _endPointPos = this.transform.position;
         _startPointPos = this.transform.root.gameObject.transform.position;
-         _velo = _endPointPos - _startPointPos; 
+        _velo = _endPointPos - _startPointPos; 
 
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = _velo.normalized * _speed; 
