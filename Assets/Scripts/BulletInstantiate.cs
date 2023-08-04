@@ -17,7 +17,7 @@ public class BulletInstantiate : MonoBehaviour
     [SerializeField, Tooltip("発射をカウントする")] int _shotCount;
     [SerializeField, Tooltip("時間")] float _timer;
     [SerializeField, Tooltip("発射フラグ")] public bool _isShot;
-    GameObject _muzzle;
+    [SerializeField] GameObject _muzzle;
     
 
     // Time.deltaTime で時間カウント、数秒毎に生成
@@ -37,7 +37,8 @@ public class BulletInstantiate : MonoBehaviour
         _timeCount = 0;
         _timer = 0;
         _shotCount = 0;
-        _muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
+        //_muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
+        _muzzle = transform.GetChild(0).gameObject;
     }
 
 
