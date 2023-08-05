@@ -19,9 +19,9 @@ TagManager:
   - 
   - Enemy
   - Bullet
-  - Tile
-  - 
-  - 
+  - Tile_ground
+  - Tile_wall
+  - Player
   - 
   - 
   - 
