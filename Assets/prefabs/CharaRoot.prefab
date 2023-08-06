@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyHp: 0
-  _characterDate: {fileID: 11400000, guid: b74c2728fc48506458d8028f9150c568, type: 2}
+  _characterData: {fileID: 11400000, guid: 0da1998349c31344aac9bd6e88e94145, type: 2}
   _effectPrefab: {fileID: 8675353245122752699, guid: 25f772b7893be0b41aec03be7a50b220, type: 3}
 --- !u!114 &3135252348018863407
 MonoBehaviour:

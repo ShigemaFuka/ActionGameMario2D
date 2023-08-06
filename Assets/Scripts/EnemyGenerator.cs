@@ -27,7 +27,7 @@ public class EnemyGenerator : MonoBehaviour
         if (_timer > _intervalTime)
         {
             _randomIndex = Random.Range(0, _generatePoses.Length);
-            Instantiate(_prefab, _generatePoses[_randomIndex].position, Quaternion.identity);
+            Instantiate(_prefab, _generatePoses[_randomIndex].position, Quaternion.identity, gameObject.transform);
             _timer = 0;
         }
 

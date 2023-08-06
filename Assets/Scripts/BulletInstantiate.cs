@@ -23,21 +23,11 @@ public class BulletInstantiate : MonoBehaviour
     // Time.deltaTime で時間カウント、数秒毎に生成
     // そのために、エネミーにアタッチ
     // プレハブセット、削除を行う
-
-    void Start()
-    {
-        //_timeCount = 0;
-        //_timer = 0;       
-        ////_isShot = true;
-        //_shotCount = 0;
-        //_muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
-    }
     void OnEnable()
     {
         _timeCount = 0;
         _timer = 0;
         _shotCount = 0;
-        //_muzzle = GameObject.Find(this.gameObject.name + "/Muzzle");
         _muzzle = transform.GetChild(0).gameObject;
     }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -19,7 +17,10 @@ public class BulletControllerStraight : BaseBulletController
     public override void MoveBullet()
     {
         _endPointPos = this.transform.position;
-        _startPointPos = this.transform.root.gameObject.transform.position;
+        GameObject parent = transform.parent.gameObject;
+        // ２個上の親オブジェクト 
+        _startPointPos = parent.transform.parent.gameObject.transform.position;
+        //_startPointPos = this.transform.root.gameObject.transform.position;
         _velo = _endPointPos - _startPointPos; 
 
         _rb = GetComponent<Rigidbody2D>();

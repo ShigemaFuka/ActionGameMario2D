@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,7 +15,7 @@ public class EnemyController : MonoBehaviour
     SpriteRenderer _spriteRenderer;
     Animator _anim;
 
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterDate;
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterData;
     [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
 
     void Start()
@@ -25,8 +23,8 @@ public class EnemyController : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>(); 
 
         // エネミーのHPの初期化
-        if (_characterDate)
-            _enemyHp = _characterDate.Maxhp;
+        if (_characterData)
+            _enemyHp = _characterData.Maxhp;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if(_spriteRenderer) _spriteRenderer.color = Color.white;
@@ -34,7 +32,6 @@ public class EnemyController : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (gameObject.transform.position.y <= -13)
@@ -63,7 +60,7 @@ public class EnemyController : MonoBehaviour
                     Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
                 }
                 // スコア加算 
-                _gameManager.AddScore(_characterDate.Score);
+                _gameManager.AddScore(_characterData.Score);
                 // キル数加算  
                 _gameManager.KillCount += 1;
                 Destroy(gameObject);

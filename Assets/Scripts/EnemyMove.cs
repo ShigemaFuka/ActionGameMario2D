@@ -1,14 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-
 /// <summary>
 /// 左右移動する敵キャラの行動制御、 
 /// 移動する向きに応じて反転もする
 /// </summary>
 public class EnemyMove : MonoBehaviour
 {
-    //[SerializeField, Tooltip("範囲")] float _moveRange = 5.0f;
     [SerializeField, Tooltip("速度")] float _moveSpeed = 0.5f;
     Vector3 _scale = default;
     [SerializeField] LayerMask _wall;
@@ -55,6 +51,7 @@ public class EnemyMove : MonoBehaviour
 
         if (hit_wall || !hit_ground)
         {
+            // 反転 
             _moveDirection = -_moveDirection;
             _lineForWall.x = -_lineForWall.x;
             _lineForGround.x = -_lineForGround.x; 
