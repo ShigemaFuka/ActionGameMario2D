@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static PlayerController;
 
 /// <summary> ゲームマネージャー
 /// 制限時間やスコア、キル数、残りHP、フェードアウト、(自動)シーン遷移を管理する 
@@ -22,10 +21,11 @@ public class GameManager : MonoBehaviour
     public int KillCount { get => _killCount; set => _killCount = value; }
     [SerializeField, Tooltip("残りのHP")] static int _remainingHp = 0; 
     public int RemainingHp { get => _remainingHp; set => _remainingHp = value; }
-    //[SerializeField, Tooltip("プレイヤーの状態を表す")] public PlayerState _state = PlayerState.Alive; 
-
     PlayerHp _playerHp = default;
-    [SerializeField] FadeOut _fadeOut; 
+    [SerializeField] FadeOut _fadeOut;
+    [SerializeField] GameState _nowState = GameState.Select;
+    /// <summary> GameStateのプロパティ </summary>
+    public GameState NowState { get => _nowState; set => _nowState = value; }
 
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
@@ -35,18 +35,6 @@ public class GameManager : MonoBehaviour
         Select,
         Result,
     }
-    ///// <summary> プレイヤーの状態を表す </summary>
-    //public enum PlayerState
-    //{
-    //    /// <summary>通常</summary>
-    //    Alive,
-    //    /// <summary>死</summary>
-    //    Dead,
-    //}
-
-    [SerializeField] GameState _nowState = GameState.InGame;
-    /// <summary> GameStateのプロパティ </summary>
-    public GameState NowState { get => _nowState; set => _nowState = value; }
 
     void Start()
     {
@@ -57,7 +45,7 @@ public class GameManager : MonoBehaviour
             _playerHp = FindAnyObjectByType<PlayerHp>();
             Reset();
             _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
-            _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>(); 
+            _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
         }
     }
 
@@ -66,7 +54,6 @@ public class GameManager : MonoBehaviour
         // ゲーム中 → ゲームオーバー 遷移した瞬間 
         if (_nowState == GameState.GameOver && _oldState == GameState.InGame)
         {
-            //SceneManager.LoadScene("GameOverScene"); 
             _fadeOut.ToFadeOut("GameOverScene"); 
         }
         // 現在のステートと実行中のシーン 
@@ -85,7 +72,6 @@ public class GameManager : MonoBehaviour
         // ゲーム中 → クリア 遷移した瞬間 
         if (_nowState == GameState.Result && _oldState == GameState.InGame)
         {
-            //SceneManager.LoadScene("Result");
             _fadeOut.ToFadeOut("Result"); 
         }
         // Select → ゲーム中 遷移した瞬間だけ取得 
@@ -103,10 +89,9 @@ public class GameManager : MonoBehaviour
     public void AddScore(int score)
     {
         if (_score < _maxScore)
-        {
             _score += score;
-        }
-        _scoreText.text = "Score:" + _score.ToString("00000");
+        if (_scoreText)
+            _scoreText.text = "Score:" + _score.ToString("00000");
     }
 
     /// <summary> 残り時間を減らして表示するメソッド  </summary>
@@ -116,9 +101,7 @@ public class GameManager : MonoBehaviour
         if(_timerText)
             _timerText.text = "Time:" + _nowTime.ToString("00000");
         if (_nowTime <= 0f)
-        {
             Result();
-        }
     }
 
     /// <summary> ゲームオーバーにするメソッド  </summary>
@@ -152,7 +135,7 @@ public class GameManager : MonoBehaviour
         if(_scoreText)
             _scoreText.text = "Score:" + _score.ToString("00000"); 
         _killCount = 0;
-        _remainingHp = _playerHp.PlayerCurrentHp;
+        //_remainingHp = _playerHp.PlayerCurrentHp;
         _fadeOut.ToFadeIn(); 
     }
 }

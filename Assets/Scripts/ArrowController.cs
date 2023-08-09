@@ -22,7 +22,7 @@ public class ArrowController : MonoBehaviour
     {
         if (_num < _images.Length -1)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
                 _num = _num + 1;
                 MoveArrow(); 
@@ -30,7 +30,7 @@ public class ArrowController : MonoBehaviour
         }
         if(_num >= 1)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
                 _num = _num - 1;
                 MoveArrow(); 

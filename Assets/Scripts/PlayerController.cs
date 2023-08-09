@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ジャンプできるかの接地判定")] bool _isJump = false;
     [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount = 0;
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables = null;
-    [SerializeField, Tooltip("スタートポジション")] GameObject _startPosition = default;
-    [SerializeField] GameManager _gameManager = default; 
+    [Tooltip("スタートポジション")] GameObject _startPosition = default;
+    [Tooltip("GameManager")] GameManager _gameManager = default; 
     void Start()
     {
         _gameManager = FindAnyObjectByType<GameManager>(); 
