@@ -30,14 +30,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(this.gameObject.transform.position.y);
+        if (this.gameObject.transform.position.y <= -13)
+        {
+            _gameManager.GameOver();
+        }
         _h = Input.GetAxis("Horizontal"); 
         FlipX(_h);
         Jump();
         MoveControl(); 
-        if (gameObject.transform.position.y <= -13)
-        {
-            _gameManager.GameOver(); 
-        }
     }
     void FixedUpdate()
     {

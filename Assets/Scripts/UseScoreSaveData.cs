@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,18 +12,15 @@ using UnityEngine.UI;
 /// </summary>
 public class UseScoreSaveData : MonoBehaviour
 {
-    //[SerializeField] InputField _inputField;
-
     SaveManager _saveManager = new SaveManager();
-    string _saveDirPath;
+    string _saveDirPath = default;
     // Directory.GetFiles が string[] を返す 
     [Tooltip("ソートされていないテキストデータ")] string[] _existFiles = null;
     [Tooltip("ソート前の複数のスコアが入ったリスト")] List<int> numberList = new List<int>();
     [Tooltip("ソート済みの複数のスコアが入ったリスト")] List<int> sortedList = new List<int>();
     [Tooltip("何位")] int _rank = 0;
     [SerializeField] Text _text = default;
-    string playerName;
-    GameManager _gameManager;
+    GameManager _gameManager = default;
 
 
     private void Awake()
@@ -105,17 +100,18 @@ public class UseScoreSaveData : MonoBehaviour
     /// </summary>
     void ShowText()
     {
+        int count = 0;
         // スコアリストの上から順に、テキストデータとスコアが一致したらテキスト表示する 
-        for (var i = 0; i < sortedList.Count; i++)
+        for (var i = 0; i < 5; i++)
         {
             for (var j = 0; j < _existFiles.Length; j++)
             {
                 ScoreSaveData sdata = _saveManager.DataLoad(_saveDirPath, _existFiles[j]);
-                if (sortedList[i] == sdata._score)
+                if (sortedList[i] == sdata._score && count < 5)
                 {
                     _rank++;
-                    
-                    _text.text = _text.text + $"{_rank}位：{sdata._playerName} スコア : {sdata._score} \n";
+                    count++;
+                    _text.text = _text.text + $"{_rank}位     {sdata._playerName}     {sdata._score}     {sdata._killCount}     {sdata._remainingHp} \n";
                 }
             }
         }
