@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +12,9 @@ using UnityEngine.UI;
 /// プレイヤー名が被ったら、データが上書きされる
 /// スコアが重複したら古いデータ順に、降順になる
 /// </summary>
-public class UseSaveData : MonoBehaviour
+public class UseScoreSaveData : MonoBehaviour
 {
-    [SerializeField] InputField[] _inputFields;
+    //[SerializeField] InputField _inputField;
 
     SaveManager _saveManager = new SaveManager();
     string _saveDirPath;
@@ -21,6 +24,9 @@ public class UseSaveData : MonoBehaviour
     [Tooltip("ソート済みの複数のスコアが入ったリスト")] List<int> sortedList = new List<int>();
     [Tooltip("何位")] int _rank = 0;
     [SerializeField] Text _text = default;
+    string playerName;
+    GameManager _gameManager;
+
 
     private void Awake()
     {
@@ -29,25 +35,29 @@ public class UseSaveData : MonoBehaviour
         Debug.Log(_saveDirPath);
     }
 
-    private void Update()
+    void Start()
     {
-        // データを作って保存  
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            string playerName = _inputFields[0].text;
-            ScoreSaveData sdata = _saveManager.CreateSaveData(playerName, int.Parse(_inputFields[1].text), int.Parse(_inputFields[2].text), int.Parse(_inputFields[3].text));
-            _saveManager.DataSave(sdata, _saveDirPath, $"{playerName}のデータ.data"); 
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            numberList.Clear();
-            sortedList.Clear();
-            _rank = 0;
-            _text.text = null;
-            SortAndAdd();
-            ShowText();
-            Delete();
-        }
+        _gameManager = FindAnyObjectByType<GameManager>();
+        if (String.IsNullOrEmpty(_gameManager.PlayerName))
+            _gameManager.PlayerName = MakeName("Unknown_");
+        _existFiles = Directory.GetFiles(_saveDirPath, "*");
+        ScoreSaveData sdata = _saveManager.CreateSaveData(_gameManager.PlayerName, _gameManager.Score, _gameManager.KillCount, _gameManager.RemainingHp);
+        //int count = 0;
+        //for (var i = 0; i < _existFiles.Length; i++)
+        //{
+
+        //    if (_existFiles[i].Contains("Unknown"))
+        //    {
+        //        //var str = MakeName("Unknown_");
+        //        _saveManager.DataSave(sdata, _saveDirPath, $"{_gameManager.PlayerName}のデータ.data");
+        //    }
+        //    else
+                _saveManager.DataSave(sdata, _saveDirPath, $"{_gameManager.PlayerName}のデータ.data");
+        //}
+        ResetData();
+        SortAndAdd();
+        ShowText();
+        //Delete();
     }
     /// <summary>
     /// テキストデータの数が11以上になったら、削除 
@@ -88,7 +98,7 @@ public class UseSaveData : MonoBehaviour
             // リストを降順ソート
             sortedList = numberList.OrderByDescending(i => i).ToList();
         }
-        Debug.LogWarning(string.Join(", ", sortedList));
+        Debug.Log($"<color=orange>{string.Join(", ", sortedList)}</color> ");
     }
     /// <summary>
     /// テキスト表示 
@@ -104,9 +114,37 @@ public class UseSaveData : MonoBehaviour
                 if (sortedList[i] == sdata._score)
                 {
                     _rank++;
-                    _text.text = _text.text + $"{_rank}位：名前 : {sdata._playerName} スコア : {sdata._score} \n";
+                    
+                    _text.text = _text.text + $"{_rank}位：{sdata._playerName} スコア : {sdata._score} \n";
                 }
             }
         }
+    }
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    void ResetData()
+    {
+        numberList.Clear();
+        sortedList.Clear();
+        _rank = 0;
+        _text.text = null;
+        //_gameManager.PlayerName = null;
+    }
+
+    string MakeName(string resultString)
+    {
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var Charsarr = new char[5];
+        var random = new System.Random();
+
+        for (int i = 0; i < Charsarr.Length; i++)
+        {
+            Charsarr[i] = characters[random.Next(characters.Length)];
+        }
+
+        return resultString = resultString + new String(Charsarr);
+        //var resultString = new String(Charsarr);
+        //Console.WriteLine(resultString);
     }
 }

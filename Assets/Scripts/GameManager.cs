@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField, Tooltip("現在のスコア")] static int _score = 0;
+    [Tooltip("現在のスコア")] static int _score = 0;
     public int Score { get => _score; set => _score = value; }
     [SerializeField, Tooltip("制限時間(初期設定)")] float _initialLimit = 0f;
     [SerializeField, Tooltip("現在の残り時間")] float _nowTime = 0f;
@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameState _nowState = GameState.Select;
     /// <summary> GameStateのプロパティ </summary>
     public GameState NowState { get => _nowState; set => _nowState = value; }
+    [Tooltip("入力されるプレイヤー名")] static string _playerName = default;
+    public string PlayerName { get => _playerName; set => _playerName = value; }
+    [SerializeField] InputField _inputField = default;
+
 
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
@@ -35,9 +39,13 @@ public class GameManager : MonoBehaviour
         Select,
         Result,
     }
-
-    void Start()
+    void OnEnable()
     {
+        if (_nowState == GameState.Select)
+        {
+            // 一回しか取得できなかった 
+            _inputField = GameObject.Find("InputFieldPlayerName").GetComponent<InputField>();
+        }
         // デバッグ時メインシーンから開始してもいいように  
         if (_nowState == GameState.InGame)
         {
@@ -49,8 +57,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     void Update()
     {
+
         // ゲーム中 → ゲームオーバー 遷移した瞬間 
         if (_nowState == GameState.GameOver && _oldState == GameState.InGame)
         {
@@ -68,6 +78,10 @@ public class GameManager : MonoBehaviour
         {
             None();
             Reset();
+
+            if (!_inputField)
+                _inputField = GameObject.Find("InputFieldPlayerName").GetComponent<InputField>();
+            PlayerName = _inputField.text;
         }
         // ゲーム中 → クリア 遷移した瞬間 
         if (_nowState == GameState.Result && _oldState == GameState.InGame)
@@ -135,7 +149,8 @@ public class GameManager : MonoBehaviour
         if(_scoreText)
             _scoreText.text = "Score:" + _score.ToString("00000"); 
         _killCount = 0;
-        //_remainingHp = _playerHp.PlayerCurrentHp;
-        _fadeOut.ToFadeIn(); 
+        if(_playerHp)
+            _remainingHp = _playerHp.PlayerCurrentHp;
+        _fadeOut.ToFadeIn();
     }
 }
