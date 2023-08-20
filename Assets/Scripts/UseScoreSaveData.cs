@@ -35,24 +35,13 @@ public class UseScoreSaveData : MonoBehaviour
         _gameManager = FindAnyObjectByType<GameManager>();
         if (String.IsNullOrEmpty(_gameManager.PlayerName))
             _gameManager.PlayerName = MakeName("Unknown_");
-        _existFiles = Directory.GetFiles(_saveDirPath, "*");
+        // フォルダ内の全てのファイルの検索 
+        //_existFiles = Directory.GetFiles(_saveDirPath, "*");
         ScoreSaveData sdata = _saveManager.CreateSaveData(_gameManager.PlayerName, _gameManager.Score, _gameManager.KillCount, _gameManager.RemainingHp);
-        //int count = 0;
-        //for (var i = 0; i < _existFiles.Length; i++)
-        //{
-
-        //    if (_existFiles[i].Contains("Unknown"))
-        //    {
-        //        //var str = MakeName("Unknown_");
-        //        _saveManager.DataSave(sdata, _saveDirPath, $"{_gameManager.PlayerName}のデータ.data");
-        //    }
-        //    else
-                _saveManager.DataSave(sdata, _saveDirPath, $"{_gameManager.PlayerName}のデータ.data");
-        //}
+        _saveManager.DataSave(sdata, _saveDirPath, $"{_gameManager.PlayerName}のデータ.data");
         ResetData();
         SortAndAdd();
         ShowText();
-        //Delete();
     }
     /// <summary>
     /// テキストデータの数が11以上になったら、削除 
@@ -125,22 +114,24 @@ public class UseScoreSaveData : MonoBehaviour
         sortedList.Clear();
         _rank = 0;
         _text.text = null;
-        //_gameManager.PlayerName = null;
     }
 
+    /// <summary>
+    /// 「 Unknown_jwa5k 」のようなユーザー名を作る 
+    /// </summary>
+    /// <param name="resultString">「Unknown_」</param>
+    /// <returns></returns>
     string MakeName(string resultString)
     {
         var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var Charsarr = new char[5];
+        var CharsArr = new char[5];
         var random = new System.Random();
 
-        for (int i = 0; i < Charsarr.Length; i++)
+        for (int i = 0; i < CharsArr.Length; i++)
         {
-            Charsarr[i] = characters[random.Next(characters.Length)];
+            CharsArr[i] = characters[random.Next(characters.Length)];
         }
 
-        return resultString = resultString + new String(Charsarr);
-        //var resultString = new String(Charsarr);
-        //Console.WriteLine(resultString);
+        return resultString = resultString + new String(CharsArr);
     }
 }

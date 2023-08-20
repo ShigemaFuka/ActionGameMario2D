@@ -1241,7 +1241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3570799227812934702, guid: f1ce9fc61002e0942aa1d47c2fffc54c, type: 3}
       propertyPath: _initialLimit
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3570799228362854965, guid: f1ce9fc61002e0942aa1d47c2fffc54c, type: 3}
       propertyPath: m_Name

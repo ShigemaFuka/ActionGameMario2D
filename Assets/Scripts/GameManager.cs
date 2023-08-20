@@ -149,8 +149,7 @@ public class GameManager : MonoBehaviour
         if(_scoreText)
             _scoreText.text = "Score:" + _score.ToString("00000"); 
         _killCount = 0;
-        if(_playerHp)
-            _remainingHp = _playerHp.PlayerCurrentHp;
         _fadeOut.ToFadeIn();
+        Debug.Log("Reset");
     }
 }

@@ -28,15 +28,16 @@ public class PlayerHp : MonoBehaviour
 
     void Start()
     {
+        _gameManager = FindAnyObjectByType<GameManager>();
         // ƒvƒŒƒCƒ„[‚ÌHP‚Ì‰Šú‰»
         if (characterDate)
         {
             _playerCurrentHp = characterDate.Maxhp;
             _slider = GameObject.Find("HpSlider").GetComponent<Slider>(); 
             _slider.maxValue = characterDate.Maxhp; 
-            _slider.value = characterDate.Maxhp; 
+            _slider.value = characterDate.Maxhp;
+            _gameManager.RemainingHp = _playerCurrentHp;
         }
-        _gameManager = FindAnyObjectByType<GameManager>();
     }
 
     void OnCollisionEnter2D(Collision2D coll)

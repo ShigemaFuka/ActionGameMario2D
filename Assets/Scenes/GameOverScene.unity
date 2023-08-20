@@ -525,8 +525,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _images:
   - {fileID: 1083490230}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!50 &1269638912
 Rigidbody2D:
   serializedVersion: 4
@@ -1001,4 +999,6 @@ MonoBehaviour:
   _scoreText: {fileID: 0}
   _maxScore: 100000
   _oldState: 1
+  _fadeOut: {fileID: 0}
   _nowState: 1
+  _inputField: {fileID: 0}

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲームオーバーや
+/// ゲームオーバーやリザルトへ遷移する前に、画面を暗くする 
 /// </summary>
 public class FadeOut : MonoBehaviour
 {
