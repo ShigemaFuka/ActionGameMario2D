@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(this.gameObject.transform.position.y);
+        //Debug.Log(this.gameObject.transform.position.y);
         if (this.gameObject.transform.position.y <= -13)
         {
             _gameManager.GameOver();

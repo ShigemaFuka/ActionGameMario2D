@@ -91,8 +91,8 @@ public class GameManager : MonoBehaviour
         // Select → ゲーム中 遷移した瞬間だけ取得 
         if (_nowState == GameState.InGame && _oldState == GameState.Select)
         {
-            _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
-            _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
+            if(!_timerText) _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
+            if (!_scoreText) _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
         }
 
         _oldState = _nowState;
@@ -102,10 +102,8 @@ public class GameManager : MonoBehaviour
     /// <param name="score"> 加算したいスコア </param>
     public void AddScore(int score)
     {
-        if (_score < _maxScore)
-            _score += score;
-        if (_scoreText)
-            _scoreText.text = "Score:" + _score.ToString("00000");
+        if (_score < _maxScore) _score += score;
+        if (_scoreText) _scoreText.text = "Score:" + _score.ToString("00000");
     }
 
     /// <summary> 残り時間を減らして表示するメソッド  </summary>
@@ -150,6 +148,5 @@ public class GameManager : MonoBehaviour
             _scoreText.text = "Score:" + _score.ToString("00000"); 
         _killCount = 0;
         _fadeOut.ToFadeIn();
-        Debug.Log("Reset");
     }
 }
