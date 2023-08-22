@@ -29,16 +29,17 @@ public class ComboAttackAnimation : MonoBehaviour
     void Update()
     {
         // 走っている最中はコンボ攻撃使用不可 
-        if(Input.GetKey(KeyCode.B))
+        if (Input.GetKey(KeyCode.B))
         {
             _canCombo = false;
+            _startCombo = false;
             AttackReset();
         }
+        else _startCombo = true; 
 
         if (Input.GetKeyDown(KeyCode.N) && !_canCombo && !_attack2Enable && !_attack3Enable)
         {
             _canCombo = true;
-
             _count = 0;
         }
 
