@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 
 /// <summary>
@@ -6,17 +7,18 @@ using UnityEngine;
 /// </summary>
 public class EnemyController : MonoBehaviour
 {
-    GameManager _gameManager; 
-    int _damageValue; 
+    GameManager _gameManager = default; 
+    int _damageValue = default; 
     // HP
-    [SerializeField, Header("入力不要")] int _enemyHp;
+    [SerializeField, Header("入力不要")] int _enemyHp = default;
     
     // その他
-    SpriteRenderer _spriteRenderer;
-    Animator _anim;
+    SpriteRenderer _spriteRenderer = default;
+    Animator _anim = default;
 
-    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterData;
-    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab;
+    [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterData = default;
+    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = default;
+    AttackValueController _playerAttackValueController = default; 
 
     void Start()
     {
@@ -30,12 +32,8 @@ public class EnemyController : MonoBehaviour
         if(_spriteRenderer) _spriteRenderer.color = Color.white;
 
         _anim = GetComponent<Animator>();
-    }
-
-    void Update()
-    {
-        if (gameObject.transform.position.y <= -13)
-            Destroy(gameObject); 
+        GameObject go = GameObject.FindWithTag("Player");
+        if(go) _playerAttackValueController = go.GetComponent<AttackValueController>();
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -43,9 +41,8 @@ public class EnemyController : MonoBehaviour
         if (coll.gameObject.tag == "Weapon") 
         {
             // 攻撃値 
-            AttackValueController scr = coll.transform.root.gameObject.GetComponent<AttackValueController>();
-            scr.Attack();
-            _damageValue = scr._attackValue;
+            _playerAttackValueController.Attack();
+            _damageValue = _playerAttackValueController._attackValue;
 
             // HP減らしていく
             _enemyHp = _enemyHp - _damageValue;  

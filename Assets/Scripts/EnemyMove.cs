@@ -14,17 +14,21 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] Vector2 _lineForWall = new Vector2(1, -0.5f);
     [SerializeField] Vector2 _lineForGround = new Vector2(1, -1f);
     [Tooltip("地面に接したら真")] bool _canMove = false; 
+    GameObject _chara = null;
 
 
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>(); 
-        _scale = this.transform.localScale;
-        //_scale = GameObject.Find(this.gameObject.name + "/Chara").transform.localScale;
+        _rb = GetComponent<Rigidbody2D>();
+        //_scale = this.transform.localScale;
+        _chara = GameObject.Find(this.gameObject.name + "/Chara");
+        _scale = _chara.transform.localScale;
+        _scale.x = _chara.transform.localScale.x;
         // 一度だけ、左向きを右向きに修正
         _scale.x = -_scale.x;
-        transform.localScale = _scale;
+        //transform.localScale = _scale;
+        _chara.transform.localScale = _scale;
         _canMove = false;
     }
 
@@ -57,7 +61,8 @@ public class EnemyMove : MonoBehaviour
             _lineForGround.x = -_lineForGround.x; 
             _scale.x = -_scale.x;
         }
-        transform.localScale = _scale; 
+        //transform.localScale = _scale; 
+        _chara.transform.localScale = _scale; 
         velo = _moveDirection.normalized * _moveSpeed;
         velo.y = _rb.velocity.y;
         _rb.velocity = velo;

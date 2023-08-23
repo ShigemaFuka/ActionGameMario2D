@@ -14,11 +14,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("水平方向の入力値")] float _h = 0;
     [Tooltip("左右反転")]  Vector3 _scale = default;
     [Tooltip("スタートポジション")] GameObject _startPosition = default;
-    [Tooltip("GameManager")] GameManager _gameManager = default;
     [Tooltip("プレイヤーのHP管理をするスクリプト")] PlayerHp playerHp = null;
+    
     void Start()
     {
-        _gameManager = FindAnyObjectByType<GameManager>(); 
         _movePowerUp = _movePowerDef * 1.5f;
         _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
@@ -29,10 +28,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (this.gameObject.transform.position.y <= -13)
-        {
-            _gameManager.GameOver();
-        }
         _h = Input.GetAxis("Horizontal"); 
         FlipX(_h);
         MoveControl(); 

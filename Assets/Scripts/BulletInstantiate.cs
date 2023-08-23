@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -73,7 +70,10 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= 2)
                 {
                     // ‚R‰ñ‚Ü‚Å‚Í’eŠÛ‚ð¶¬ 
-                    if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
+                    //if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
+                    if(_muzzle) Instantiate(_bulletPrefab, _muzzle.transform.parent.gameObject.transform);
+                    //_bulletPrefab.transform.position = _muzzle.gameObject.transform.position;
+                    _bulletPrefab.transform.position = new Vector2(0, 0);
                     _shotCount++;
                 }
                 _timeCount = 0;
