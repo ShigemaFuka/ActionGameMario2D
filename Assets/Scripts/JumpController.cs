@@ -4,6 +4,7 @@ using UnityEngine;
 /// weaponのコライダに反応して、壁ジャンプしてしまうのを防ぐために、
 /// ジャンプのみを管理する
 /// プレイヤー直下に空オブジェクトを作り、コライダを付け、それをジャンプ判定用にする 
+/// Enterを入力時にSE再生 
 /// </summary>
 public class JumpController : MonoBehaviour
 {
@@ -12,10 +13,12 @@ public class JumpController : MonoBehaviour
     [SerializeField, Tooltip("ジャンプできるかの接地判定")] bool _isJump = false;
     [SerializeField, Tooltip("ジャンプできるかのカウント")] int _jumpCount = 0;
     [SerializeField, Tooltip("ジャンプできて良いオブジェクトの名")] string[] _jumpables = null;
+    [Tooltip("Jump時のSE")] AudioSource _audioSource = null; 
 
     void Start()
     {
         _rb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>(); 
     }
     void Update()
     {
@@ -29,6 +32,7 @@ public class JumpController : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
+                _audioSource.PlayOneShot(_audioSource.clip); 
                 _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
                 _jumpCount++;
             }
