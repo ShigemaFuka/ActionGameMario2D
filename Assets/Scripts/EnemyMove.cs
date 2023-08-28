@@ -62,7 +62,7 @@ public class EnemyMove : MonoBehaviour
             _scale.x = -_scale.x;
         }
         //transform.localScale = _scale; 
-        _chara.transform.localScale = _scale; 
+        if(_chara) _chara.transform.localScale = _scale; 
         velo = _moveDirection.normalized * _moveSpeed;
         velo.y = _rb.velocity.y;
         _rb.velocity = velo;
@@ -78,8 +78,8 @@ public class EnemyMove : MonoBehaviour
         if (!_canMove)
         {
             Vector2 start = this.transform.position;
-            Debug.DrawLine(start, start + new Vector2(0, -2f));
-            RaycastHit2D hit_ground = Physics2D.Linecast(start, start + new Vector2(0, -2f), _ground);
+            Debug.DrawLine(start, start + new Vector2(0, -3f));
+            RaycastHit2D hit_ground = Physics2D.Linecast(start, start + new Vector2(0, -3f), _ground);
             if (hit_ground)
             {
                 _canMove = true;

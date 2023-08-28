@@ -10,7 +10,8 @@ public class AnimationEventController : MonoBehaviour
     [SerializeField] Collider2D _rightColl = null;
     [SerializeField] Collider2D _leftColl = null; 
     [Tooltip("‰E•Ší‚Ì‹OÕ")] TrailRenderer _rightTrail = null; 
-    [Tooltip("¶•Ší‚Ì‹OÕ")] TrailRenderer _leftTrail = null; 
+    [Tooltip("¶•Ší‚Ì‹OÕ")] TrailRenderer _leftTrail = null;
+    [Tooltip("UŒ‚SE")] AudioSource _audioSource = null; 
 
     void Start()
     {
@@ -19,6 +20,12 @@ public class AnimationEventController : MonoBehaviour
         ColliderOff();
         TrailOff(); 
         _anim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    void OnSE()
+    {
+        _audioSource.PlayOneShot(_audioSource.clip); 
     }
 
     /// <summary> UŒ‚”»’èON </summary>
