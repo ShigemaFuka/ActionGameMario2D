@@ -292,8 +292,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02534008, y: 0.021343708}
-  m_Size: {x: 1.3792458, y: 2.1374192}
+  m_Offset: {x: -0.02534008, y: -0.0055168867}
+  m_Size: {x: 1.3792458, y: 2.1911404}
   m_Direction: 0
 --- !u!114 &6588715399347762319
 MonoBehaviour:
@@ -385,7 +385,7 @@ MonoBehaviour:
   _ground:
     serializedVersion: 2
     m_Bits: 512
-  _lineForWall: {x: 1, y: -0.2}
+  _lineForWall: {x: 2, y: -0.7}
   _lineForGround: {x: 1.5, y: -4}
 --- !u!1 &8024485961903052486
 GameObject:

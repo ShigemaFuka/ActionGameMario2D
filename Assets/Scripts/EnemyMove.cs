@@ -26,10 +26,11 @@ public class EnemyMove : MonoBehaviour
         _scale = _chara.transform.localScale;
         _scale.x = _chara.transform.localScale.x;
         // ˆê“x‚¾‚¯A¶Œü‚«‚ð‰EŒü‚«‚ÉC³
-        _scale.x = -_scale.x;
+        this._scale.x = -_scale.x;
         //transform.localScale = _scale;
-        _chara.transform.localScale = _scale;
+        _chara.transform.localScale = this._scale;
         _canMove = false;
+        if(_scale.x >= 0) _moveDirection = new Vector2(1, 0);
     }
 
 
@@ -62,7 +63,7 @@ public class EnemyMove : MonoBehaviour
             _scale.x = -_scale.x;
         }
         //transform.localScale = _scale; 
-        if(_chara) _chara.transform.localScale = _scale; 
+        if (_chara) _chara.transform.localScale = _scale; 
         velo = _moveDirection.normalized * _moveSpeed;
         velo.y = _rb.velocity.y;
         _rb.velocity = velo;
