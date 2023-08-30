@@ -30,7 +30,7 @@ public class ComboAttackAnimation : MonoBehaviour
 
     void Update()
     {
-        Debug.LogWarning(_count); 
+        //Debug.LogWarning(_count); 
         // 走っている最中はコンボ攻撃使用不可 
         if (Input.GetKey(KeyCode.B))
         {

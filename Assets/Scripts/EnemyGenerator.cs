@@ -29,10 +29,21 @@ public class EnemyGenerator : MonoBehaviour
         if (_timer > _intervalTime)
         {
             _randomIndex = Random.Range(0, _generatePoses.Length);
-            _randomPrefabsIndex = Random.Range(0, _prefabs.Length);
-            Instantiate(_prefabs[_randomPrefabsIndex], _generatePoses[_randomIndex].position, Quaternion.identity, gameObject.transform);
+            //_randomPrefabsIndex = Random.Range(0, _prefabs.Length);
+            //Instantiate(_prefabs[_randomPrefabsIndex], _generatePoses[_randomIndex].position, Quaternion.identity, gameObject.transform);
+            GeneratePrefabs();
             _timer = 0;
         }
-
+    }
+    /// <summary>
+    /// åªèÛÇ∆ÇËÇ†Ç¶Ç∏10ëÃÇ≠ÇÁÇ¢Ç‹Ç∆ÇﬂÇƒê∂ê¨
+    /// </summary>
+    void GeneratePrefabs()
+    {
+        for (var i = 0; i < 11; i++)
+        {
+            _randomPrefabsIndex = Random.Range(0, _prefabs.Length);
+            Instantiate(_prefabs[_randomPrefabsIndex], _generatePoses[_randomIndex].position, Quaternion.identity, gameObject.transform);
+        }
     }
 }
