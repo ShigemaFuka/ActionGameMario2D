@@ -139,6 +139,7 @@ public class ComboAttackAnimation : MonoBehaviour
         }
     }
 
+    WaitForSeconds _wfs = new WaitForSeconds(0.2f);
     IEnumerator CanComboCorutine()
     {
         // スタン中のアニメーション 
@@ -150,7 +151,7 @@ public class ComboAttackAnimation : MonoBehaviour
         _attack3Enable = false;
         AttackReset();
         // n秒間スタン 
-        yield return new WaitForSeconds(0.2f);
+        yield return _wfs; 
         _startCombo = true; 
     }
 

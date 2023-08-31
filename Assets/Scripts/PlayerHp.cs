@@ -10,7 +10,6 @@ using static PlayerController;
 /// </summary>
 public class PlayerHp : MonoBehaviour
 {
-
     GameManager _gameManager = default; 
 
     // HP
@@ -42,7 +41,7 @@ public class PlayerHp : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Bullet")        
+        if (coll.gameObject.CompareTag("Bullet"))       
         {
             AttackValueController scr = coll.gameObject.GetComponent<AttackValueController>(); 
             scr.Attack(); 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 /// <summary>
 /// 左右移動する敵キャラの行動制御、 
@@ -10,39 +11,33 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] LayerMask _wall;
     [SerializeField] LayerMask _ground;
     Rigidbody2D _rb = default;
-    Vector2 _moveDirection = new Vector2(1, 0);
-    [SerializeField] Vector2 _lineForWall = new Vector2(1, -0.5f);
-    [SerializeField] Vector2 _lineForGround = new Vector2(1, -1f);
+    Vector2 _moveDirection = new Vector2(-1, 0);
+    [SerializeField] Vector2 _lineForWall = new Vector2(-1, -0.5f);
+    [SerializeField] Vector2 _lineForGround = new Vector2(-1, -1f);
     [Tooltip("地面に接したら真")] bool _canMove = false; 
-    GameObject _chara = null;
+    [SerializeField] GameObject _chara = null;
 
 
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        //_scale = this.transform.localScale;
-        _chara = GameObject.Find(this.gameObject.name + "/Chara");
+        // 親子関係あたりを変更したときは注意  
+        _chara = transform.GetChild(2).gameObject;
         _scale = _chara.transform.localScale;
-        _scale.x = _chara.transform.localScale.x;
-        // 一度だけ、左向きを右向きに修正
-        this._scale.x = -_scale.x;
-        //transform.localScale = _scale;
-        _chara.transform.localScale = this._scale;
         _canMove = false;
-        if(_scale.x >= 0) _moveDirection = new Vector2(1, 0);
+        _moveDirection = new Vector2(-1, 0);
     }
-
-
     void Update()
     {
         CanMoveOnce(); 
         if (_canMove)
             Move();
     }
-
-    
-
+    void OnBecameInvisible()
+    {
+        _canMove = false; 
+    }
     void Move()
     {
         Vector2 start = this.transform.position;
@@ -57,13 +52,12 @@ public class EnemyMove : MonoBehaviour
         if (hit_wall || !hit_ground)
         {
             // 反転 
+            _scale.x = -_scale.x;
+            _chara.transform.localScale = _scale;
             _moveDirection = -_moveDirection;
             _lineForWall.x = -_lineForWall.x;
             _lineForGround.x = -_lineForGround.x; 
-            _scale.x = -_scale.x;
         }
-        //transform.localScale = _scale; 
-        if (_chara) _chara.transform.localScale = _scale; 
         velo = _moveDirection.normalized * _moveSpeed;
         velo.y = _rb.velocity.y;
         _rb.velocity = velo;

@@ -5,12 +5,12 @@ using UnityEngine;
 /// 弾丸の制御の基底クラス
 /// 時間経過、武器接触、衝突、したら自身を破棄
 /// </summary>
-public abstract class BaseBulletController : MonoBehaviour
+public abstract class BaseBulletController_2 : MonoBehaviour
 {
     // GMをプレハブ化して直入れしても意味ない、シーン上にないとダメ(インスタンス化) 
     [SerializeField] GameManager _gameManager = default;
-    [SerializeField, Tooltip("ScriptableObjectなキャラのパラメータ")] CharacterDates _characterDate = default; 
-    [SerializeField, Tooltip("エフェクト")] GameObject _crashEffectPrefab = default; 
+    [SerializeField, Tooltip("ScriptableObjectなキャラのパラメータ")] CharacterDates _characterDate = default;
+    [SerializeField, Tooltip("エフェクト")] GameObject _crashEffectPrefab = default;
     [SerializeField] float _destroyTime = 5f;
     //オブジェクトプール用コントローラー格納用変数宣言
     ObjectPoolController _objectPool;
@@ -18,7 +18,8 @@ public abstract class BaseBulletController : MonoBehaviour
     void Start()
     {
         MoveBullet();
-        Destroy(gameObject, _destroyTime);
+        //Destroy(gameObject, _destroyTime); 
+        StartCoroutine(DestroyBullet());
         // シーンに１つしかないから 
         _gameManager = FindObjectOfType<GameManager>();
         //オブジェクトプールを取得
@@ -39,7 +40,8 @@ public abstract class BaseBulletController : MonoBehaviour
                 Instantiate(_crashEffectPrefab, this.transform.position, this.transform.rotation);
             }
             _gameManager.AddScore(_characterDate.Score);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            HideFromStage();
         }
     }
 
@@ -54,11 +56,24 @@ public abstract class BaseBulletController : MonoBehaviour
             Instantiate(_crashEffectPrefab, this.transform.position, this.transform.rotation);
         }
         // 削除
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        HideFromStage();
     }
-    
+
     /// <summary>
     /// Start関数で呼ばれる 
     /// </summary>
     public abstract void MoveBullet();
+
+    void HideFromStage()
+    {
+        //オブジェクトプールのCollect関数を呼び出し自身を回収
+        _objectPool.Collect(this.gameObject);
+    }
+    //コルーチン
+    IEnumerator DestroyBullet()
+    {
+        yield return new WaitForSeconds(_destroyTime);
+        HideFromStage();
+    }
 }

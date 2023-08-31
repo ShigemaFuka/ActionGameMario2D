@@ -7,7 +7,7 @@ using UnityEngine;
 /// マズルを子オブジェクトにする必要がある 
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class BulletInstantiate : MonoBehaviour
+public class BulletInstantiate_2 : MonoBehaviour
 {
     [SerializeField, Tooltip("弾丸のプレハブ")] GameObject _bulletPrefab;
     [SerializeField, Tooltip("時間をカウントする")] float _timeCount;
@@ -15,6 +15,8 @@ public class BulletInstantiate : MonoBehaviour
     [SerializeField, Tooltip("時間")] float _timer;
     [SerializeField, Tooltip("発射フラグ")] public bool _isShot;
     [SerializeField] GameObject _muzzle;
+    //オブジェクトプール用コントローラー格納用変数宣言
+    ObjectPoolController _objectPool;
 
     // Time.deltaTime で時間カウント、数秒毎に生成
     // そのために、エネミーにアタッチ
@@ -25,6 +27,7 @@ public class BulletInstantiate : MonoBehaviour
         _timer = 0;
         _shotCount = 0;
         _muzzle = transform.GetChild(0).gameObject;
+        _objectPool = FindObjectOfType<ObjectPoolController>();
     }
 
 
@@ -37,7 +40,7 @@ public class BulletInstantiate : MonoBehaviour
 
         // 時間の管理************
         // 3.5f秒を超えたらリセット
-        if(_timer >= 3.5f)
+        if (_timer >= 3.5f)
         {
             _isShot = true;
             _timer = 0;
@@ -48,19 +51,20 @@ public class BulletInstantiate : MonoBehaviour
             _isShot = false;
         }
         // 3.5秒をカウント
-        if(_timer < 3.5f)
+        if (_timer < 3.5f)
         {
             _timer = _timer + Time.deltaTime;
         }
         // **********************
-        
-        if(_isShot)
+
+
+        if (_isShot)
         {
             // 0.5秒周期で発射
-            if(_timeCount >= 0.5f)
+            if (_timeCount >= 0.5f)
             {
                 // 時間だけだと誤差が出るため、回数制限
-                if(_shotCount >= 3)
+                if (_shotCount >= 3)
                 {
                     // ３回発射されたらカウントリセットで０から再開
                     _shotCount = 0;
@@ -68,14 +72,19 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= 2)
                 {
                     // ３回までは弾丸を生成 
-                    if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
+                    //if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
+                    if (_muzzle)
+                    {
+                        GameObject go = Instantiate(_bulletPrefab, _muzzle.transform.parent.gameObject.transform);
+                        _objectPool.UsePrefab(go);
+                    }
                     //_bulletPrefab.transform.position = _muzzle.gameObject.transform.position;
                     _bulletPrefab.transform.position = new Vector2(0, 0);
                     _shotCount++;
                 }
                 _timeCount = 0;
             }
-            else if(_timeCount < 0.5f)
+            else if (_timeCount < 0.5f)
             {
                 _timeCount = _timeCount + Time.deltaTime;
             }

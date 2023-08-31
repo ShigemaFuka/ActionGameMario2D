@@ -3,18 +3,17 @@ using UnityEngine;
 /// <summary>
 /// 弾丸を制御するコンポーネント
 /// </summary>
-public class BulletControllerStraight_2 : BaseBulletController
+public class BulletControllerStraight_3 : BaseBulletController
 {
     [SerializeField, Tooltip("弾が飛ぶ速さ")] float m_speed = 3f;
-    [SerializeField, Tooltip("弾丸を生成するオブジェクト")] GameObject _shooterObject;
-    [Tooltip("ローカルスケール(反転情報)を入れている")]  Vector3 _bulletLoSc;
+    [Tooltip("弾丸を生成するオブジェクト")] GameObject _shooterObject;
+    [Tooltip("ローカルスケール(反転情報)を入れている")] Vector3 _bulletLoSc;
 
     public override void MoveBullet()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        GameObject parentObj = transform.parent.gameObject;
-        string grandParentObjName = parentObj.transform.parent.gameObject.name;
-        _shooterObject = GameObject.Find(grandParentObjName + "/Chara");
+        string parentObjName = transform.parent.gameObject.name;
+        _shooterObject = GameObject.Find(parentObjName + "/Chara");
 
         _bulletLoSc = _shooterObject.transform.localScale;
         float _xSc = _bulletLoSc.x;

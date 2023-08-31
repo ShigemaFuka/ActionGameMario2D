@@ -22,24 +22,30 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Tooltip("ダメージ値を自身の頭上に表示するためのテキスト")] Text _damageText = default;
     [SerializeField, Tooltip("ダメージ値を表示しつづける時間")] float _showTextTime = 0.2f;
     [Tooltip("計算時間")] float _timer = 0f;
-    [Tooltip("タイマー制御条件")] bool _isTimer = false; 
-
+    [Tooltip("タイマー制御条件")] bool _isTimer = false;
+    EnemyGenerator _enemyGenerator = default;
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>(); 
-
         // エネミーのHPの初期化
         if (_characterData)
             _enemyHp = _characterData.Maxhp;
-
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if(_spriteRenderer) _spriteRenderer.color = Color.white;
-
         _anim = GetComponent<Animator>();
         GameObject go = GameObject.FindWithTag("Player");
         if(go) _playerAttackValueController = go.GetComponent<AttackValueController>();
         _timer = 0f;
         if (_damageText) _damageText.text = "";
+        _enemyGenerator = FindAnyObjectByType<EnemyGenerator>();
+        gameObject.SetActive(false);
+    }
+    void OnEnable()
+    {
+        if (_spriteRenderer) _spriteRenderer.color = Color.white;
+        _enemyHp = _characterData.Maxhp;
+        _timer = 0f;
+        _damageText.text = "";
     }
 
     void Update()
@@ -78,7 +84,9 @@ public class EnemyController : MonoBehaviour
                 _gameManager.AddScore(_characterData.Score);
                 // キル数加算  
                 _gameManager.KillCount += 1;
-                Destroy(gameObject);
+                _enemyGenerator.Count -= 1;
+                //Destroy(gameObject);  //**
+                _enemyGenerator.Collect(this.gameObject);  //**
             }
             Debug.Log($"_enemyHp : {_enemyHp}");
         }
@@ -96,5 +104,10 @@ public class EnemyController : MonoBehaviour
     {
         if (_damageText) _damageText.text = damageValue.ToString();
         _isTimer = true;  
+    }
+
+    void OnBecameInvisible() //**
+    {
+        _enemyGenerator.Collect(this.gameObject);
     }
 }
