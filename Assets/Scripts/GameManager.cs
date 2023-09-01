@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     public string PlayerName { get => _playerName; set => _playerName = value; }
     [SerializeField] InputField _inputField = default;
 
-
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
     {
@@ -56,11 +55,8 @@ public class GameManager : MonoBehaviour
             _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
         }
     }
-
-
     void Update()
     {
-
         // ゲーム中 → ゲームオーバー 遷移した瞬間 
         if (_nowState == GameState.GameOver && _oldState == GameState.InGame)
         {
@@ -78,7 +74,6 @@ public class GameManager : MonoBehaviour
         {
             None();
             Reset();
-
             if (!_inputField)
                 _inputField = GameObject.Find("InputFieldPlayerName").GetComponent<InputField>();
             PlayerName = _inputField.text;
@@ -94,10 +89,8 @@ public class GameManager : MonoBehaviour
             if(!_timerText) _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
             if (!_scoreText) _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
         }
-
         _oldState = _nowState;
     }
-
     /// <summary> スコアを加算するメソッド </summary>
     /// <param name="score"> 加算したいスコア </param>
     public void AddScore(int score)
@@ -105,7 +98,6 @@ public class GameManager : MonoBehaviour
         if (_score < _maxScore) _score += score;
         if (_scoreText) _scoreText.text = "Score:" + _score.ToString("00000");
     }
-
     /// <summary> 残り時間を減らして表示するメソッド  </summary>
     private void Timer()
     {
@@ -115,28 +107,23 @@ public class GameManager : MonoBehaviour
         if (_nowTime <= 0f)
             Result();
     }
-
     /// <summary> ゲームオーバーにするメソッド  </summary>
     public void GameOver()
     {
         _nowState = GameState.GameOver;
     }
-
     public void InGame()
     {
         _nowState = GameState.InGame; 
     }
-
     public void Result()
     {
         _nowState = GameState.Result; 
     }
-
     public void None()
     {
         _nowState = GameState.Select; 
     }
-
     /// <summary> 現在の時間、スコア、キル数、残りHPを初期化 </summary>
     void Reset()
     {

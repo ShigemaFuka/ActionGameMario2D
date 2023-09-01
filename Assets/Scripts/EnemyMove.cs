@@ -31,12 +31,11 @@ public class EnemyMove : MonoBehaviour
     void Update()
     {
         CanMoveOnce(); 
-        if (_canMove)
-            Move();
+        if (_canMove) Move();
     }
     void OnBecameInvisible()
     {
-        _canMove = false; 
+        _canMove = false;        
     }
     void Move()
     {

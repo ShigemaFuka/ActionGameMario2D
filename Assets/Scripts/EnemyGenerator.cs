@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.WSA;
 
 /// <summary>
 /// 敵キャラを生成する 
 /// 一定時間おきに生成 
-/// 生成位置のリスト内からランダムに生成位置が決まる 
+/// 生成位置のリスト内でプレイヤーに一番近いジェネレータから生成する 
+/// オブジェクトプールで、事前に一定数の敵キャラを生成しておき、必要時にSetActiveを切り替える 
 /// </summary>
 public class EnemyGenerator : MonoBehaviour
 {
@@ -16,8 +16,8 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField, Tooltip("生成場所")] Transform[] _generatePoses = default;
     int _index = 0;
     int _randomPrefabsIndex = 0;
-    [SerializeField] int _maxCount = 20;
-    [Tooltip("個体数の制限")] static int _count = 0;
+    [SerializeField, Tooltip("何体まで生成しておくか")] int _maxCount = 20;
+    [Tooltip("個体数")] static int _count = 0;
     public int Count { get => _count; set => _count = value; }
     Transform _playerPosition = default;
 
@@ -110,5 +110,4 @@ public class EnemyGenerator : MonoBehaviour
         _prefabQueue.Enqueue(go);
         Count--; 
     }
-
 }

@@ -7866,7 +7866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5925287298082253664, guid: 2d07be50bdf801a4c8a623f23d847962, type: 3}
       propertyPath: _movePowerDef
-      value: 200
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 5925287298082253664, guid: 2d07be50bdf801a4c8a623f23d847962, type: 3}
       propertyPath: _jumpables.Array.size
