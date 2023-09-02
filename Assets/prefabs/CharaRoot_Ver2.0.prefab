@@ -331,6 +331,7 @@ MonoBehaviour:
   _effectPrefab: {fileID: 8675353245122752699, guid: 25f772b7893be0b41aec03be7a50b220, type: 3}
   _damageText: {fileID: 4446048768101762832}
   _showTextTime: 0.5
+  _deathEnemy: {fileID: 3973276267944947599, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
 --- !u!114 &4144267235560641400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +389,7 @@ MonoBehaviour:
     m_Bits: 512
   _lineForWall: {x: -1, y: -0.2}
   _lineForGround: {x: -1.5, y: -4}
+  _chara: {fileID: 0}
 --- !u!23 &1462884176830163098
 MeshRenderer:
   m_ObjectHideFlags: 0

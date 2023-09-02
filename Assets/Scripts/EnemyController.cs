@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
     [Tooltip("計算時間")] float _timer = 0f;
     [Tooltip("タイマー制御条件")] bool _isTimer = false;
     EnemyGenerator _enemyGenerator = default;
+    [SerializeField] GameObject _deathEnemy = default;
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>(); 
@@ -71,24 +72,25 @@ public class EnemyController : MonoBehaviour
             _enemyHp = _enemyHp - _damageValue;
             ShowTextDamage(_damageValue); 
             if (_spriteRenderer) _spriteRenderer.color = Color.red;
-            if(_anim) _anim.Play("Hit");
+            if(isActiveAndEnabled) _anim.Play("Hit");
 
             if (_enemyHp < _damageValue)
             {
                 // エフェクトとなるプレハブが設定されていたら、それを生成する
-                if (_effectPrefab)
-                {
-                    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
-                }
+                //if (_effectPrefab)
+                //{
+                //    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
+                //}
                 // スコア加算 
                 _gameManager.AddScore(_characterData.Score);
                 // キル数加算  
                 _gameManager.KillCount += 1;
                 _enemyGenerator.Count -= 1;
                 //Destroy(gameObject);  //**
+                Instantiate(_deathEnemy, this.transform.position, Quaternion.identity);
+                //_deathEnemy.SetActive(true);
                 _enemyGenerator.Collect(this.gameObject);  //**
             }
-            Debug.Log($"_enemyHp : {_enemyHp}");
         }
     }
 

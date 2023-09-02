@@ -28,6 +28,5 @@ public class AttackValueController : MonoBehaviour
     {
         // +-2‚ÅUŒ‚
         _attackValue = Random.Range(_atVa - _num, _atVa + _num +1);
-        Debug.Log(this.gameObject.name + "  :  this.gameObject.name" + "      UŒ‚’l :  " + _attackValue);
     }
 }

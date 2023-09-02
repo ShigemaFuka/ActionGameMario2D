@@ -15,7 +15,7 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] Vector2 _lineForWall = new Vector2(-1, -0.5f);
     [SerializeField] Vector2 _lineForGround = new Vector2(-1, -1f);
     [Tooltip("ínñ Ç…ê⁄ÇµÇΩÇÁê^")] bool _canMove = false; 
-    [SerializeField] GameObject _chara = null;
+    GameObject _chara = null;
 
 
 

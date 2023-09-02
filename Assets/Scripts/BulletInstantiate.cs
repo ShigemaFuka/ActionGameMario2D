@@ -31,13 +31,13 @@ public class BulletInstantiate : MonoBehaviour
     void Update()
     {
         // 同時にカウント二つ作動
-        // ひとつは1.5秒、もうひとつは3.5秒で終わり→この差が2秒
-        // 1.5秒：一定間隔の弾丸（0.5秒毎に一発 * 3）、3.5秒：発射から待機までの一セット（bool）、
+        // ひとつは1.5->3秒、もうひとつは3.5->5秒で終わり→この差が2秒
+        // 1.5->3秒：一定間隔の弾丸（0.5->1秒毎に一発 * 3）、3.5->5秒：発射から待機までの一セット（bool）、
         // 2秒：次の発射までのインターバル
 
         // 時間の管理************
         // 3.5f秒を超えたらリセット
-        if(_timer >= 3.5f)
+        if(_timer >= 5f) // 3.5->5
         {
             _isShot = true;
             _timer = 0;
@@ -48,7 +48,7 @@ public class BulletInstantiate : MonoBehaviour
             _isShot = false;
         }
         // 3.5秒をカウント
-        if(_timer < 3.5f)
+        if(_timer < 5f)  // 3.5->5
         {
             _timer = _timer + Time.deltaTime;
         }
@@ -57,7 +57,7 @@ public class BulletInstantiate : MonoBehaviour
         if(_isShot)
         {
             // 0.5秒周期で発射
-            if(_timeCount >= 0.5f)
+            if(_timeCount >= 1f)  // 0.5->1
             {
                 // 時間だけだと誤差が出るため、回数制限
                 if(_shotCount >= 3)
@@ -75,7 +75,7 @@ public class BulletInstantiate : MonoBehaviour
                 }
                 _timeCount = 0;
             }
-            else if(_timeCount < 0.5f)
+            else if(_timeCount < 1f) // 0.5->1
             {
                 _timeCount = _timeCount + Time.deltaTime;
             }

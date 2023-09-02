@@ -21,15 +21,6 @@ public class ObjectPoolController : MonoBehaviour
             //_bulletQueue.Enqueue(tmpBullet);
         }
     }
-        void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
     //’e‚ğ‘İ‚µo‚·ˆ—
     public GameObject UsePrefab(GameObject go)
     {
