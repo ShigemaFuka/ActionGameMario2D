@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,28 +46,13 @@ public class UseScoreSaveData : MonoBehaviour
         ShowText();
     }
     /// <summary>
-    /// テキストデータの数が11以上になったら、削除 
-    /// ただし同じスコアのデータは、まとめて1つのカウントになる 
+    /// スコアの記録が6つ以上になったら、削除 
     /// </summary>
-    void Delete()
+    void Delete(int i, int j)
     {
-        if (sortedList.Count >= 11)
-        {
-            for (var i = 10; i < sortedList.Count; i++)
-            {
-                for (var j = 0; j < _existFiles.Length; j++)
-                {
-                    ScoreSaveData sdata = _saveManager.DataLoad(_saveDirPath, _existFiles[j]);
-                    // スコアリストの上から順に、テキストデータとスコアが一致したら削除する 
-                    if (sortedList[i] == sdata._score)
-                    {
-                        File.Delete(Path.Combine(_saveDirPath, _existFiles[j]));
-                        Debug.LogWarning($"{_existFiles[j]} を削除しました。");
-                        sortedList.RemoveAt(i);
-                    }
-                }
-            }
-        }
+        File.Delete(Path.Combine(_saveDirPath, _existFiles[j]));
+        Debug.LogWarning($"{_existFiles[j]} を削除しました。");
+        sortedList.RemoveAt(i);
     }
     /// <summary>
     /// 全検索、ソート、追加 
@@ -91,7 +75,7 @@ public class UseScoreSaveData : MonoBehaviour
     /// <summary>
     /// テキスト表示 
     /// 上位5位までを表示する
-    /// 同じスコアのときは名前順になる 
+    /// 同じスコアのときは名前順になる(数字＞英字) 
     /// </summary>
     void ShowText()
     {
@@ -101,12 +85,14 @@ public class UseScoreSaveData : MonoBehaviour
         {
             for (var j = 0; j < _existFiles.Length; j++)
             {
+                Debug.Log(j);
                 ScoreSaveData sdata = _saveManager.DataLoad(_saveDirPath, _existFiles[j]);
-                if (sortedList[i] == sdata._score && count < 5)
+                if (sortedList[i] == sdata._score)
                 {
                     _rank++;
                     count++;
-                    _text.text = _text.text + $"{_rank}位     {sdata._playerName}     {sdata._score}     {sdata._killCount}     {sdata._remainingHp} \n";
+                    if(count < 6) _text.text = _text.text + $"{_rank}位           {sdata._playerName}           {sdata._score}     {sdata._killCount} \n";
+                    else Delete(i, j);　//余分を削除
                 }
             }
         }

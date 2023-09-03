@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// 敵キャラを生成する 
@@ -20,36 +21,50 @@ public class EnemyGenerator : MonoBehaviour
     [Tooltip("個体数")] static int _count = 0;
     public int Count { get => _count; set => _count = value; }
     Transform _playerPosition = default;
+    [Tooltip("生成した敵キャラを格納するQueue")] static Queue<GameObject> _prefabQueue; //**
+    public Queue<GameObject> PrefabQueue { get => _prefabQueue; set => _prefabQueue = value; }
+    [SerializeField, Tooltip("最初の生成インターバル")] float _firstInterval = 3.0f;
+    [SerializeField, Tooltip("生成したいプレハブ")] GameObject _deathPrefab = default;
+    [Tooltip("生成した死亡演出用の敵キャラを格納するQueue")] Queue<GameObject> _deathPrefabQueue;
+    public Queue<GameObject> DeathPrefabQueue { get => _deathPrefabQueue; set => _deathPrefabQueue = value; }
+    [SerializeField, Tooltip("生成範囲X")] float _x = 2;
+    [SerializeField, Tooltip("生成範囲Y")] float _y = 2;
 
-    [Tooltip("生成した弾を格納するQueue")] Queue<GameObject> _prefabQueue; //**
-    [SerializeField, Tooltip("最初の生成インターバル")] float _firstInterval = 3.0f; 
-
-    void Awake() //**
+    void Awake() 
     {
         //Queueの初期化
-        _prefabQueue = new Queue<GameObject>();
+        PrefabQueue = new Queue<GameObject>();
+        DeathPrefabQueue = new Queue<GameObject>();
+        //事前に規定数のオブジェクトを生成して、非アクティブにして用意 
         for (int i = 0; i < _maxCount; i++)
         {
             _randomPrefabsIndex = Random.Range(0, _prefabs.Length);
-            GameObject go = Instantiate(_prefabs[_randomPrefabsIndex], _generatePoses[_index].position, Quaternion.identity, gameObject.transform);
+            GameObject go = Instantiate(_prefabs[_randomPrefabsIndex], gameObject.transform);
             //Queueに追加 
-            _prefabQueue.Enqueue(go);
+            PrefabQueue.Enqueue(go);
+            GameObject go2 = Instantiate(_deathPrefab, gameObject.transform);
+            DeathPrefabQueue.Enqueue(go2);
         }
     }
-    public GameObject Launch(Vector3 _pos)
+    /// <summary>
+    /// Nullでなければqueueから取り出す
+    /// </summary>
+    /// <param name="queue">PrefabQueueか、DeathPrefabQueue</param>
+    /// <param name="pos">取り出したときに配置するポジション</param>
+    /// <returns>取り出したオブジェクトかNull</returns>
+    public GameObject Launch(Queue<GameObject> queue, Vector3 pos)
     {
         //Queueが空ならnull
-        if (_prefabQueue.Count <= 0) return null;
+        if (queue.Count <= 0) return null;
 
-        //Queueから弾を一つ取り出す
-        GameObject go = _prefabQueue.Dequeue();
-        //弾を表示する
+        //Queueからオブジェクトを一つ取り出す
+        GameObject go = queue.Dequeue();
+        //オブジェクトを表示する
         go.gameObject.SetActive(true);
-        go.transform.position = _pos;
+        go.transform.position = pos;
         //呼び出し元に渡す
         return go;
     }
-
     void Start()
     {
         _timer = _firstInterval;
@@ -91,23 +106,32 @@ public class EnemyGenerator : MonoBehaviour
             }
         }
     }
-    WaitForSeconds _wfs = new WaitForSeconds(0.2f);
+    WaitForSeconds _wfs = new WaitForSeconds(0.1f);
     IEnumerator CoroutineInstantiate()
     {
         for (var i = 0; i < (_maxCount - Count); i++)
         {
-            //Instantiate(_prefabs[_randomPrefabsIndex], _generatePoses[_index].position, Quaternion.identity, gameObject.transform);
-            Launch(_generatePoses[_index].position);  //**
+            float x = Random.Range(-_x, _x);
+            float y = Random.Range(-_y, _y);
+            Vector2 pos = _generatePoses[_index].position;
+            pos.x += x;
+            pos.y += y;
+            Launch(PrefabQueue, pos);  
             Count++;
             yield return _wfs;
         }
     }
-    public void Collect(GameObject go) //**
+    /// <summary>
+    /// queueへ格納する
+    /// 格納時に非アクティブにする
+    /// </summary>
+    /// <param name="queue">PrefabQueueか、DeathPrefabQueue</param>
+    /// <param name="go">対象のオブジェクト</param>
+    public void Collect(Queue<GameObject> queue, GameObject go) 
     {
-        // ゲームオブジェクトを非表示 
         go.gameObject.SetActive(false);
         //Queueに格納
-        _prefabQueue.Enqueue(go);
+        queue.Enqueue(go);
         Count--; 
     }
 }

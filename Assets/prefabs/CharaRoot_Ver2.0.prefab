@@ -328,7 +328,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyHp: 0
   _characterData: {fileID: 11400000, guid: 0da1998349c31344aac9bd6e88e94145, type: 2}
-  _effectPrefab: {fileID: 8675353245122752699, guid: 25f772b7893be0b41aec03be7a50b220, type: 3}
   _damageText: {fileID: 4446048768101762832}
   _showTextTime: 0.5
   _deathEnemy: {fileID: 3973276267944947599, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
@@ -358,7 +357,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f7208fa605d80d448942fc30c467b271, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -389,7 +388,6 @@ MonoBehaviour:
     m_Bits: 512
   _lineForWall: {x: -1, y: -0.2}
   _lineForGround: {x: -1.5, y: -4}
-  _chara: {fileID: 0}
 --- !u!23 &1462884176830163098
 MeshRenderer:
   m_ObjectHideFlags: 0

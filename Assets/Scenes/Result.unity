@@ -733,7 +733,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: rank    name     score     kill     hp
+  m_Text: rank          name         score         kill
 --- !u!222 &1029927582
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1683,7 +1683,6 @@ MonoBehaviour:
   _gameManager: {fileID: 0}
   _killCountText: {fileID: 1749049121}
   _scoreText: {fileID: 1463487892}
-  _remainingHpText: {fileID: 2043865752}
 --- !u!114 &1989586621
 MonoBehaviour:
   m_ObjectHideFlags: 0

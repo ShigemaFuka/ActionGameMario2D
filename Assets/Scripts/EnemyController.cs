@@ -9,22 +9,16 @@ public class EnemyController : MonoBehaviour
 {
     GameManager _gameManager = default; 
     int _damageValue = default; 
-    // HP
     [SerializeField, Header("入力不要")] int _enemyHp = default;
-    
-    // その他
     SpriteRenderer _spriteRenderer = default;
     Animator _anim = default;
-
     [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterData = default;
-    [SerializeField, Tooltip("エフェクト")] GameObject _effectPrefab = default;
     AttackValueController _playerAttackValueController = default;
     [SerializeField, Tooltip("ダメージ値を自身の頭上に表示するためのテキスト")] Text _damageText = default;
     [SerializeField, Tooltip("ダメージ値を表示しつづける時間")] float _showTextTime = 0.2f;
     [Tooltip("計算時間")] float _timer = 0f;
     [Tooltip("タイマー制御条件")] bool _isTimer = false;
     EnemyGenerator _enemyGenerator = default;
-    [SerializeField] GameObject _deathEnemy = default;
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>(); 
@@ -62,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Weapon") 
+        if (coll.gameObject.CompareTag("Weapon")) 
         {
             // 攻撃値 
             _playerAttackValueController.Attack();
@@ -76,20 +70,13 @@ public class EnemyController : MonoBehaviour
 
             if (_enemyHp < _damageValue)
             {
-                // エフェクトとなるプレハブが設定されていたら、それを生成する
-                //if (_effectPrefab)
-                //{
-                //    Instantiate(_effectPrefab, this.transform.position, this.transform.rotation);
-                //}
                 // スコア加算 
                 _gameManager.AddScore(_characterData.Score);
                 // キル数加算  
                 _gameManager.KillCount += 1;
                 _enemyGenerator.Count -= 1;
-                //Destroy(gameObject);  //**
-                Instantiate(_deathEnemy, this.transform.position, Quaternion.identity);
-                //_deathEnemy.SetActive(true);
-                _enemyGenerator.Collect(this.gameObject);  //**
+                GameObject go = _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
+                _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);  //**
             }
         }
     }
@@ -110,6 +97,6 @@ public class EnemyController : MonoBehaviour
 
     void OnBecameInvisible() //**
     {
-        _enemyGenerator.Collect(this.gameObject);
+        _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
     }
 }

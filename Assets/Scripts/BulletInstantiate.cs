@@ -26,8 +26,6 @@ public class BulletInstantiate : MonoBehaviour
         _shotCount = 0;
         _muzzle = transform.GetChild(0).gameObject;
     }
-
-
     void Update()
     {
         // “¯‚ÉƒJƒEƒ“ƒg“ñ‚Âì“®
@@ -69,7 +67,6 @@ public class BulletInstantiate : MonoBehaviour
                 {
                     // ‚R‰ñ‚Ü‚Å‚Í’eŠÛ‚ğ¶¬ 
                     if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
-                    //_bulletPrefab.transform.position = _muzzle.gameObject.transform.position;
                     _bulletPrefab.transform.position = new Vector2(0, 0);
                     _shotCount++;
                 }
