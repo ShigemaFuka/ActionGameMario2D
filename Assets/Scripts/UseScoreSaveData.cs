@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// リザルトシーンで使用 
 /// ランキング機能
 /// プレイヤー名が被ったら、データが上書きされる
-/// スコアが重複したら古いデータ順に、降順になる
+/// スコアが重複したらデータの名前順になる
 /// </summary>
 public class UseScoreSaveData : MonoBehaviour
 {
@@ -93,6 +93,7 @@ public class UseScoreSaveData : MonoBehaviour
                     count++;
                     if(count < 6) _text.text = _text.text + $"{_rank}位           {sdata._playerName}           {sdata._score}     {sdata._killCount} \n";
                     else Delete(i, j);　//余分を削除
+                    SortAndAdd();
                 }
             }
         }
