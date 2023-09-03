@@ -22,15 +22,12 @@ public class UseScoreSaveData : MonoBehaviour
     [Tooltip("何位")] int _rank = 0;
     [SerializeField] Text _text = default;
     GameManager _gameManager = default;
-
-
     private void Awake()
     {
         // 保存先 
         _saveDirPath = Application.persistentDataPath;
         Debug.Log(_saveDirPath);
     }
-
     void Start()
     {
         _gameManager = FindAnyObjectByType<GameManager>();
@@ -92,8 +89,11 @@ public class UseScoreSaveData : MonoBehaviour
                     _rank++;
                     count++;
                     if(count < 6) _text.text = _text.text + $"{_rank}位           {sdata._playerName}           {sdata._score}     {sdata._killCount} \n";
-                    else Delete(i, j);　//余分を削除
-                    SortAndAdd();
+                    else
+                    {
+                        Delete(i, j);　//余分を削除
+                        SortAndAdd();
+                    }
                 }
             }
         }
@@ -119,17 +119,15 @@ public class UseScoreSaveData : MonoBehaviour
         var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var CharsArr = new char[5];
         var random = new System.Random();
-
         for (int i = 0; i < CharsArr.Length; i++)
         {
             CharsArr[i] = characters[random.Next(characters.Length)];
         }
-
         return resultString + new String(CharsArr);
     }
     /// <summary>
     /// 同じプレイヤー名で、スコアがより高い方を保存する 
-    /// 元々あったデータのスコアより低ければ、保存しない 
+    /// 元々あったデータのスコアより低ければ、上書き保存しない 
     /// </summary>
     void Comparison(ScoreSaveData data, string playerName, int newScore)
     {
