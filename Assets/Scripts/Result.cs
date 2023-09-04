@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,5 +19,4 @@ public class Result : MonoBehaviour
         _scoreText.text = _gameManager.Score.ToString("00000");
         //_remainingHpText.text = _gameManager.RemainingHp.ToString("00000"); 
     }
-
 }

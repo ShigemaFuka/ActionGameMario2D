@@ -13,7 +13,7 @@ public class EnemyGenerator : MonoBehaviour
 {
     [SerializeField, Tooltip("生成したいプレハブ")] GameObject[] _prefabs = default;
     [SerializeField, Tooltip("生成インターバル")] float _intervalTime = 0;
-    [Tooltip("時間")] float _timer = 0;
+    [SerializeField, Tooltip("時間")] float _timer = 0;
     [SerializeField, Tooltip("生成場所")] Transform[] _generatePoses = default;
     int _index = 0;
     int _randomPrefabsIndex = 0;
@@ -67,7 +67,7 @@ public class EnemyGenerator : MonoBehaviour
     }
     void Start()
     {
-        _timer = _firstInterval;
+        _timer = _intervalTime - _firstInterval;
         Count = 0;
         _playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -78,8 +78,8 @@ public class EnemyGenerator : MonoBehaviour
         {
             FindNearGenerator();
             GeneratePrefabs();
-            _timer = 0;
         }
+        if (Count < 3) IntervalController();
     }
     /// <summary>
     /// 20体まで生成 
@@ -120,6 +120,7 @@ public class EnemyGenerator : MonoBehaviour
             Count++;
             yield return _wfs;
         }
+        _timer = 0;
     }
     /// <summary>
     /// queueへ格納する
@@ -132,6 +133,13 @@ public class EnemyGenerator : MonoBehaviour
         go.gameObject.SetActive(false);
         //Queueに格納
         queue.Enqueue(go);
-        Count--; 
+        Count--;
+    }
+    /// <summary>
+    /// ノータイムでSetActive化
+    /// </summary>
+    public void IntervalController()
+    {
+        _timer = _intervalTime;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 /// <summary>
 /// 左右移動する敵キャラの行動制御、 
@@ -16,9 +15,6 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] Vector2 _lineForGround = new Vector2(-1, -1f);
     [Tooltip("地面に接したら真")] bool _canMove = false; 
     GameObject _chara = null;
-
-
-
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -32,10 +28,6 @@ public class EnemyMove : MonoBehaviour
     {
         CanMoveOnce(); 
         if (_canMove) Move();
-    }
-    void OnBecameInvisible()
-    {
-        _canMove = false;        
     }
     void Move()
     {
@@ -74,10 +66,15 @@ public class EnemyMove : MonoBehaviour
             Vector2 start = this.transform.position;
             Debug.DrawLine(start, start + new Vector2(0, -3f));
             RaycastHit2D hit_ground = Physics2D.Linecast(start, start + new Vector2(0, -3f), _ground);
-            if (hit_ground)
+            RaycastHit2D hit_wall = Physics2D.Linecast(start, start + new Vector2(0, -3f), _wall);
+            if (hit_ground || hit_wall)
             {
                 _canMove = true;
             }
         }
+    }
+    void OnBecameVisible()
+    {
+        _canMove = false; 
     }
 }

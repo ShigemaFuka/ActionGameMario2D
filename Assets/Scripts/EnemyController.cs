@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
                 _gameManager.KillCount += 1;
                 _enemyGenerator.Count -= 1;
                 GameObject go = _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
-                _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);  //**
+                _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
             }
         }
     }
@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour
         _isTimer = true;  
     }
 
-    void OnBecameInvisible() //**
+    void OnBecameInvisible() 
     {
         _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
     }

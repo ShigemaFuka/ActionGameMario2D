@@ -574,61 +574,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4828177309995838, guid: d43f38fc1456e574589ba6f37f268767, type: 3}
   m_PrefabInstance: {fileID: 1191408761}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1211246800
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1211246802}
-  - component: {fileID: 1211246801}
-  m_Layer: 0
-  m_Name: DeathEnemyTimeline
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!320 &1211246801
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211246800}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 299e42d085e5f8c43be8863e70bda178, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -761158556761276379, guid: 299e42d085e5f8c43be8863e70bda178, type: 2}
-    value: {fileID: 2583961673754995112}
-  - key: {fileID: -5103611878283946556, guid: 299e42d085e5f8c43be8863e70bda178, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 3168637563597223585, guid: 299e42d085e5f8c43be8863e70bda178, type: 2}
-    value: {fileID: 2583961673754995110}
-  m_ExposedReferences:
-    m_References: []
---- !u!4 &1211246802
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211246800}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1271200623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,16 +1257,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
---- !u!1 &2583961673754995110 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3973276267944947599, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
-  m_PrefabInstance: {fileID: 1513203725114197545}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2583961673754995112 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3973276267944947585, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
-  m_PrefabInstance: {fileID: 1513203725114197545}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3761458728309621242
 PrefabInstance:
   m_ObjectHideFlags: 0
