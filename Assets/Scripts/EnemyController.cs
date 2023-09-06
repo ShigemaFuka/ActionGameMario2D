@@ -58,34 +58,45 @@ public class EnemyController : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("Weapon")) 
         {
-            // çUåÇíl 
-            _playerAttackValueController.Attack();
-            _damageValue = _playerAttackValueController._attackValue;
-
-            // HPå∏ÇÁÇµÇƒÇ¢Ç≠
-            _enemyHp = _enemyHp - _damageValue;
-            ShowTextDamage(_damageValue); 
-            if (_spriteRenderer) _spriteRenderer.color = Color.red;
-            if(isActiveAndEnabled) _anim.Play("Hit");
-
-            if (_enemyHp < _damageValue)
-            {
-                // ÉXÉRÉAâ¡éZ 
-                _gameManager.AddScore(_characterData.Score);
-                // ÉLÉãêîâ¡éZ  
-                _gameManager.KillCount += 1;
-                _enemyGenerator.Count -= 1;
-                GameObject go = _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
-                _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
-            }
+            HitWeapon();
+        }
+    }
+    void OnTriggerStay2D(Collider2D coll)
+    {
+        if (coll.gameObject.CompareTag("RangeWeapon"))
+        {
+            HitWeapon();
         }
     }
 
     void OnTriggerExit2D(Collider2D coll)
     {
-        if(coll.gameObject.tag == "Weapon")
+        if (coll.gameObject.CompareTag("Weapon"))
         {
-            if(_spriteRenderer) _spriteRenderer.color = Color.white;
+            if (_spriteRenderer) _spriteRenderer.color = Color.white;
+        }
+    }
+    void HitWeapon()
+    {
+        // çUåÇíl 
+        _playerAttackValueController.Attack();
+        _damageValue = _playerAttackValueController._attackValue;
+
+        // HPå∏ÇÁÇµÇƒÇ¢Ç≠
+        _enemyHp = _enemyHp - _damageValue;
+        ShowTextDamage(_damageValue);
+        if (_spriteRenderer) _spriteRenderer.color = Color.red;
+        if (isActiveAndEnabled) _anim.Play("Hit");
+
+        if (_enemyHp < _damageValue)
+        {
+            // ÉXÉRÉAâ¡éZ 
+            _gameManager.AddScore(_characterData.Score);
+            // ÉLÉãêîâ¡éZ  
+            _gameManager.KillCount += 1;
+            _enemyGenerator.Count -= 1;
+            GameObject go = _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
+            _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
         }
     }
 

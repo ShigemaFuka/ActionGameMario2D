@@ -17,7 +17,8 @@ public class AttackValueController : MonoBehaviour
 
     void Start()
     {
-        _atVa = _characterDate.Attack; 
+        if(_characterDate)
+            _atVa = _characterDate.Attack; 
     }
 
     /// <summary>
