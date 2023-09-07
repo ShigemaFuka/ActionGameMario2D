@@ -16,16 +16,23 @@ public class RangeAttackController : MonoBehaviour
     GameManager _gameManager = default;
     [SerializeField] ParticleSystem _particleSystem = default;
     bool _active = false;
+    [SerializeField] Canvas _canvas = default;
     void Start()
     {
         _coll = GetComponent<Collider2D>(); 
         _coll.enabled = false;
         _gameManager = FindObjectOfType<GameManager>();
+        _canvas.enabled = false;
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
+        {
+            _coll.enabled = true;
             _particleSystem.Play();
+            _canvas.enabled = true;
+            StartCoroutine(CoroutineCollect());
+        }
 
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -35,6 +42,7 @@ public class RangeAttackController : MonoBehaviour
             {
                 _coll.enabled = true;
                 _particleSystem.Play();
+                _canvas.enabled = true;
                 _count++;
                 value += 10 + 5 * (_count - 1);
                 StartCoroutine(CoroutineCollect());
@@ -58,6 +66,7 @@ public class RangeAttackController : MonoBehaviour
     {
         yield return _wfs;
         _coll.enabled = false;
-        _particleSystem.Stop(); 
+        _canvas.enabled = false;
+        _particleSystem.Stop();
     }
 }

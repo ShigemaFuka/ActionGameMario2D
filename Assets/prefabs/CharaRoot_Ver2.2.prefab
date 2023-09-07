@@ -235,7 +235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6588715399347762321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6588715399347762316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe817ba0274f6a44f8d78460f8d9ab94, type: 3}
   m_Name: 
@@ -330,7 +330,6 @@ MonoBehaviour:
   _characterData: {fileID: 11400000, guid: b74c2728fc48506458d8028f9150c568, type: 2}
   _damageText: {fileID: 4446048768101762832}
   _showTextTime: 0.5
-  _deathEnemy: {fileID: 3973276267944947599, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
 --- !u!114 &4144267235560641400
 MonoBehaviour:
   m_ObjectHideFlags: 0

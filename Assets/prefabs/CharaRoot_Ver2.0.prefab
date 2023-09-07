@@ -330,7 +330,6 @@ MonoBehaviour:
   _characterData: {fileID: 11400000, guid: 0da1998349c31344aac9bd6e88e94145, type: 2}
   _damageText: {fileID: 4446048768101762832}
   _showTextTime: 0.5
-  _deathEnemy: {fileID: 3973276267944947599, guid: fdc2bae2cea4cfc4db08d784ced50c26, type: 3}
 --- !u!114 &4144267235560641400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,8 +566,8 @@ MonoBehaviour:
   - {fileID: 8024485963760904279}
   - {fileID: 8024485962158648312}
   m_Bounds:
-    m_Center: {x: 0.2452292, y: -0.21894921, z: 0}
-    m_Extent: {x: 0.1757634, y: 0.2108861, z: 0}
+    m_Center: {x: 0.24522932, y: -0.21894969, z: 0}
+    m_Extent: {x: 0.17576352, y: 0.21088468, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -674,7 +673,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 8024485962256528629}
   m_Bounds:
-    m_Center: {x: -0.0027479231, y: -0.27574834, z: 0}
+    m_Center: {x: -0.0027469695, y: -0.27574787, z: 0}
     m_Extent: {x: 0.32874188, y: 0.27857623, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1010,7 +1009,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 8024485963646340276}
   m_Bounds:
-    m_Center: {x: 0.014189079, y: -0.12940855, z: 0}
+    m_Center: {x: 0.014189079, y: -0.1294082, z: 0}
     m_Extent: {x: 0.048109844, y: 0.13300313, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1117,7 +1116,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 8024485961903052487}
   m_Bounds:
-    m_Center: {x: -0.0020226538, y: -0.24024056, z: 0}
+    m_Center: {x: -0.0020226538, y: -0.24024092, z: 0}
     m_Extent: {x: 0.33269194, y: 0.2407621, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1424,7 +1423,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 8024485962862374433}
   m_Bounds:
-    m_Center: {x: 0.027127579, y: -0.18969606, z: 0}
+    m_Center: {x: 0.027128533, y: -0.18969665, z: 0}
     m_Extent: {x: 0.25274178, y: 0.1864449, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1564,8 +1563,8 @@ MonoBehaviour:
   - {fileID: 8024485963637209680}
   - {fileID: 8024485963548643834}
   m_Bounds:
-    m_Center: {x: 0.07411892, y: -0.22397958, z: 0}
-    m_Extent: {x: 0.16481532, y: 0.22442545, z: 0}
+    m_Center: {x: 0.074121304, y: -0.22397994, z: 0}
+    m_Extent: {x: 0.16481484, y: 0.22442557, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -1871,7 +1870,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 8024485962928932400}
   m_Bounds:
-    m_Center: {x: -0.021758512, y: -0.12959227, z: 0}
+    m_Center: {x: -0.021758512, y: -0.12959251, z: 0}
     m_Extent: {x: 0.060324885, y: 0.13049108, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1

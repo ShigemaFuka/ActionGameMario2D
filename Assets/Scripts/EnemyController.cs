@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     GameManager _gameManager = default; 
     int _damageValue = default; 
     [SerializeField, Header("入力不要")] int _enemyHp = default;
-    SpriteRenderer _spriteRenderer = default;
+    //SpriteRenderer _spriteRenderer = default;
     Animator _anim = default;
     [SerializeField, Tooltip("ScriptableObjectな敵のパラメータ")] CharacterDates _characterData = default;
     AttackValueController _playerAttackValueController = default;
@@ -23,10 +23,10 @@ public class EnemyController : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>(); 
         // エネミーのHPの初期化
-        if (_characterData)
+        //if (_characterData)
             _enemyHp = _characterData.Maxhp;
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        if(_spriteRenderer) _spriteRenderer.color = Color.white;
+        //_spriteRenderer = GetComponent<SpriteRenderer>();
+        //if(_spriteRenderer) _spriteRenderer.color = Color.white;
         _anim = GetComponent<Animator>();
         GameObject go = GameObject.FindWithTag("Player");
         if(go) _playerAttackValueController = go.GetComponent<AttackValueController>();
@@ -37,7 +37,7 @@ public class EnemyController : MonoBehaviour
     }
     void OnEnable()
     {
-        if (_spriteRenderer) _spriteRenderer.color = Color.white;
+        //if (_spriteRenderer) _spriteRenderer.color = Color.white;
         _enemyHp = _characterData.Maxhp;
         _timer = 0f;
         _damageText.text = "";
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.CompareTag("Weapon")) 
+        if (coll.gameObject.CompareTag("Weapon") || coll.gameObject.CompareTag("RangeWeapon")) 
         {
             HitWeapon();
         }
@@ -69,13 +69,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.CompareTag("Weapon"))
-        {
-            if (_spriteRenderer) _spriteRenderer.color = Color.white;
-        }
-    }
+    //void OnTriggerExit2D(Collider2D coll)
+    //{
+    //    if (coll.gameObject.CompareTag("Weapon"))
+    //    {
+    //        if (_spriteRenderer) _spriteRenderer.color = Color.white;
+    //    }
+    //}
     void HitWeapon()
     {
         // 攻撃値 
@@ -85,7 +85,7 @@ public class EnemyController : MonoBehaviour
         // HP減らしていく
         _enemyHp = _enemyHp - _damageValue;
         ShowTextDamage(_damageValue);
-        if (_spriteRenderer) _spriteRenderer.color = Color.red;
+        //if (_spriteRenderer) _spriteRenderer.color = Color.red;
         if (isActiveAndEnabled) _anim.Play("Hit");
 
         if (_enemyHp < _damageValue)

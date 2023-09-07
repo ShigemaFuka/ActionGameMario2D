@@ -10,20 +10,20 @@ using System.Collections;
 /// </summary>
 public class ImpactDeathEnemy : MonoBehaviour
 {
-    Rigidbody2D _rb= default;
+    [SerializeField] Rigidbody2D _rb= default;
     Vector2 _position = Vector2.zero;
     Vector2 _targetPosition = Vector2.zero;
     Vector2 _distance = Vector2.zero; 
     Vector2 _direction = new Vector2(-1, 1);
     [SerializeField] float _power = 10f;
-    Animator _animator = default;
+    [SerializeField] Animator _animator = default;
     int _num = 0;
     EnemyGenerator _enemyGenerator = default;
     void OnEnable()
     {
         _enemyGenerator = FindAnyObjectByType<EnemyGenerator>(); 
-        _animator = GetComponent<Animator>(); 
-        _rb = GetComponent<Rigidbody2D>();
+        //_animator = GetComponent<Animator>(); 
+        //_rb = GetComponent<Rigidbody2D>();
         _position = this.transform.position;
         _targetPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         _distance = (_targetPosition - _position).normalized;

@@ -20,10 +20,10 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField, Tooltip("何体まで生成しておくか")] int _maxCount = 20;
     [Tooltip("個体数")] static int _count = 0;
     public int Count { get => _count; set => _count = value; }
-    Transform _playerPosition = default;
+    [SerializeField] Transform _playerPosition = default;
     [Tooltip("生成した敵キャラを格納するQueue")] static Queue<GameObject> _prefabQueue; //**
     public Queue<GameObject> PrefabQueue { get => _prefabQueue; set => _prefabQueue = value; }
-    [SerializeField, Tooltip("最初の生成インターバル")] float _firstInterval = 3.0f;
+    [SerializeField, Tooltip("最初の生成インターバルから経過させておく時間")] float _firstInterval = 3.0f;
     [SerializeField, Tooltip("生成したいプレハブ")] GameObject _deathPrefab = default;
     [Tooltip("生成した死亡演出用の敵キャラを格納するQueue")] Queue<GameObject> _deathPrefabQueue;
     public Queue<GameObject> DeathPrefabQueue { get => _deathPrefabQueue; set => _deathPrefabQueue = value; }
@@ -69,7 +69,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         _timer = _intervalTime - _firstInterval;
         Count = 0;
-        _playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        //_playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
     }
     void Update()
     {
@@ -118,6 +118,7 @@ public class EnemyGenerator : MonoBehaviour
             pos.y += y;
             Launch(PrefabQueue, pos);  
             Count++;
+            Debug.Log(Count); 
             yield return _wfs;
         }
         _timer = 0;
