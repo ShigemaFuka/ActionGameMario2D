@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// “GƒLƒƒƒ‰‚ğ¶¬‚·‚é 
@@ -19,8 +18,8 @@ public class EnemyGenerator : MonoBehaviour
     int _randomPrefabsIndex = 0;
     [SerializeField, Tooltip("‰½‘Ì‚Ü‚Å¶¬‚µ‚Ä‚¨‚­‚©")] int _maxCount = 20;
     [Tooltip("ŒÂ‘Ì”")] static int _count = 0;
-    public int Count { get => _count; set => _count = value; }
-    [SerializeField] Transform _playerPosition = default;
+    public int CharaCount { get => _count; set => _count = value; }
+    Transform _playerPosition = default;
     [Tooltip("¶¬‚µ‚½“GƒLƒƒƒ‰‚ğŠi”[‚·‚éQueue")] static Queue<GameObject> _prefabQueue; //**
     public Queue<GameObject> PrefabQueue { get => _prefabQueue; set => _prefabQueue = value; }
     [SerializeField, Tooltip("Å‰‚Ì¶¬ƒCƒ“ƒ^[ƒoƒ‹‚©‚çŒo‰ß‚³‚¹‚Ä‚¨‚­ŠÔ")] float _firstInterval = 3.0f;
@@ -67,19 +66,20 @@ public class EnemyGenerator : MonoBehaviour
     }
     void Start()
     {
+        CharaCount = 0;
         _timer = _intervalTime - _firstInterval;
-        Count = 0;
-        //_playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
     }
     void Update()
     {
+        //Debug.Log(CharaCount);
         _timer += Time.deltaTime;
         if (_timer > _intervalTime)
         {
             FindNearGenerator();
             GeneratePrefabs();
         }
-        if (Count < 3) IntervalController();
+        if (CharaCount < 3) IntervalController(); // ‚±‚±‚ªãè‚­‚¢‚©‚È‚¢ 
     }
     /// <summary>
     /// 20‘Ì‚Ü‚Å¶¬ 
@@ -109,16 +109,17 @@ public class EnemyGenerator : MonoBehaviour
     WaitForSeconds _wfs = new WaitForSeconds(0.1f);
     IEnumerator CoroutineInstantiate()
     {
-        for (var i = 0; i < (_maxCount - Count); i++)
+        for (var i = 0; i < (_maxCount - CharaCount); i++)
         {
             float x = Random.Range(-_x, _x);
             float y = Random.Range(-_y, _y);
             Vector2 pos = _generatePoses[_index].position;
             pos.x += x;
             pos.y += y;
+            yield return _wfs;
+
             Launch(PrefabQueue, pos);  
-            Count++;
-            Debug.Log(Count); 
+            CharaCount++;
             yield return _wfs;
         }
         _timer = 0;
@@ -134,13 +135,15 @@ public class EnemyGenerator : MonoBehaviour
         go.gameObject.SetActive(false);
         //Queue‚ÉŠi”[
         queue.Enqueue(go);
-        Count--;
+        CharaCount--; 
+       // Debug.Log("Œ¸‚Á‚½" + CharaCount);
+
     }
     /// <summary>
-    /// ƒm[ƒ^ƒCƒ€‚ÅSetActive‰»
+    /// ¶¬ŠÔ‚ğ‘‚­‚·‚é 
     /// </summary>
     public void IntervalController()
     {
-        _timer = _intervalTime;
+        _timer *= 2;
     }
 }

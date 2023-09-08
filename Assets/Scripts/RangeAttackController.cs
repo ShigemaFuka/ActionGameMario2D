@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 /// <summary>
@@ -16,49 +17,64 @@ public class RangeAttackController : MonoBehaviour
     GameManager _gameManager = default;
     [SerializeField] ParticleSystem _particleSystem = default;
     bool _active = false;
-    [SerializeField] Canvas _canvas = default;
+    [SerializeField, Tooltip("オンオフする画像のキャンバス")] Canvas _canvas = default;
+    [SerializeField, Tooltip("Vkeyが押せることを示唆")] Text _text = default;
+    [SerializeField] Slider _slider = default;
+    int _value = default;
     void Start()
     {
         _coll = GetComponent<Collider2D>(); 
         _coll.enabled = false;
         _gameManager = FindObjectOfType<GameManager>();
         _canvas.enabled = false;
+        _text.enabled = false;
+        _slider.value = 0;
+        _value = 10;
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            _coll.enabled = true;
-            _particleSystem.Play();
-            _canvas.enabled = true;
-            StartCoroutine(CoroutineCollect());
-        }
+            Debug.Log("value : " + _value);
 
+            //_coll.enabled = true;
+            //_particleSystem.Play();
+            //_canvas.enabled = true;
+            //StartCoroutine(CoroutineCollect());
+        }
+        OnCount(_gameManager.KillCount);
+        _slider.value = _gameManager.KillCount;
         if (Input.GetKeyDown(KeyCode.V))
         {
-            OnCount(_gameManager.KillCount);
-            Debug.Log(_active + "  _gameManager.KillCount : " + _gameManager.KillCount);
+            //Debug.Log(_active + "  _gameManager.KillCount : " + _gameManager.KillCount);
             if (_active)
             {
                 _coll.enabled = true;
                 _particleSystem.Play();
                 _canvas.enabled = true;
                 _count++;
-                value += 10 + 5 * (_count - 1);
+                var oldValue = _value;
+                _slider.minValue = oldValue; 
+                _value += 5 * (_count - 1);
                 StartCoroutine(CoroutineCollect());
             }
-            Debug.Log("_count : " + _count);
+            //Debug.Log("_count : " + _count);
         }
     }
-    int value = 0;
     void OnCount(int kCount)
     {
-        if (kCount >= value)
+        if (kCount >= _value)
         {
             _active = true;
+            _text.enabled = true;
         }
-        else _active = false;
-        Debug.Log("value : " + value);
+        else 
+        { 
+            _active = false;
+            _text.enabled = false;
+        }
+        _slider.maxValue = _value;
+        //Debug.Log("value : " + _value);
     }
 
     WaitForSeconds _wfs = new WaitForSeconds(0.1f);
