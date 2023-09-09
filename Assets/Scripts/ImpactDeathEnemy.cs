@@ -21,9 +21,9 @@ public class ImpactDeathEnemy : MonoBehaviour
     EnemyGenerator _enemyGenerator = default;
     void OnEnable()
     {
+        var randomY = Random.Range(0, 2.0f);
+        _direction.y = randomY; 
         _enemyGenerator = FindAnyObjectByType<EnemyGenerator>(); 
-        //_animator = GetComponent<Animator>(); 
-        //_rb = GetComponent<Rigidbody2D>();
         _position = this.transform.position;
         _targetPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         _distance = (_targetPosition - _position).normalized;
@@ -34,9 +34,10 @@ public class ImpactDeathEnemy : MonoBehaviour
             Vector2 _localScale = this.transform.localScale;
             this.transform.localScale = new Vector3(-_localScale.x, this.transform.localScale.y);
         }
-        //_num = Random.Range(1, 4);
-        _num = Random.Range(1, 3);
-        //if (_num == 3) _power = 20;
+        var randomNum = Random.Range(0, 10);
+        // 8Š„‚è‚ÍisDead_1‚ðÄ¶ 
+        if (randomNum > 1) _num = 1;
+        else _num = 2; 
         _animator.SetTrigger($"isDead_{_num}"); 
         _rb.AddForce(_direction * _power, ForceMode2D.Impulse);
         StartCoroutine(CoroutineCollect());
