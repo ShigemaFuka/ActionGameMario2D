@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static GameManager;
-using static PlayerController;
 
 /// <summary>
 /// プレイヤーのHPを制御
@@ -62,7 +60,7 @@ public class PlayerHp : MonoBehaviour
                 PlayerHide(); 
                 Debug.LogWarning("プレイヤー死んだよ"); 
             }
-            Debug.Log(_playerCurrentHp); 
+            Debug.Log("_playerCurrentHp : " + _playerCurrentHp); 
         }
     }
 

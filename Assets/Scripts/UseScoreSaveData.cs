@@ -82,7 +82,7 @@ public class UseScoreSaveData : MonoBehaviour
         {
             for (var j = 0; j < _existFiles.Length; j++)
             {
-                Debug.Log(j);
+                Debug.Log(j + "ŒÂ–Ú‚Ìƒf[ƒ^");
                 ScoreSaveData sdata = _saveManager.DataLoad(_saveDirPath, _existFiles[j]);
                 if (sortedList[i] == sdata._score)
                 {
