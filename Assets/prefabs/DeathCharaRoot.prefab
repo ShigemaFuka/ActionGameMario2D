@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 3973276267944947587}
-  _power: 50
+  _power: 20
   _animator: {fileID: 3973276267944947585}
 --- !u!82 &6517020264551847698
 AudioSource:

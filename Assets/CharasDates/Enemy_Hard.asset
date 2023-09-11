@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4424f31095640c459f221b95e602c88, type: 3}
   m_Name: Enemy_Hard
   m_EditorClassIdentifier: 
-  characterKind: 3
-  maxHp: 35
+  maxHp: 20
   attack: 10
   speed: 9
   score: 10
