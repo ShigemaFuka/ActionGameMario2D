@@ -7,19 +7,29 @@ using UnityEngine;
 /// </summary>
 public class DeadZoneController : MonoBehaviour
 {
-    GameManager _gameManager = default;
+    [SerializeField] GameManager _gameManager = default;
     [SerializeField] EnemyGenerator _enemyGenerator = default;
-    private void Start()
+           
+    //void OnCollisionEnter2D(Collision2D coll)
+    //{
+        //if (coll.gameObject.CompareTag("Player"))
+        //{
+        //    _gameManager.GameOver();
+        //}
+        //else if (coll.gameObject.CompareTag("Enemy"))
+        //{
+        //    _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, coll.gameObject);
+        //    _enemyGenerator.CharaCount--;
+        //}
+    //}
+    private void OnTriggerEnter2D(Collider2D coll)
     {
-        _gameManager = FindAnyObjectByType<GameManager>(); 
-    }
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag == "Player")
+        if(!_gameManager) _gameManager = FindAnyObjectByType<GameManager>();
+        if (coll.gameObject.CompareTag("Player"))
         {
             _gameManager.GameOver();
         }
-        else if (coll.gameObject.tag == "Enemy")
+        else if (coll.gameObject.CompareTag("Enemy"))
         {
             _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, coll.gameObject);
             _enemyGenerator.CharaCount--;

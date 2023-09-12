@@ -42,7 +42,6 @@ public class EnemyController : MonoBehaviour
         _timer = 0f;
         _damageText.text = "";
     }
-
     void Update()
     {
         if(_isTimer) _timer += Time.deltaTime;  
@@ -53,7 +52,6 @@ public class EnemyController : MonoBehaviour
             _timer = 0;
         }
     }
-
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.gameObject.CompareTag("Weapon") || coll.gameObject.CompareTag("RangeWeapon")) 
@@ -68,14 +66,6 @@ public class EnemyController : MonoBehaviour
             HitWeapon();
         }
     }
-
-    //void OnTriggerExit2D(Collider2D coll)
-    //{
-    //    if (coll.gameObject.CompareTag("Weapon"))
-    //    {
-    //        if (_spriteRenderer) _spriteRenderer.color = Color.white;
-    //    }
-    //}
     void HitWeapon()
     {
         // çUåÇíl 
@@ -85,29 +75,26 @@ public class EnemyController : MonoBehaviour
         // HPå∏ÇÁÇµÇƒÇ¢Ç≠
         _enemyHp = _enemyHp - _damageValue;
         ShowTextDamage(_damageValue);
-        //if (_spriteRenderer) _spriteRenderer.color = Color.red;
         if (isActiveAndEnabled) _anim.Play("Hit");
-
         if (_enemyHp < _damageValue)
         {
             // ÉXÉRÉAâ¡éZ 
             _gameManager.AddScore(_characterData.Score);
-            // ÉLÉãêîâ¡éZ  
+            // ÉLÉãêîâ¡éZ 
             _gameManager.KillCount += 1;
-            //_enemyGenerator.CharaCount -= 1;
             GameObject go = _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
             _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
+            _enemyGenerator.CharaCount--;
         }
     }
-
     void ShowTextDamage(int damageValue)
     {
         if (_damageText) _damageText.text = damageValue.ToString();
-        _isTimer = true;  
+        _isTimer = true;
     }
-
     void OnBecameInvisible() 
     {
         _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
+        _enemyGenerator.CharaCount--;
     }
 }
