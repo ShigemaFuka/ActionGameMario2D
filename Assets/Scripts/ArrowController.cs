@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// 矢印が触れたUIに応じてシーン遷移する、 
 /// シーン遷移の制御はUIに付けている 
+/// 遷移先のシーンが増えても登録したUIがあれば
+/// 簡単に遷移できる 
 /// </summary>
 public class ArrowController : MonoBehaviour
 {
     [SerializeField, Tooltip("シーン遷移のために設置しているUI")] GameObject[] _images = null; 
     int _num = 0; 
-    SceneChanger _sceneChanger = null; 
+    SceneChanger _sceneChanger = null;
+    [SerializeField, Tooltip("エンター押下時にのみ再生")] AudioSource _audioSource = default;  
 
     void Start()
     {
@@ -39,17 +40,23 @@ public class ArrowController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            if (_audioSource) _audioSource.PlayOneShot(_audioSource.clip);
             _sceneChanger.ChangeScene(); 
         }
     }
 
-    void OnTriggerStay2D(Collider2D col)
+    //void OnTriggerStay2D(Collider2D col)
+    //{
+    //    _sceneChanger = col.gameObject.GetComponent<SceneChanger>();  
+    //}
+    void OnTriggerEnter2D(Collider2D coll)
     {
-        _sceneChanger = col.gameObject.GetComponent<SceneChanger>();  
+        if(!_sceneChanger) _sceneChanger = coll.gameObject.GetComponent<SceneChanger>();
     }
 
     void MoveArrow()
     {
+        _sceneChanger = null;
         // objのXポジを取得してクリックのたびに、ずれるようにする
         // objの位置が変わっても。objのｘポジのまま、ｙポジより110下に矢印が来る
         this.gameObject.transform.position = new Vector3(_images[_num].transform.position.x, _images[_num].transform.position.y - 110, this.gameObject.transform.position.z);
