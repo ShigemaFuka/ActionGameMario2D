@@ -79,10 +79,10 @@ public class EnemyGenerator : MonoBehaviour
             FindNearGenerator();
             GeneratePrefabs();
         }
-        if (CharaCount < 3) IntervalController(); // ‚±‚±‚ªãè‚­‚¢‚©‚È‚¢ 
+        if (CharaCount == 0) IntervalController(); 
     }
     /// <summary>
-    /// 20‘Ì‚Ü‚Å¶¬ 
+    /// Å‘å20‘Ì‚Ü‚Å¶¬ 
     /// </summary>
     void GeneratePrefabs()
     {
@@ -109,17 +109,15 @@ public class EnemyGenerator : MonoBehaviour
     WaitForSeconds _wfs = new WaitForSeconds(0.1f);
     IEnumerator CoroutineInstantiate()
     {
-        for (var i = 0; i < (_maxCount - CharaCount); i++)
+        for (var i = 0; i < /*(_maxCount - CharaCount)*/ 5; i++)
         {
             float x = Random.Range(-_x, _x);
             float y = Random.Range(-_y, _y);
             Vector2 pos = _generatePoses[_index].position;
             pos.x += x;
             pos.y += y;
-            yield return _wfs;
-
-            Launch(PrefabQueue, pos);  
-            CharaCount++;
+            GameObject go = Launch(PrefabQueue, pos);  
+            if(go) CharaCount++;
             yield return _wfs;
         }
         _timer = 0;
@@ -135,9 +133,6 @@ public class EnemyGenerator : MonoBehaviour
         go.gameObject.SetActive(false);
         //Queue‚ÉŠi”[
         queue.Enqueue(go);
-        CharaCount--; 
-       // Debug.Log("Œ¸‚Á‚½" + CharaCount);
-
     }
     /// <summary>
     /// ¶¬ŠÔ‚ğ‘‚­‚·‚é 
@@ -145,5 +140,6 @@ public class EnemyGenerator : MonoBehaviour
     public void IntervalController()
     {
         _timer *= 2;
+        Debug.Log("IntervalController"); 
     }
 }

@@ -82,7 +82,7 @@ public class EnemyController : MonoBehaviour
             _gameManager.AddScore(_characterData.Score);
             // ƒLƒ‹”‰ÁZ 
             _gameManager.KillCount += 1;
-            GameObject go = _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
+            _enemyGenerator.Launch(_enemyGenerator.DeathPrefabQueue, this.gameObject.transform.position);
             _enemyGenerator.Collect(_enemyGenerator.PrefabQueue, this.gameObject);
             _enemyGenerator.CharaCount--;
         }

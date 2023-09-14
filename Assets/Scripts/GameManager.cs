@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int KillCount { get => _killCount; set => _killCount = value; }
     [SerializeField, Tooltip("残りのHP")] static int _remainingHp = 0; 
     public int RemainingHp { get => _remainingHp; set => _remainingHp = value; }
-    PlayerHp _playerHp = default;
+    //PlayerHp _playerHp = default;
     [SerializeField] FadeOut _fadeOut;
     [SerializeField] GameState _nowState = GameState.Select;
     /// <summary> GameStateのプロパティ </summary>
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("入力されるプレイヤー名")] static string _playerName = default;
     public string PlayerName { get => _playerName; set => _playerName = value; }
     [SerializeField] InputField _inputField = default;
+    [SerializeField, Tooltip("スコア加算のエフェクト")] ParticleSystem _addScoreParticle = default;
 
     /// <summary> ゲームの状態を管理する列挙型 </summary>
     public enum GameState
@@ -49,10 +50,11 @@ public class GameManager : MonoBehaviour
         if (_nowState == GameState.InGame)
         {
             // シーンに1つだけ存在する 
-            _playerHp = FindAnyObjectByType<PlayerHp>();
+            //_playerHp = FindAnyObjectByType<PlayerHp>();
             Reset();
             _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
             _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
+            _addScoreParticle = GameObject.Find("ChangeScoreUI").GetComponent<ParticleSystem>();
         }
     }
     void Update()
@@ -87,7 +89,8 @@ public class GameManager : MonoBehaviour
         if (_nowState == GameState.InGame && _oldState == GameState.Select)
         {
             if(!_timerText) _timerText = GameObject.Find("CurrentTimer").GetComponent<Text>();
-            if (!_scoreText) _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
+            if(!_scoreText) _scoreText = GameObject.Find("CurrentScore").GetComponent<Text>();
+            if(!_addScoreParticle) _addScoreParticle = GameObject.Find("ChangeScoreUI").GetComponent<ParticleSystem>();
         }
         _oldState = _nowState;
     }
@@ -96,7 +99,11 @@ public class GameManager : MonoBehaviour
     public void AddScore(int score)
     {
         if (_score < _maxScore) _score += score;
-        if (_scoreText) _scoreText.text = "Score:" + _score.ToString("00000");
+        if (_scoreText)
+        {
+            _scoreText.text = "Score:" + _score.ToString("00000");
+            _addScoreParticle.Play();
+        }
     }
     /// <summary> 残り時間を減らして表示するメソッド  </summary>
     private void Timer()
