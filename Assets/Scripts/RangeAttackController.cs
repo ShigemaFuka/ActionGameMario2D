@@ -15,7 +15,9 @@ public class RangeAttackController : MonoBehaviour
     int _count = 1;
     Collider2D _coll = default;
     GameManager _gameManager = default;
-    [SerializeField] ParticleSystem _particleSystem = default;
+    [SerializeField, Tooltip("コライダと同じ範囲に表示")] ParticleSystem _particleSystem = default;
+    [SerializeField, Tooltip("スライダが満タンになったら再生（粒子）")] ParticleSystem _sliderPSystem = default; 
+    [SerializeField, Tooltip("スライダが満タンになったら再生（リング）")] ParticleSystem _sliderPSystem2 = default; 
     bool _active = false;
     [SerializeField, Tooltip("オンオフする画像のキャンバス")] Canvas _canvas = default;
     [SerializeField, Tooltip("Vkeyが押せることを示唆")] Text _text = default;
@@ -30,11 +32,16 @@ public class RangeAttackController : MonoBehaviour
         _text.enabled = false;
         _slider.value = 0;
         _value = 10;
+        _sliderPSystem.Stop(); 
+        _sliderPSystem2.Stop(); 
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            _count++;
+            _value += 5 * (_count - 1);
+
             Debug.Log("value : " + _value);
 
             //_coll.enabled = true;
@@ -51,6 +58,7 @@ public class RangeAttackController : MonoBehaviour
             {
                 _coll.enabled = true;
                 _particleSystem.Play();
+                _sliderPSystem2.Play();
                 _canvas.enabled = true;
                 _count++;
                 var oldValue = _value;
@@ -66,15 +74,19 @@ public class RangeAttackController : MonoBehaviour
         if (kCount >= _value)
         {
             _active = true;
+            _sliderPSystem.Play();
+            _sliderPSystem2.Play();
             _text.enabled = true;
         }
         else 
         { 
             _active = false;
+            _sliderPSystem.Stop();
+            _sliderPSystem2.Stop();
             _text.enabled = false;
         }
         _slider.maxValue = _value;
-        //Debug.Log("value : " + _value);
+        //Debug.Log("_value - kCount : " + (_value - kCount) + "//  _value : " + _value);
     }
 
     WaitForSeconds _wfs = new WaitForSeconds(0.1f);
@@ -82,7 +94,7 @@ public class RangeAttackController : MonoBehaviour
     {
         yield return _wfs;
         _coll.enabled = false;
-        _canvas.enabled = false;
         _particleSystem.Stop();
+        _canvas.enabled = false;
     }
 }
