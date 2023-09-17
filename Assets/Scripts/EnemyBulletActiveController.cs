@@ -24,9 +24,9 @@ public class EnemyBulletActiveController : MonoBehaviour
         if (_target)
         {
             //2点間のベクトルの 2 乗の長さを返します。
-            //Vector3.Distance で2点間の距離を算出する場合、ルートの計算に時間がかかります。
+            //Vector3.Distance で2点間の距離を算出する場合、ルートの計算に時間がかかる。
             //このため、単純に距離の遠近を比較したい場合は sqrMagnitude を利用し、
-            //2乗値で比較するようにすると処理が高速に行えます。
+            //2乗値で比較するようにすると処理が高速に行える。
 
             Vector2 offset = _target.transform.position - transform.position;
             _distance = offset.sqrMagnitude;

@@ -2,6 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// 弾丸を制御するコンポーネント
+/// 敵キャラを何かの子オブジェクトにして生成しているとき
 /// </summary>
 public class BulletControllerStraight_2 : BaseBulletController
 {

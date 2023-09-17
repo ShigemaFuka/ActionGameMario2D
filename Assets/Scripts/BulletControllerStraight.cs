@@ -4,6 +4,8 @@ using UnityEngine;
 /// 生成された瞬間、生成された初期位置（終点）・生成するオブジェクト（始点）の方向へ移動する、
 /// 破棄も自身で行う 
 /// ※ 生成側で弾を子オブジェクトにしていないといけない
+/// マズルの位置が固定だと、生成方向も固定されたまま
+/// マズルの位置がキャラクタの斜め右上だったら、進行方向も斜め右上
 /// </summary>
 public class BulletControllerStraight : BaseBulletController 
 {

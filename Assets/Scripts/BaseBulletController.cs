@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -13,7 +12,7 @@ public abstract class BaseBulletController : MonoBehaviour
     [SerializeField, Tooltip("エフェクト")] GameObject _crashEffectPrefab = default; 
     [SerializeField] float _destroyTime = 5f;
     //オブジェクトプール用コントローラー格納用変数宣言
-    ObjectPoolController _objectPool;
+    //ObjectPoolController _objectPool;
 
     void Start()
     {
@@ -22,7 +21,7 @@ public abstract class BaseBulletController : MonoBehaviour
         // シーンに１つしかないから 
         _gameManager = FindObjectOfType<GameManager>();
         //オブジェクトプールを取得
-        _objectPool = FindObjectOfType<ObjectPoolController>();
+        //_objectPool = FindObjectOfType<ObjectPoolController>();
     }
 
     /// <summary>

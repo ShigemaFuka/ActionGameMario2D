@@ -15,16 +15,24 @@ public class BulletInstantiate : MonoBehaviour
     [SerializeField, Tooltip("時間")] float _timer;
     [SerializeField, Tooltip("発射フラグ")] public bool _isShot;
     [SerializeField] GameObject _muzzle;
+    [SerializeField, Tooltip("「何秒ごとに１発生成するか」の最小値")] float _minRange = 0.2f;
+    [SerializeField, Tooltip("「何秒ごとに１発生成するか」の最大値")] float _maxRange = 0.7f;
+    [SerializeField, Tooltip("何秒ごとに１発生成するか")] float _oneInterval = 1;
+    [SerializeField, Tooltip("１サイクル後のインターバル")] float _wait = 2;
+    [SerializeField, Tooltip("発射から待機までの１サイクルの時間")] float _totalTime = 5;
+    [SerializeField, Tooltip("１サイクルで何発生成するか")] int _maxCount = 3; 
 
     // Time.deltaTime で時間カウント、数秒毎に生成
     // そのために、エネミーにアタッチ
     // プレハブセット、削除を行う
     void OnEnable()
     {
+        _oneInterval = Random.Range(_minRange, _maxRange);
         _timeCount = 0;
         _timer = 0;
         _shotCount = 0;
         _muzzle = transform.GetChild(0).gameObject;
+        _totalTime = _oneInterval * _maxCount + _wait;
     }
     void Update()
     {
@@ -35,18 +43,18 @@ public class BulletInstantiate : MonoBehaviour
 
         // 時間の管理************
         // 3.5f秒を超えたらリセット
-        if(_timer >= 5f) // 3.5->5
+        if(_timer >= _totalTime) // 3.5->5
         {
             _isShot = true;
             _timer = 0;
         }
         // 発射インターバル2秒
-        else if (_timer >= 2.0f)
+        else if (_timer >= _wait)
         {
             _isShot = false;
         }
         // 3.5秒をカウント
-        if(_timer < 5f)  // 3.5->5
+        if(_timer < _totalTime)  // 3.5->5
         {
             _timer = _timer + Time.deltaTime;
         }
@@ -55,24 +63,24 @@ public class BulletInstantiate : MonoBehaviour
         if(_isShot)
         {
             // 0.5秒周期で発射
-            if(_timeCount >= 1f)  // 0.5->1
+            if(_timeCount >= _oneInterval)  // 0.5->1
             {
                 // 時間だけだと誤差が出るため、回数制限
-                if(_shotCount >= 3)
+                if(_shotCount >= _maxCount)
                 {
                     // ３回発射されたらカウントリセットで０から再開
                     _shotCount = 0;
                 }
-                else if (_shotCount <= 2)
+                else if (_shotCount <= _maxCount - 1)
                 {
-                    // ３回までは弾丸を生成 
+                    // ３回未満までは弾丸を生成 
                     if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
                     _bulletPrefab.transform.position = new Vector2(0, 0);
                     _shotCount++;
                 }
                 _timeCount = 0;
             }
-            else if(_timeCount < 1f) // 0.5->1
+            else if(_timeCount < _oneInterval) // 0.5->1
             {
                 _timeCount = _timeCount + Time.deltaTime;
             }

@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe817ba0274f6a44f8d78460f8d9ab94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 1507012249380705141, guid: da5e15118abebd24a974e0bb5c8ac8bb, type: 3}
+  _bulletPrefab: {fileID: 1968694659401355359, guid: a4e0d64e441033840b3ae7f78073b154, type: 3}
   _timeCount: 0
   _shotCount: 0
   _timer: 0
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _script: {fileID: 0}
-  _range: 10
+  _range: 30
   _distance: 0
 --- !u!95 &6588715399347762306
 Animator:

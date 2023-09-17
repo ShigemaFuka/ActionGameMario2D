@@ -1,5 +1,4 @@
 using UnityEngine;
-
 /// <summary>
 /// 生成された瞬間、自身で目標へ向かって移動し、
 /// 時限で自身を破棄する 
@@ -8,7 +7,7 @@ using UnityEngine;
 public class BulletControllerToTarget : BaseBulletController
 {
     GameObject _target = default;
-    Vector3 _pos; 
+    [Tooltip("ターゲットのポジション")] Vector3 _pos; 
     [SerializeField] float _speed = 5f; 
     public override void MoveBullet()
     {
@@ -28,8 +27,12 @@ public class BulletControllerToTarget : BaseBulletController
         if(_target)
         {
             transform.up = _target.transform.position;
+            if (_pos == gameObject.transform.position)
+            {
+                Destroy(gameObject);
+            }
             // 生成した瞬間に、最終到達地点が決まる  
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _pos/*_target.transform.position*/, _speed * Time.deltaTime);
+            else gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _pos/*_target.transform.position*/, _speed * Time.deltaTime);
         }
     }
 }
