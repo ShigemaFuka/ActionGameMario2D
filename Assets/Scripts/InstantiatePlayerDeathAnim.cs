@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -14,13 +12,11 @@ public class InstantiatePlayerDeathAnim : MonoBehaviour
     [SerializeField] GameObject _player;
     bool _isDeath = false; 
 
-    // Start is called before the first frame update
     void Start()
     {
         _playerHp = FindAnyObjectByType<PlayerHp>(); 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(_playerHp.PlayerCurrentHp <= 0 && !_isDeath)

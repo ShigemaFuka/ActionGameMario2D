@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         // •ûŒüŽwŽ¦‚ª‚ ‚é‚Æ‚« 
         if(_h != 0)
         {
-            if (Input.GetKey(KeyCode.B))
+            if (Input.GetKey(KeyCode.LeftControl))
             {
                 // ‘–‚é
                 _movePower = _movePowerUp;
