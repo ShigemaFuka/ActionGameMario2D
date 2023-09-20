@@ -20,16 +20,16 @@ public class RangeAttackController : MonoBehaviour
     [SerializeField, Tooltip("スライダが満タンになったら再生（リング）")] ParticleSystem _sliderPSystem2 = default; 
     bool _active = false;
     [SerializeField, Tooltip("オンオフする画像のキャンバス")] Canvas _canvas = default;
-    [SerializeField, Tooltip("Vkeyが押せることを示唆")] Text _text = default;
     [SerializeField] Slider _slider = default;
     int _value = default;
+    [SerializeField, Tooltip("ゲージ満タンのサインUI")] GameObject _gameObject = default;
     void Start()
     {
         _coll = GetComponent<Collider2D>(); 
         _coll.enabled = false;
         _gameManager = FindObjectOfType<GameManager>();
         _canvas.enabled = false;
-        _text.enabled = false;
+        _gameObject.SetActive(false);
         _slider.value = 0;
         _value = 10;
         _sliderPSystem.Stop(); 
@@ -76,14 +76,14 @@ public class RangeAttackController : MonoBehaviour
             _active = true;
             _sliderPSystem.Play();
             _sliderPSystem2.Play();
-            _text.enabled = true;
+            _gameObject.SetActive(true);
         }
         else 
         { 
             _active = false;
             _sliderPSystem.Stop();
             _sliderPSystem2.Stop();
-            _text.enabled = false;
+            _gameObject.SetActive(false);
         }
         _slider.maxValue = _value;
         //Debug.Log("_value - kCount : " + (_value - kCount) + "//  _value : " + _value);
