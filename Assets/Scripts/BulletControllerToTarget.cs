@@ -8,10 +8,13 @@ public class BulletControllerToTarget : BaseBulletController
 {
     GameObject _target = default;
     [Tooltip("ターゲットのポジション")] Vector3 _pos; 
-    [SerializeField] float _speed = 5f; 
+    [SerializeField] float _speed = 5f;
+    //[Tooltip("格納された弾丸を管理しているスクリプト")] MakeBulletObjectPool _makeBulletObjectPool = default;
     public override void MoveBullet()
     {
-        _target = GameObject.FindGameObjectWithTag("Player");
+        //if (!_makeBulletObjectPool) _makeBulletObjectPool = FindAnyObjectByType<MakeBulletObjectPool>();
+
+        if(!_target) _target = GameObject.FindGameObjectWithTag("Player");
         // ポジションをそのままにしてしまうと、見た目では足元を狙ってしまう 
         if(_target)
         {
@@ -29,7 +32,8 @@ public class BulletControllerToTarget : BaseBulletController
             transform.up = _target.transform.position;
             if (_pos == gameObject.transform.position)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                _makeBulletObjectPool.Collect(gameObject);
             }
             // 生成した瞬間に、最終到達地点が決まる  
             else gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _pos/*_target.transform.position*/, _speed * Time.deltaTime);

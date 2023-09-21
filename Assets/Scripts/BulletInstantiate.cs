@@ -17,14 +17,21 @@ public class BulletInstantiate : MonoBehaviour
     [SerializeField] GameObject _muzzle;
     [SerializeField, Tooltip("「何秒ごとに１発生成するか」の最小値")] float _minRange = 0.2f;
     [SerializeField, Tooltip("「何秒ごとに１発生成するか」の最大値")] float _maxRange = 0.7f;
+    [Header("_oneInterval = _minRange ～ _maxRange")]
     [SerializeField, Tooltip("何秒ごとに１発生成するか")] float _oneInterval = 1;
     [SerializeField, Tooltip("１サイクル後のインターバル")] float _wait = 2;
+    [Header("_totalTime = _oneInterval * _maxCount + _wait")]
     [SerializeField, Tooltip("発射から待機までの１サイクルの時間")] float _totalTime = 5;
-    [SerializeField, Tooltip("１サイクルで何発生成するか")] int _maxCount = 3; 
+    [SerializeField, Tooltip("１サイクルで何発生成するか")] int _maxCount = 3;
+    [Tooltip("格納された弾丸を管理しているスクリプト")] MakeBulletObjectPool _makeBulletObjectPool = default;
 
     // Time.deltaTime で時間カウント、数秒毎に生成
     // そのために、エネミーにアタッチ
     // プレハブセット、削除を行う
+    void Start()
+    {
+        if(!_makeBulletObjectPool) _makeBulletObjectPool = FindAnyObjectByType<MakeBulletObjectPool>();
+    }
     void OnEnable()
     {
         _oneInterval = Random.Range(_minRange, _maxRange);
@@ -74,8 +81,10 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= _maxCount - 1)
                 {
                     // ３回未満までは弾丸を生成 
-                    if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
-                    _bulletPrefab.transform.position = new Vector2(0, 0);
+                    //if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
+                    //_bulletPrefab.transform.position = new Vector2(0, 0);
+                    if (_muzzle)
+                        _makeBulletObjectPool.Launch(_muzzle.gameObject.transform.position);
                     _shotCount++;
                 }
                 _timeCount = 0;
