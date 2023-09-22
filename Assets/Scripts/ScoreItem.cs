@@ -13,7 +13,7 @@ public class ScoreItem : MonoBehaviour
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (!_gameManager) _gameManager = FindAnyObjectByType<GameManager>(); 
-        if (coll.gameObject.CompareTag("Weapon"))
+        if (coll.gameObject.CompareTag("Weapon") || coll.gameObject.CompareTag("RangeWeapon"))
         {
             _gameManager.AddScore(_starScore);
             _particleSystem.SetActive(true);
