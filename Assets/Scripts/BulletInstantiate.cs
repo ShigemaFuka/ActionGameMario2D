@@ -81,8 +81,6 @@ public class BulletInstantiate : MonoBehaviour
                 else if (_shotCount <= _maxCount - 1)
                 {
                     // ‚R‰ñ–¢–ž‚Ü‚Å‚Í’eŠÛ‚ð¶¬ 
-                    //if(_muzzle) Instantiate(_bulletPrefab, _muzzle.gameObject.transform);
-                    //_bulletPrefab.transform.position = new Vector2(0, 0);
                     if (_muzzle)
                         _makeBulletObjectPool.Launch(_muzzle.gameObject.transform.position);
                     _shotCount++;
