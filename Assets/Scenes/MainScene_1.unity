@@ -18375,7 +18375,7 @@ PrefabInstance:
       objectReference: {fileID: 1038935927}
     - target: {fileID: 3993504743889549473, guid: 2d07be50bdf801a4c8a623f23d847962, type: 3}
       propertyPath: _isInvincible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5925287296407216842, guid: 2d07be50bdf801a4c8a623f23d847962, type: 3}
       propertyPath: m_Enabled
