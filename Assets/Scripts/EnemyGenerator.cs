@@ -17,8 +17,6 @@ public class EnemyGenerator : MonoBehaviour
     int _index = 0;
     int _randomPrefabsIndex = 0;
     [SerializeField, Tooltip("何体まで生成しておくか")] int _maxCount = 20;
-    [Tooltip("個体数")] static int _count = 0;
-    public int CharaCount { get => _count; set => _count = value; }
     Transform _playerPosition = default;
     [Tooltip("生成した敵キャラを格納するQueue")] static Queue<GameObject> _prefabQueue; //**
     public Queue<GameObject> PrefabQueue { get => _prefabQueue; set => _prefabQueue = value; }
@@ -28,6 +26,8 @@ public class EnemyGenerator : MonoBehaviour
     public Queue<GameObject> DeathPrefabQueue { get => _deathPrefabQueue; set => _deathPrefabQueue = value; }
     [SerializeField, Tooltip("生成範囲X")] float _x = 2;
     [SerializeField, Tooltip("生成範囲Y")] float _y = 2;
+    [SerializeField, Tooltip("敵キャラの親オブジェクト")] GameObject _parentEnemy = default;
+    [SerializeField, Tooltip("死亡演出の敵キャラの親オブジェクト")] GameObject _parentDeathEneymy = default;
 
     void Awake() 
     {
@@ -38,10 +38,10 @@ public class EnemyGenerator : MonoBehaviour
         for (int i = 0; i < _maxCount; i++)
         {
             _randomPrefabsIndex = Random.Range(0, _prefabs.Length);
-            GameObject go = Instantiate(_prefabs[_randomPrefabsIndex], gameObject.transform);
+            GameObject go = Instantiate(_prefabs[_randomPrefabsIndex], _parentEnemy.transform);
             //Queueに追加 
             PrefabQueue.Enqueue(go);
-            GameObject go2 = Instantiate(_deathPrefab, gameObject.transform);
+            GameObject go2 = Instantiate(_deathPrefab, _parentDeathEneymy.transform);
             DeathPrefabQueue.Enqueue(go2);
         }
     }
@@ -66,7 +66,7 @@ public class EnemyGenerator : MonoBehaviour
     }
     void Start()
     {
-        CharaCount = 0;
+        //CharaCount = 0;
         _timer = _intervalTime - _firstInterval;
         _playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -79,7 +79,8 @@ public class EnemyGenerator : MonoBehaviour
             FindNearGenerator();
             GeneratePrefabs();
         }
-        if (CharaCount == 0) IntervalController(); 
+        if (PrefabQueue.Count > _maxCount - 5) IntervalController();
+        //Debug.Log("PrefabQueue : " + PrefabQueue.Count);
     }
     /// <summary>
     /// 最大20体まで生成 
@@ -106,7 +107,7 @@ public class EnemyGenerator : MonoBehaviour
             }
         }
     }
-    WaitForSeconds _wfs = new WaitForSeconds(0.1f);
+    WaitForSeconds _wfs = new WaitForSeconds(0.5f);
     IEnumerator CoroutineInstantiate()
     {
         for (var i = 0; i < /*(_maxCount - CharaCount)*/ 5; i++)
@@ -116,8 +117,7 @@ public class EnemyGenerator : MonoBehaviour
             Vector2 pos = _generatePoses[_index].position;
             pos.x += x;
             pos.y += y;
-            GameObject go = Launch(PrefabQueue, pos);  
-            if(go) CharaCount++;
+            GameObject go = Launch(PrefabQueue, pos);
             yield return _wfs;
         }
         _timer = 0;
@@ -128,7 +128,7 @@ public class EnemyGenerator : MonoBehaviour
     /// </summary>
     /// <param name="queue">PrefabQueueか、DeathPrefabQueue</param>
     /// <param name="go">対象のオブジェクト</param>
-    public void Collect(Queue<GameObject> queue, GameObject go) 
+    public void Collect(Queue<GameObject> queue, GameObject go)
     {
         go.gameObject.SetActive(false);
         //Queueに格納
@@ -139,7 +139,7 @@ public class EnemyGenerator : MonoBehaviour
     /// </summary>
     public void IntervalController()
     {
-        _timer *= 2;
-        Debug.Log("IntervalController"); 
+        _timer *= 1.1f;
+        //Debug.Log("IntervalController"); 
     }
 }
