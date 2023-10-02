@@ -38,7 +38,7 @@ public class ArrowController : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             if (_audioSource) _audioSource.PlayOneShot(_audioSource.clip);
             _sceneChanger.ChangeScene(); 
