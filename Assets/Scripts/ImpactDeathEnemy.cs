@@ -28,17 +28,17 @@ public class ImpactDeathEnemy : MonoBehaviour
         _targetPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         _distance = (_targetPosition - _position).normalized;
         // Player‚ª“G‚æ‚è‰E‚É‹‚é‚Æ‚« 
-        if (_distance.x > 0)
+        if (_distance.x != 0)
         {
             _direction.x = -_direction.x;
             Vector2 _localScale = this.transform.localScale;
             this.transform.localScale = new Vector3(-_localScale.x, this.transform.localScale.y);
         }
-        var randomNum = Random.Range(0, 10);
-        // 8Š„‚è‚ÍisDead_1‚ðÄ¶ 
+        var randomNum = Random.Range(0, 20);
+        // 9Š„‚è‚ÍisDead_1‚ðÄ¶ 
         if (randomNum > 1) _num = 1;
         else _num = 2; 
-        _animator.SetTrigger($"isDead_{_num}"); 
+        _animator.SetTrigger($"isDead_{_num}");
         _rb.AddForce(_direction * _power, ForceMode2D.Impulse);
         StartCoroutine(CoroutineCollect());
     }
